@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.API", "Notes.API\Notes.API.csproj", "{BE0043C9-4804-4224-A85B-0478D0A5F30E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.Api", "src\Notes.Api\Notes.Api.csproj", "{BE0043C9-4804-4224-A85B-0478D0A5F30E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.API.Tests", "Notes.API.Tests\Notes.API.Tests.csproj", "{32D175AD-F8D8-4856-BF48-E96C64F5F76C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.Api.Tests", "tests\Notes.Api.Tests\Notes.Api.Tests.csproj", "{32D175AD-F8D8-4856-BF48-E96C64F5F76C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
