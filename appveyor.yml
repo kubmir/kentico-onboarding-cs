@@ -1,7 +1,7 @@
 configuration: Release
 
 before_build:
-  - nuget restore ./NotesBE/NotesBE.sln
+  - nuget restore ./NotesBackEnd/NotesBackEnd.sln
 
 build:
   verbosity: minimal
