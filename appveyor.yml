@@ -1,0 +1,8 @@
+configuration: Release
+
+before_build:
+  - nuget restore ./NotesBackEnd/NotesBackEnd.sln
+
+build:
+  verbosity: minimal
+  publish_wap: true
