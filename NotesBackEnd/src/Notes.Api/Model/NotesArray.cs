@@ -2,11 +2,11 @@
 
 namespace Notes.Api.Model
 {
-    public static class NotesList
+    public static class NotesArray
     {
-        public static List<Note> GetInitialNotes()
+        public static IEnumerable<Note> GetInitialNotes()
         {
-            return new List<Note>
+            return new []
             {
                 new Note("First note", "2c00d1c2-fd2b-4c06-8f2d-130e88f719c2", false),
                 new Note("Second note", "ebcb3d81-af4e-428f-a22d-e7852d70d3a0", false),

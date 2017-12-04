@@ -1,4 +1,6 @@
-﻿namespace Notes.Api.Model
+﻿using System.Collections.Generic;
+
+namespace Notes.Api.Model
 {
     public class Note
     {
