@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Notes.Api.Model;
@@ -36,9 +37,17 @@ namespace Notes.Api.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult UpdateNote(string text, bool isEditActive)
+        public async Task<IHttpActionResult> UpdateNoteAsync(Guid id, string text)
         {
-            return null;
+            var noteToUpdate = _notesList.SingleOrDefault(note => note.Id == id);
+            if (noteToUpdate != null)
+            {
+                var index = Array.IndexOf(_notesList, noteToUpdate);
+                noteToUpdate.Text = text;
+                _notesList[index] = noteToUpdate;
+            }
+
+            return await Task.FromResult(Ok(_notesList));
         }
 
         [HttpDelete]
