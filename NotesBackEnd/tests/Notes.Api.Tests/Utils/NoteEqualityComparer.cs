@@ -23,7 +23,7 @@ namespace Notes.Api.Tests.Utils
         public int GetHashCode(Note obj)
         {
             int hashCodeText = obj.Text == null ? 0 : obj.Text.GetHashCode();
-            int hashCodeId = obj.Id == null ? 0 : obj.Id.GetHashCode();
+            int hashCodeId = obj.Id.GetHashCode();
 
             return hashCodeId ^ hashCodeText;
         }
