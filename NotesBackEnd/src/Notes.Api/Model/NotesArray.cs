@@ -4,7 +4,7 @@ namespace Notes.Api.Model
 {
     public static class NotesArray
     {
-        public static IEnumerable<Note> GetInitialNotes()
+        public static Note[] GetInitialNotes()
         {
             return new []
             {

@@ -9,7 +9,7 @@ namespace Notes.Api.Controllers
 {
     public class DummyController : ApiController
     {
-        private IEnumerable<Note> _notesList = NotesArray.GetInitialNotes();
+        private Note[] _notesList = NotesArray.GetInitialNotes();
 
         [HttpGet]
         public async Task<IHttpActionResult> FindNotesAsync()
@@ -19,9 +19,10 @@ namespace Notes.Api.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult FindNoteById(int id)
+        public async Task<IHttpActionResult> FindNoteByIdAsync(string id)
         {
-            return null;
+            var foundItem = await Task.FromResult(_notesList[0]);
+            return Ok(foundItem);
         }
 
         [HttpPost]
