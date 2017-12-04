@@ -114,5 +114,27 @@ namespace Notes.Api.Tests.Controllers
                 Assert.That(expectedNotes, Is.EqualTo(actualNotes).Using(_noteEqualityComparer));
             });
         }
+
+        [Test]
+        public async Task Delete_DeleteNoteByIdAsync()
+        {
+            var expectedNotes = new[]
+            {
+                new Note("Second note", new Guid("ebcb3d81-af4e-428f-a22d-e7852d70d3a0"), false),
+                new Note("Third note", new Guid("599442c0-ae28-4157-9a3f-0491bb4ba6c1"), false),
+                new Note("Fourth note", new Guid("4785546e-824d-42a4-900b-e656f19ffb59"), false),
+            };
+
+            IHttpActionResult response =
+                await _controller.DeleteNoteByIdAsync(Guid.Parse("2c00d1c2-fd2b-4c06-8f2d-130e88f719c2"));
+            HttpResponseMessage executedResponse = await response.ExecuteAsync(CancellationToken.None);
+            executedResponse.TryGetContentValue(out Note[] actualNotes);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(HttpStatusCode.OK, Is.EqualTo(executedResponse.StatusCode));
+                Assert.That(expectedNotes, Is.EqualTo(actualNotes).Using(_noteEqualityComparer));
+            });
+        }
     }
 }

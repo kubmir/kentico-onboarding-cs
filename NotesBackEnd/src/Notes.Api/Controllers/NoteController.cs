@@ -51,9 +51,11 @@ namespace Notes.Api.Controllers
         }
 
         [HttpDelete]
-        public IHttpActionResult DeleteNoteById(int id)
+        public async Task<IHttpActionResult> DeleteNoteByIdAsync(Guid id)
         {
-            return null;
+            _notesList = _notesList.Where(note => note.Id != id).ToArray();
+
+            return await Task.FromResult(Ok(_notesList));
         }
     }
 }
