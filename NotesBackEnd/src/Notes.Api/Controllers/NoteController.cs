@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading;
+﻿using System;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Notes.Api.Model;
 
 namespace Notes.Api.Controllers
 {
-    public class DummyController : ApiController
+    public class NoteController : ApiController
     {
         private Note[] _notesList = NotesArray.GetInitialNotes();
 
@@ -19,16 +17,22 @@ namespace Notes.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IHttpActionResult> FindNoteByIdAsync(string id)
+        public async Task<IHttpActionResult> FindNoteByIdAsync(Guid id)
         {
             var foundItem = await Task.FromResult(_notesList[0]);
             return Ok(foundItem);
         }
 
         [HttpPost]
-        public IHttpActionResult AddNote(string text)
+        public async Task<IHttpActionResult> AddNoteAsync(string text)
         {
-            return null;
+            var newNotesArray = new Note[_notesList.Length + 1];
+            _notesList.CopyTo(newNotesArray, 0);
+            newNotesArray[_notesList.Length] = new Note(text, new Guid("d0a0f5bc-0f46-43f0-ab4b-06860c3ea19c"), false);
+            _notesList = newNotesArray;
+
+            //just for using await in async function - Ok() is also possible
+            return await Task.FromResult(Ok(_notesList));
         }
 
         [HttpPut]

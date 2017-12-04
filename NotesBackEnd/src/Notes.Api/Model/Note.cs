@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace Notes.Api.Model
 {
     public class Note
     {
         public string Text { get; set; }
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public bool IsEditActive { get; set; }
 
-        public Note(string text, string id, bool isEditActive)
+        public Note(string text, Guid id, bool isEditActive)
         {
             Text = text;
             Id = id;
