@@ -1,10 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Notes.Api.Model;
 
 namespace Notes.Api.Tests.Utils
 {
     class NoteEqualityComparer : IEqualityComparer<Note>
     {
+        private static readonly Lazy<NoteEqualityComparer> instance = new Lazy<NoteEqualityComparer>();
+
+        public static NoteEqualityComparer Instance => instance.Value;
+
+        private NoteEqualityComparer()
+        {
+            
+        }
+
         public bool Equals(Note x, Note y)
         {
             if (ReferenceEquals(x, y))
@@ -17,7 +28,7 @@ namespace Notes.Api.Tests.Utils
                 return false;
             }
 
-            return x.Id == y.Id && x.Text == y.Text && x.IsEditActive == y.IsEditActive;
+            return x.Id == y.Id && x.Text == y.Text;
         }
 
         public int GetHashCode(Note obj)
