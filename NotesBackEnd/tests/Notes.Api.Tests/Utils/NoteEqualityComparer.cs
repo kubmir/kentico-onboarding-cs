@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Notes.Api.Model;
 
 namespace Notes.Api.Tests.Utils
 {
     class NoteEqualityComparer : IEqualityComparer<Note>
     {
-        private static readonly Lazy<NoteEqualityComparer> instance = new Lazy<NoteEqualityComparer>();
+        private static readonly Lazy<NoteEqualityComparer> LazyInstance = new Lazy<NoteEqualityComparer>(() => new NoteEqualityComparer());
 
-        public static NoteEqualityComparer Instance => instance.Value;
+        public static NoteEqualityComparer Instance => LazyInstance.Value;
 
         private NoteEqualityComparer()
         {
-            
+
         }
 
         public bool Equals(Note x, Note y)
