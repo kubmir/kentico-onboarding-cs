@@ -43,7 +43,6 @@ namespace Notes.Api.Tests.Controllers
             };
 
             IHttpActionResult response = await _controller.GetAsync();
-
             HttpResponseMessage executedResponse = await response.ExecuteAsync(CancellationToken.None);
             executedResponse.TryGetContentValue(out Note[] actualNotes);
 
@@ -79,7 +78,6 @@ namespace Notes.Api.Tests.Controllers
             var expectedUri = new Uri($"http://test/{id}/test");
             var expectedNote = new Note { Text = "Second note", Id = new Guid(id) };
 
-
             IHttpActionResult response = await _controller.PostAsync(new Note { Text = "test text" });
             HttpResponseMessage executedResponse = await response.ExecuteAsync(CancellationToken.None);
             executedResponse.TryGetContentValue(out Note actualNote);
@@ -97,7 +95,6 @@ namespace Notes.Api.Tests.Controllers
         {
             var updatedText = "Updated note";
             var expectedNote = new Note { Text = "Third note", Id = new Guid("599442c0-ae28-4157-9a3f-0491bb4ba6c1") };
-
 
             IHttpActionResult response =
                 await _controller.PutAsync(new Note { Text = updatedText, Id = Guid.Parse("2c00d1c2-fd2b-4c06-8f2d-130e88f719c2") });

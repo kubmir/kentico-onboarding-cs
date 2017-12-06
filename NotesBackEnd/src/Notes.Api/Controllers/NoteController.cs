@@ -20,13 +20,11 @@ namespace Notes.Api.Controllers
         public async Task<IHttpActionResult> GetAsync()
             => await Task.FromResult(Ok(Notes));
 
-
         public async Task<IHttpActionResult> GetAsync(Guid id)
             => await Task.FromResult(Ok(Notes[0]));
 
         public async Task<IHttpActionResult> PostAsync(Note noteToAdd)
-            => await Task.FromResult(CreatedAtRoute("Notes",  new { id = Notes[1].Id.ToString() }, Notes[1]));
-       
+            => await Task.FromResult(CreatedAtRoute("Notes", new { id = Notes[1].Id.ToString() }, Notes[1]));
 
         public async Task<IHttpActionResult> PutAsync(Note noteToUpdate)
             => await Task.FromResult(Ok(Notes[2]));
