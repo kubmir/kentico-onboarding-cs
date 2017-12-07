@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="netstandard" />
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -67,6 +68,10 @@
     <ProjectReference Include="..\..\src\Notes.Api\Notes.Api.csproj">
       <Project>{BE0043C9-4804-4224-A85B-0478D0A5F30E}</Project>
       <Name>Notes.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Notes.Models\Notes.Models.csproj">
+      <Project>{2F54B55A-1349-436C-99C2-7F0F8EECDF74}</Project>
+      <Name>Notes.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

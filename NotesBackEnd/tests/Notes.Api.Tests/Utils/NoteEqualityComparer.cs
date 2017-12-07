@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Notes.Api.Model;
+using Notes.Models.Model;
 
 namespace Notes.Api.Tests.Utils
 {

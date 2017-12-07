@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Web.Http;
-using Notes.Api.Model;
+using Notes.Models.Model;
 
 namespace Notes.Api.Controllers
 {

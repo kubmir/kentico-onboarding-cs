@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Net;
 using Notes.Api.Controllers;
-using Notes.Api.Model;
 using NUnit.Framework;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Notes.Api.Tests.Utils;
+using Notes.Models.Model;
 
 namespace Notes.Api.Tests.Controllers
 {
