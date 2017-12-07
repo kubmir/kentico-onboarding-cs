@@ -8,7 +8,7 @@ namespace Notes.Api.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/notes/{id?}", Name = "Notes")]
-    public class NoteController : ApiController
+    public class NotesController : ApiController
     {
         private static readonly Note[] Notes = {
             new Note {Text = "First note", Id = new Guid("2c00d1c2-fd2b-4c06-8f2d-130e88f719c2")},

@@ -12,14 +12,14 @@ using Notes.Api.Tests.Utils;
 namespace Notes.Api.Tests.Controllers
 {
     [TestFixture]
-    public class NoteControllerTest
+    public class NotesControllerTest
     {
-        private NoteController _controller;
+        private NotesController _controller;
 
         [SetUp]
         public void Init()
         {
-            _controller = new NoteController();
+            _controller = new NotesController();
             _controller.Configuration = new HttpConfiguration();
             _controller.Configuration.Routes.MapHttpRoute(
                 name: "Notes",
