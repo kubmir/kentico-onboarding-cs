@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Notes.Models.Model;
+using Notes.Contracts.Model;
 
-namespace Notes.Models.Repository
+namespace Notes.Contracts.Repository
 {
     public interface INotesRepository
     {
@@ -15,6 +15,6 @@ namespace Notes.Models.Repository
 
         Task<Note> DeleteNoteByIdAsync(Guid id);
 
-        Task<Note> UpdateNote(Note note);
+        Task<Note> UpdateNoteAsync(Note note);
     }
 }
