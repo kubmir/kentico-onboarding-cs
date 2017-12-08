@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Notes.Contracts.Model;
 
-namespace Notes.Api.Tests.Utils
+namespace Notes.Api.Tests.Comparers
 {
-    class NoteEqualityComparer : IEqualityComparer<Note>
+    internal sealed class NoteEqualityComparer : IEqualityComparer<Note>
     {
         private static readonly Lazy<NoteEqualityComparer> LazyInstance = new Lazy<NoteEqualityComparer>(() => new NoteEqualityComparer());
 

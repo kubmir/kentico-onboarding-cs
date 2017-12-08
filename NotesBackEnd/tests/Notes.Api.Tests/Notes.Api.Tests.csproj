@@ -61,8 +61,8 @@
   <ItemGroup>
     <Compile Include="Controllers\NotesControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\EqualityConstraintExtension.cs" />
-    <Compile Include="Utils\NoteEqualityComparer.cs" />
+    <Compile Include="Comparers\EqualityConstraintExtension.cs" />
+    <Compile Include="Comparers\NoteEqualityComparer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Notes.Api\Notes.Api.csproj">
