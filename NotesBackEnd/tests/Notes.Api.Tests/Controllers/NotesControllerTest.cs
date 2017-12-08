@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Notes.Api.Tests.Utils;
+using Notes.Api.Tests.Comparers;
 
 namespace Notes.Api.Tests.Controllers
 {

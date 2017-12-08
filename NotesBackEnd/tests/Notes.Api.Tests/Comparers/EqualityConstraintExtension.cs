@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework.Constraints;
 
-namespace Notes.Api.Tests.Utils
+namespace Notes.Api.Tests.Comparers
 {
     internal static class EqualityConstraintExtension
     {
