@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Net;
 using Notes.Api.Controllers;
-using Notes.Api.Model;
 using NUnit.Framework;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Notes.Api.Tests.Comparers;
+using Notes.Contracts.Model;
 
 namespace Notes.Api.Tests.Controllers
 {
