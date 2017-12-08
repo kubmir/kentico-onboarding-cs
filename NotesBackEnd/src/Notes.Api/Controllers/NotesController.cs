@@ -4,7 +4,6 @@ using System.Web.Http;
 using Microsoft.Web.Http;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
-using Notes.Repository;
 
 namespace Notes.Api.Controllers
 {
@@ -12,7 +11,12 @@ namespace Notes.Api.Controllers
     [Route("api/v{version:apiVersion}/notes/{id?}", Name = "Notes")]
     public class NotesController : ApiController
     {
-        private INotesRepository _repository = new NotesRepository();
+        private readonly INotesRepository _repository;
+
+        public NotesController(INotesRepository repository)
+        {
+            _repository = repository;
+        }
 
         public async Task<IHttpActionResult> GetAsync()
         {

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Notes.Api.Tests.Comparers;
 using Notes.Contracts.Model;
+using Notes.Repository;
 
 namespace Notes.Api.Tests.Controllers
 {
@@ -20,13 +21,13 @@ namespace Notes.Api.Tests.Controllers
         [SetUp]
         public void Init()
         {
-            _controller = new NotesController
+            _controller = new NotesController(new NotesRepository())
             {
                 Configuration = new HttpConfiguration(),
                 Request = new HttpRequestMessage
                 {
                     RequestUri = new Uri("http://test")
-                }
+                },
             };
 
             _controller.Configuration.Routes.MapHttpRoute(
