@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace Notes.API
+namespace Notes.Api
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
