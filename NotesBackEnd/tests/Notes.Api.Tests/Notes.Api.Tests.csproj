@@ -69,9 +69,9 @@
       <Project>{BE0043C9-4804-4224-A85B-0478D0A5F30E}</Project>
       <Name>Notes.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Notes.Models\Notes.Models.csproj">
+    <ProjectReference Include="..\..\src\Notes.Models\Notes.Contracts.csproj">
       <Project>{2F54B55A-1349-436C-99C2-7F0F8EECDF74}</Project>
-      <Name>Notes.Models</Name>
+      <Name>Notes.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

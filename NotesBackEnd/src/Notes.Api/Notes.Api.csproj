@@ -109,9 +109,9 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Notes.Models\Notes.Models.csproj">
+    <ProjectReference Include="..\Notes.Models\Notes.Contracts.csproj">
       <Project>{2F54B55A-1349-436C-99C2-7F0F8EECDF74}</Project>
-      <Name>Notes.Models</Name>
+      <Name>Notes.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
