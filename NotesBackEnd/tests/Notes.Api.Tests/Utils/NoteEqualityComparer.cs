@@ -4,7 +4,7 @@ using Notes.Api.Model;
 
 namespace Notes.Api.Tests.Utils
 {
-    class NoteEqualityComparer : IEqualityComparer<Note>
+    internal sealed class NoteEqualityComparer : IEqualityComparer<Note>
     {
         private static readonly Lazy<NoteEqualityComparer> LazyInstance = new Lazy<NoteEqualityComparer>(() => new NoteEqualityComparer());
 
