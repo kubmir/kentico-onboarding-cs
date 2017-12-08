@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Notes.Api.Tests.Utils;
-using Notes.Models.Model;
+using Notes.Contracts.Model;
 
 namespace Notes.Api.Tests.Controllers
 {

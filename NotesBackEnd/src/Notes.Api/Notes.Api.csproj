@@ -113,6 +113,10 @@
       <Project>{2F54B55A-1349-436C-99C2-7F0F8EECDF74}</Project>
       <Name>Notes.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Notes.Repository\Notes.Repository.csproj">
+      <Project>{2A81AC6F-EED2-4678-BBB9-CFF22BA1304E}</Project>
+      <Name>Notes.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

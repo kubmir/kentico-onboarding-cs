@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Notes.Models.Model
+namespace Notes.Contracts.Model
 {
     public class Note
     {

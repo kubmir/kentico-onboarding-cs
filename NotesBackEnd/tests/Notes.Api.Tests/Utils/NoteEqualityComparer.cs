@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Notes.Models.Model;
+using Notes.Contracts.Model;
 
 namespace Notes.Api.Tests.Utils
 {
