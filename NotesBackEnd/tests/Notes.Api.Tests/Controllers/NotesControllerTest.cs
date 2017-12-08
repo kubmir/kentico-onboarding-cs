@@ -61,8 +61,8 @@ namespace Notes.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_FindNoteById()
         {
-            var noteId = new Guid("2c00d1c2-fd2b-4c06-8f2d-130e88f719c2");
             var expectedNote = Note1;
+            var noteId = expectedNote.Id;
 
             var (actualNote, responseMessage) = await GetExecutedResponse<Note>(() => _controller.GetAsync(noteId));
 
@@ -76,9 +76,9 @@ namespace Notes.Api.Tests.Controllers
         [Test]
         public async Task PostAsync_AddNewValidNote()
         {
-            const string id = "ebcb3d81-af4e-428f-a22d-e7852d70d3a0";
-            var expectedUri = new Uri($"http://test/{id}/test");
             var expectedNote = Note2;
+            string id = expectedNote.Id.ToString();
+            var expectedUri = new Uri($"http://test/{id}/test");
 
             var (actualNote, responseMessage) = await GetExecutedResponse<Note>(() => _controller.PostAsync(new Note { Text = "test text" }));
 
@@ -93,11 +93,10 @@ namespace Notes.Api.Tests.Controllers
         [Test]
         public async Task PutAsync_UpdateNote()
         {
-            var updatedText = "Updated note";
             var expectedNote = Note3;
 
             var (actualNote, responseMessage) = await GetExecutedResponse<Note>(()
-                => _controller.PutAsync(new Note { Text = updatedText, Id = Guid.Parse("2c00d1c2-fd2b-4c06-8f2d-130e88f719c2") }));
+                => _controller.PutAsync(new Note { Text = "Updated note", Id = expectedNote.Id }));
 
             Assert.Multiple(() =>
             {
