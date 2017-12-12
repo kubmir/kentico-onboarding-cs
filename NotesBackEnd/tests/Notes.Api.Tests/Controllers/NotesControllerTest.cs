@@ -96,7 +96,7 @@ namespace Notes.Api.Tests.Controllers
             var expectedNote = Note3;
 
             var (actualNote, responseMessage) = await GetExecutedResponse<Note>(()
-                => _controller.PutAsync(expectedGuid, new Note { Text = updatedText, Id = Guid.Parse("2c00d1c2-fd2b-4c06-8f2d-130e88f719c2") }));
+                => _controller.PutAsync(Note3.Id, Note3));
 
             Assert.Multiple(() =>
             {
@@ -128,7 +128,7 @@ namespace Notes.Api.Tests.Controllers
             return (actualContent, executedResponse);
         }
 
-        internal INotesRepository MockNotesRepository()
+        private INotesRepository MockNotesRepository()
         {
             var mockedRepository = Substitute.For<INotesRepository>();
             mockedRepository.GetAllNotesAsync().Returns(AllNotes);
