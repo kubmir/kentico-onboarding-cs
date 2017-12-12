@@ -40,7 +40,7 @@ namespace Notes.Api.Tests.Controllers
             };
 
             _controller.Configuration.Routes.MapHttpRoute(
-                name: "Notes",
+                name: NotesController.NotesRouteName,
                 routeTemplate: "{id}/test");
         }
 
@@ -96,7 +96,7 @@ namespace Notes.Api.Tests.Controllers
             var expectedNote = Note3;
 
             var (actualNote, responseMessage) = await GetExecutedResponse<Note>(()
-                => _controller.PutAsync(new Note { Text = "Updated note", Id = expectedNote.Id }));
+                => _controller.PutAsync(expectedGuid, new Note { Text = updatedText, Id = Guid.Parse("2c00d1c2-fd2b-4c06-8f2d-130e88f719c2") }));
 
             Assert.Multiple(() =>
             {
@@ -119,7 +119,7 @@ namespace Notes.Api.Tests.Controllers
             });
         }
 
-        internal async Task<(T ActualContent, HttpResponseMessage ResponseMessage)> GetExecutedResponse<T>(Func<Task<IHttpActionResult>> controllerFunction)
+        private async Task<(T ActualContent, HttpResponseMessage ResponseMessage)> GetExecutedResponse<T>(Func<Task<IHttpActionResult>> controllerFunction)
         {
             IHttpActionResult response = await controllerFunction();
             HttpResponseMessage executedResponse = await response.ExecuteAsync(CancellationToken.None);

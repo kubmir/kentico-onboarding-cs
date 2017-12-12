@@ -7,10 +7,12 @@ using Notes.Contracts.Repository;
 
 namespace Notes.Api.Controllers
 {
+
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/notes/{id?}", Name = "Notes")]
+    [Route("api/v{version:apiVersion}/notes/{id?}", Name = NotesRouteName)]
     public class NotesController : ApiController
     {
+        internal const string NotesRouteName = "Notes";
         private readonly INotesRepository _repository;
 
         public NotesController(INotesRepository repository)
