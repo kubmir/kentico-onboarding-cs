@@ -29,7 +29,7 @@ namespace Notes.Api.Controllers
         public async Task<IHttpActionResult> PostAsync(Note noteToAdd)
             => await Task.FromResult(CreatedAtRoute(NotesRouteName, new { id = Notes[1].Id.ToString() }, Notes[1]));
 
-        public async Task<IHttpActionResult> PutAsync(Note noteToUpdate)
+        public async Task<IHttpActionResult> PutAsync(Guid id, Note noteToUpdate)
             => await Task.FromResult(Ok(Notes[2]));
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)

@@ -89,11 +89,12 @@ namespace Notes.Api.Tests.Controllers
         [Test]
         public async Task PutAsync_UpdateNote()
         {
+            var expectedGuid = new Guid("599442c0-ae28-4157-9a3f-0491bb4ba6c1");
             var updatedText = "Updated note";
-            var expectedNote = new Note { Text = "Third note", Id = new Guid("599442c0-ae28-4157-9a3f-0491bb4ba6c1") };
+            var expectedNote = new Note { Text = "Third note", Id = expectedGuid };
 
             var (actualNote, responseMessage) = await GetExecutedResponse<Note>(()
-                => _controller.PutAsync(new Note { Text = updatedText, Id = Guid.Parse("2c00d1c2-fd2b-4c06-8f2d-130e88f719c2") }));
+                => _controller.PutAsync(expectedGuid, new Note { Text = updatedText, Id = Guid.Parse("2c00d1c2-fd2b-4c06-8f2d-130e88f719c2") }));
 
             Assert.Multiple(() =>
             {
