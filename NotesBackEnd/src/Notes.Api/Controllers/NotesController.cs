@@ -38,7 +38,7 @@ namespace Notes.Api.Controllers
         {
             Note addedNote = await _repository.CreateNoteAsync(noteToAdd);
 
-            return await Task.FromResult(CreatedAtRoute("Notes", new { id = addedNote.Id.ToString() }, addedNote));
+            return await Task.FromResult(CreatedAtRoute(NotesRouteName, new { id = addedNote.Id.ToString() }, addedNote));
         }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, Note noteToUpdate)
