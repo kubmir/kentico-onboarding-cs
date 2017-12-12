@@ -30,7 +30,7 @@ namespace Notes.Api.Tests.Controllers
             };
 
             _controller.Configuration.Routes.MapHttpRoute(
-                name: "Notes",
+                name: NotesController.NotesRouteName,
                 routeTemplate: "{id}/test");
         }
 
