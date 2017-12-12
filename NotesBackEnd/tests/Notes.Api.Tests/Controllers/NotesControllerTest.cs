@@ -116,7 +116,7 @@ namespace Notes.Api.Tests.Controllers
             });
         }
 
-        internal async Task<(T ActualContent, HttpResponseMessage ResponseMessage)> GetExecutedResponse<T>(Func<Task<IHttpActionResult>> controllerFunction)
+        private async Task<(T ActualContent, HttpResponseMessage ResponseMessage)> GetExecutedResponse<T>(Func<Task<IHttpActionResult>> controllerFunction)
         {
             IHttpActionResult response = await controllerFunction();
             HttpResponseMessage executedResponse = await response.ExecuteAsync(CancellationToken.None);
