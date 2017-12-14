@@ -162,12 +162,12 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Notes.Models\Notes.Contracts.csproj">
-      <Project>{2F54B55A-1349-436C-99C2-7F0F8EECDF74}</Project>
+    <ProjectReference Include="..\Notes.Contracts\Notes.Contracts.csproj">
+      <Project>{a5a4fc43-cddb-4fb8-9a54-3971f2834b35}</Project>
       <Name>Notes.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\Notes.Repository\Notes.Repository.csproj">
-      <Project>{2A81AC6F-EED2-4678-BBB9-CFF22BA1304E}</Project>
+      <Project>{614f0f07-b16e-48ca-988a-a6181e80fc38}</Project>
       <Name>Notes.Repository</Name>
     </ProjectReference>
   </ItemGroup>

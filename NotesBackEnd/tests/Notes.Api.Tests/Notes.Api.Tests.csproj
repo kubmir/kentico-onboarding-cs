@@ -78,13 +78,9 @@
       <Project>{BE0043C9-4804-4224-A85B-0478D0A5F30E}</Project>
       <Name>Notes.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Notes.Models\Notes.Contracts.csproj">
-      <Project>{2F54B55A-1349-436C-99C2-7F0F8EECDF74}</Project>
+    <ProjectReference Include="..\..\src\Notes.Contracts\Notes.Contracts.csproj">
+      <Project>{a5a4fc43-cddb-4fb8-9a54-3971f2834b35}</Project>
       <Name>Notes.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Notes.Repository\Notes.Repository.csproj">
-      <Project>{2A81AC6F-EED2-4678-BBB9-CFF22BA1304E}</Project>
-      <Name>Notes.Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
