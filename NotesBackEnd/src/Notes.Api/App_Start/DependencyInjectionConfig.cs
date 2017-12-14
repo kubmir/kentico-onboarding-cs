@@ -1,19 +1,20 @@
 ﻿using System.Web.Http;
-using Notes.Contracts.Repository;
-using Notes.Repository;
+using Notes.Contracts.Dependency;
 using Unity;
 
 namespace Notes.Api
 {
-    public class DependencyInjectionConfig
+    internal static class DependencyInjectionConfig
     {
-        public static void Register(HttpConfiguration config)
+        internal static void Register(HttpConfiguration config)
         {
-            IUnityContainer container = new UnityContainer();
-
-            container.RegisterType<INotesRepository, NotesRepository>();
+            IUnityContainer container = new UnityContainer()
+                .RegisterDependency(new Repository.Dependency.RepositoryTypesRegistration());
 
             config.DependencyResolver = new UnityResolver(container);
         }
+
+        private static IUnityContainer RegisterDependency(this IUnityContainer container, IBootstrapper registrationClass)
+            => registrationClass.RegisterType(container);
     }
 }

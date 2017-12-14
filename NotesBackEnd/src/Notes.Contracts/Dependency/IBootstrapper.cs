@@ -2,7 +2,7 @@
 
 namespace Notes.Contracts.Dependency
 {
-    interface IBootstrapper
+    public interface IBootstrapper
     {
         IUnityContainer RegisterType(IUnityContainer container);
     }
