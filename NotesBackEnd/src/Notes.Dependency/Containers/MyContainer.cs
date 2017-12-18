@@ -6,7 +6,7 @@ using Notes.Contracts.Dependency;
 using Unity;
 using Unity.Injection;
 
-namespace Notes.Dependency
+namespace Notes.Dependency.Containers
 {
     public class MyContainer : IMyContainer
     {

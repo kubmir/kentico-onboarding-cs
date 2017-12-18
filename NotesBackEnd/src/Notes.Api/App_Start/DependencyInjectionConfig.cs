@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using Notes.Api.Services.Helpers;
 using Notes.Contracts.Dependency;
-using Notes.Dependency;
+using Notes.Dependency.Containers;
 
 namespace Notes.Api
 {
