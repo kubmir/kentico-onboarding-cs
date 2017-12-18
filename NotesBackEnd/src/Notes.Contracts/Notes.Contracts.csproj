@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiHelpers\IUrlLocationHelper.cs" />
     <Compile Include="Dependency\IBootstrapper.cs" />
     <Compile Include="Model\Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
