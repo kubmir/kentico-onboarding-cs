@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 namespace Notes.Contracts.Dependency
 {
-    public interface IMyContainer
+    public interface IDependencyContainer
     {
-        IMyContainer RegisterType<TFrom>();
+        IDependencyContainer RegisterType<TFrom>();
 
-        IMyContainer RegisterType<TFrom, TTo>() where TTo : TFrom;
+        IDependencyContainer RegisterType<TFrom, TTo>() where TTo : TFrom;
 
         object Resolve(Type serviceType);
 
         IEnumerable<object> ResolveAll(Type serviceType);
 
-        IMyContainer CreateChildContainer();
+        IDependencyContainer CreateChildContainer();
 
         void Dispose();
     }

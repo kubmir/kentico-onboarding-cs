@@ -9,14 +9,14 @@ namespace Notes.Api
     {
         internal static void Register(HttpConfiguration config)
         {
-            IMyContainer container = new MyContainer()
+            IDependencyContainer container = new DependencyContainer()
                 .RegisterDependency(new Repository.Dependency.RepositoryTypesRegistration())
                 .RegisterDependency(new Dependency.ApiTypesRegistration());
 
             config.DependencyResolver = new ContainerResolver(container);
         }
 
-        private static IMyContainer RegisterDependency(this IMyContainer container, IBootstrapper registrationClass)
+        private static IDependencyContainer RegisterDependency(this IDependencyContainer container, IBootstrapper registrationClass)
             => registrationClass.RegisterType(container);
     }
 }

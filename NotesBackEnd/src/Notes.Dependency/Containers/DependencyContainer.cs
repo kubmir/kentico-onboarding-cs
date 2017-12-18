@@ -8,28 +8,28 @@ using Unity.Injection;
 
 namespace Notes.Dependency.Containers
 {
-    public class MyContainer : IMyContainer
+    public class DependencyContainer : IDependencyContainer
     {
         private readonly IUnityContainer _unityContainer;
 
-        public MyContainer()
+        public DependencyContainer()
         {
             _unityContainer = new UnityContainer();
         }
 
-        private MyContainer(IUnityContainer container)
+        private DependencyContainer(IUnityContainer container)
         {
             _unityContainer = container;
         }
 
-        public IMyContainer RegisterType<TFrom>()
+        public IDependencyContainer RegisterType<TFrom>()
         {
             _unityContainer.RegisterType<TFrom>(new InjectionFactory(GetHttpRequestMessage));
 
             return this;
         }
 
-        public IMyContainer RegisterType<TFrom, TTo>() where TTo : TFrom
+        public IDependencyContainer RegisterType<TFrom, TTo>() where TTo : TFrom
         {
             _unityContainer.RegisterType<TFrom, TTo>();
 
@@ -54,9 +54,9 @@ namespace Notes.Dependency.Containers
             return _unityContainer.ResolveAll(serviceType);
         }
 
-        public IMyContainer CreateChildContainer()
+        public IDependencyContainer CreateChildContainer()
         {
-            return new MyContainer(_unityContainer.CreateChildContainer());
+            return new DependencyContainer(_unityContainer.CreateChildContainer());
         }
 
         public void Dispose()

@@ -7,9 +7,9 @@ namespace Notes.Api.Services.Helpers
 {
     public class ContainerResolver : IDependencyResolver
     {
-        protected IMyContainer Container;
+        protected IDependencyContainer Container;
 
-        public ContainerResolver(IMyContainer container)
+        public ContainerResolver(IDependencyContainer container)
         {
             Container = container ?? throw new ArgumentNullException(nameof(container));
         }

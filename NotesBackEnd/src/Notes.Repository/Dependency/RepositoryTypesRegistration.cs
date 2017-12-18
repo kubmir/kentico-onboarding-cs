@@ -6,7 +6,7 @@ namespace Notes.Repository.Dependency
 {
     public class RepositoryTypesRegistration : IBootstrapper
     {
-        public IMyContainer RegisterType(IMyContainer container)
+        public IDependencyContainer RegisterType(IDependencyContainer container)
             => container.RegisterType<INotesRepository, NotesRepository>();
     }
 }

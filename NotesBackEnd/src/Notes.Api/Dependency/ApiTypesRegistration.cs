@@ -7,7 +7,7 @@ namespace Notes.Api.Dependency
 {
     public class ApiTypesRegistration : IBootstrapper
     {
-        public IMyContainer RegisterType(IMyContainer container)
+        public IDependencyContainer RegisterType(IDependencyContainer container)
             => container
                 .RegisterType<IUrlLocationHelper, UrlLocationHelper>()
                 .RegisterType<HttpRequestMessage>();
