@@ -1,9 +1,7 @@
-﻿using Unity;
-
-namespace Notes.Contracts.Dependency
+﻿namespace Notes.Contracts.Dependency
 {
     public interface IBootstrapper
     {
-        IUnityContainer RegisterType(IUnityContainer container);
+        IMyContainer RegisterType(IMyContainer container);
     }
 }
