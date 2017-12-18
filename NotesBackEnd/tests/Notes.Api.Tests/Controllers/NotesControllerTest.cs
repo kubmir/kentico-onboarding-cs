@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Notes.Api.Tests.Comparers;
+using Notes.Contracts.ApiHelpers;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
 using NSubstitute;
@@ -29,8 +30,9 @@ namespace Notes.Api.Tests.Controllers
         public void Init()
         {
             var mockedNotesRepository = MockNotesRepository();
+            var mockedLocationHelper = MockLocationHelper();
 
-            _controller = new NotesController(mockedNotesRepository)
+            _controller = new NotesController(mockedNotesRepository, mockedLocationHelper)
             {
                 Configuration = new HttpConfiguration(),
                 Request = new HttpRequestMessage
@@ -138,6 +140,14 @@ namespace Notes.Api.Tests.Controllers
             mockedRepository.DeleteNoteByIdAsync(Arg.Any<Guid>()).Returns(Note4);
 
             return mockedRepository;
+        }
+
+        private IUrlLocationHelper MockLocationHelper()
+        {
+            var mockedLocationHelper = Substitute.For<IUrlLocationHelper>();
+            mockedLocationHelper.GetUrl(Arg.Any<Guid>()).Returns("http://test/ebcb3d81-af4e-428f-a22d-e7852d70d3a0/test");
+
+            return mockedLocationHelper;
         }
     }
 }
