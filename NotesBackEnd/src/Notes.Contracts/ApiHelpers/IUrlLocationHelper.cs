@@ -4,6 +4,6 @@ namespace Notes.Contracts.ApiHelpers
 {
     public interface IUrlLocationHelper
     {
-        String GetUrl(Guid id);
+        String GetUrlWithId(string routeName, Guid id);
     }
 }

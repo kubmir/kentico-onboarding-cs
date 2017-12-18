@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http.Routing;
 using Notes.Contracts.ApiHelpers;
 
@@ -10,14 +9,14 @@ namespace Notes.Api.Helpers
     {
         private readonly HttpRequestMessage _httpRequestMessage;
 
-        public UrlLocationHelper()
+        public UrlLocationHelper(HttpRequestMessage requestMessage)
         {
-            _httpRequestMessage = (HttpRequestMessage)HttpContext.Current.Items["MS_HttpRequestMessage"];
+            _httpRequestMessage = requestMessage;
         }
 
-        public String GetUrl(Guid id)
+        public String GetUrlWithId(String routeName, Guid id)
         {
-            return new UrlHelper(_httpRequestMessage).Route("Notes",  new { id });
+            return new UrlHelper(_httpRequestMessage).Route(routeName,  new { id });
         }
     }
 }
