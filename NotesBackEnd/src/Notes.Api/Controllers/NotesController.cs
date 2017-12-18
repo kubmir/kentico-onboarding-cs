@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Web.Http;
+using Notes.Contracts.ApiHelpers;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
 
@@ -14,10 +15,12 @@ namespace Notes.Api.Controllers
     {
         internal const string NotesRouteName = "Notes";
         private readonly INotesRepository _repository;
+        private readonly IUrlLocationHelper _locationHelper;
 
-        public NotesController(INotesRepository repository)
+        public NotesController(INotesRepository repository, IUrlLocationHelper locationHelper)
         {
             _repository = repository;
+            _locationHelper = locationHelper;
         }
 
         public async Task<IHttpActionResult> GetAsync()
@@ -38,7 +41,7 @@ namespace Notes.Api.Controllers
         {
             Note addedNote = await _repository.CreateNoteAsync(noteToAdd);
 
-            return await Task.FromResult(CreatedAtRoute(NotesRouteName, new { id = addedNote.Id.ToString() }, addedNote));
+            return await Task.FromResult(Created(_locationHelper.GetUrl(addedNote.Id), addedNote));
         }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, Note noteToUpdate)
