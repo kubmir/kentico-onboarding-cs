@@ -4,7 +4,7 @@ using System.Web.Http.Dependencies;
 using Unity;
 using Unity.Exceptions;
 
-namespace Notes.Api
+namespace Notes.Api.Helpers
 {
     public class UnityResolver : IDependencyResolver
     {

@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Notes.Api.Helpers;
 using Notes.Contracts.Dependency;
 using Unity;
 
