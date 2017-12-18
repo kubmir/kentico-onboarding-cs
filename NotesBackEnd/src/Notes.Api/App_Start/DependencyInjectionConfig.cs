@@ -1,5 +1,5 @@
 ﻿using System.Web.Http;
-using Notes.Api.Helpers;
+using Notes.Api.Services.Helpers;
 using Notes.Contracts.Dependency;
 using Notes.Dependency;
 

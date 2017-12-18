@@ -3,9 +3,9 @@ using System.Net.Http;
 using System.Web.Http.Routing;
 using Notes.Contracts.ApiHelpers;
 
-namespace Notes.Api.Helpers
+namespace Notes.Api.Services.Helpers
 {
-    internal class UrlLocationHelper : IUrlLocationHelper
+    public class UrlLocationHelper : IUrlLocationHelper
     {
         private readonly HttpRequestMessage _httpRequestMessage;
 
