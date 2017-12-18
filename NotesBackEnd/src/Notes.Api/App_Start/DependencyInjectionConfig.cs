@@ -9,7 +9,8 @@ namespace Notes.Api
         internal static void Register(HttpConfiguration config)
         {
             IUnityContainer container = new UnityContainer()
-                .RegisterDependency(new Repository.Dependency.RepositoryTypesRegistration());
+                .RegisterDependency(new Repository.Dependency.RepositoryTypesRegistration())
+                .RegisterDependency(new Dependency.ApiTypesRegistration());
 
             config.DependencyResolver = new UnityResolver(container);
         }
