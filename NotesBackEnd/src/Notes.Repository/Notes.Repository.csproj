@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dependency\RepositoryTypesRegistration.cs" />
-    <Compile Include="NotesRepository.cs" />
+    <Compile Include="Repository\NotesRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

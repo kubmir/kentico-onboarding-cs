@@ -1,5 +1,6 @@
 ﻿using Notes.Contracts.Dependency;
 using Notes.Contracts.Repository;
+using Notes.Repository.Repository;
 
 namespace Notes.Repository.Dependency
 {

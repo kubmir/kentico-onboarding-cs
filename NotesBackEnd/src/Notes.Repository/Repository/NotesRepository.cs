@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
 
-namespace Notes.Repository
+namespace Notes.Repository.Repository
 {
     public class NotesRepository : INotesRepository
     {
