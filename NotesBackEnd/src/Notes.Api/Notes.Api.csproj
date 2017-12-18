@@ -114,7 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\DependencyInjectionConfig.cs" />
-    <Compile Include="Helpers\UnityResolver.cs" />
+    <Compile Include="Helpers\ContainerResolver.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Dependency\ApiTypesRegistration.cs" />
