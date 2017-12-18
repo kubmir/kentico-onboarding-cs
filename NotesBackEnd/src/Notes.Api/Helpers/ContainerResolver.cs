@@ -1,48 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http.Dependencies;
-using Unity;
-using Unity.Exceptions;
+using Notes.Contracts.Dependency;
 
 namespace Notes.Api.Helpers
 {
-    public class UnityResolver : IDependencyResolver
+    public class ContainerResolver : IDependencyResolver
     {
-        protected IUnityContainer Container;
+        protected IMyContainer Container;
 
-        public UnityResolver(IUnityContainer container)
+        public ContainerResolver(IMyContainer container)
         {
             Container = container ?? throw new ArgumentNullException(nameof(container));
         }
 
         public object GetService(Type serviceType)
         {
-            try
-            {
-                return Container.Resolve(serviceType);
-            }
-            catch (ResolutionFailedException)
-            {
-                return null;
-            }
+            return Container.Resolve(serviceType);
         }
 
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            try
-            {
-                return Container.ResolveAll(serviceType);
-            }
-            catch (ResolutionFailedException)
-            {
-                return new List<object>();
-            }
+            return Container.ResolveAll(serviceType);
         }
 
         public IDependencyScope BeginScope()
         {
             var child = Container.CreateChildContainer();
-            return new UnityResolver(child);
+            return new ContainerResolver(child);
         }
 
         public void Dispose()
