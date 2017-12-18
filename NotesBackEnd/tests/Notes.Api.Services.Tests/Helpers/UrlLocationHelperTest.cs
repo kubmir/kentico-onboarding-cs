@@ -6,7 +6,7 @@ using Notes.Contracts.ApiHelpers;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Notes.Api.Services.Tests
+namespace Notes.Api.Services.Tests.Helpers
 {
     [TestFixture]
     internal class UrlLocationHelperTest
