@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Web.Http;
-using Notes.Api.Services.Helpers;
+using Notes.Api.Services.Services;
 using Notes.Contracts.ApiHelpers;
 using NSubstitute;
 using NUnit.Framework;

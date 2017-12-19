@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Web.Http.Routing;
 using Notes.Contracts.ApiHelpers;
 
-namespace Notes.Api.Services.Helpers
+namespace Notes.Api.Services.Services
 {
     public class UrlLocationHelper : IUrlLocationHelper
     {

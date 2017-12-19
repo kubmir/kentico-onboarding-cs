@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Web.Http.Dependencies;
 using Notes.Contracts.Dependency;
 
-namespace Notes.Api.Services.Helpers
+namespace Notes.Api.Services.Services
 {
     public class ContainerResolver : IDependencyResolver
     {
