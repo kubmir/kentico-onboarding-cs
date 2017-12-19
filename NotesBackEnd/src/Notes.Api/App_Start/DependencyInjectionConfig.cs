@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
-using Notes.Api.Services.Helpers;
+using Notes.Api.Services.Dependency;
+using Notes.Api.Services.Services;
 using Notes.Contracts.Dependency;
 using Notes.Dependency.Containers;
 
@@ -11,7 +12,7 @@ namespace Notes.Api
         {
             IDependencyContainer container = new DependencyContainer()
                 .RegisterDependency(new Repository.Dependency.RepositoryTypesRegistration())
-                .RegisterDependency(new Dependency.ApiTypesRegistration());
+                .RegisterDependency(new ApiServicesTypesRegistration());
 
             config.DependencyResolver = new ContainerResolver(container);
         }
