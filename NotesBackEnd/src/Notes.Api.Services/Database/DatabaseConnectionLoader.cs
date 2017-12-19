@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+﻿using System.Web.Configuration;
 using Notes.Contracts.ApiServices;
 
 namespace Notes.Api.Services.Database
@@ -7,9 +7,10 @@ namespace Notes.Api.Services.Database
     {
         public string GetNotesDatabaseConnectionString()
         {
-            var connection = ConfigurationManager.ConnectionStrings["MongoDb_Notes_Connection"];
+            var connectionSettings = WebConfigurationManager.ConnectionStrings["MongoDb_Notes_Connection"];
+            var connectionString = connectionSettings.ConnectionString;
 
-            return connection.ConnectionString;
+            return connectionString;
         }
     }
 }
