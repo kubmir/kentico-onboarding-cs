@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Driver;
+using Notes.Contracts.ApiServices;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
 
@@ -16,14 +17,30 @@ namespace Notes.Repository.Repository
             new Note {Text = "Fourth note", Id = new Guid("4785546e-824d-42a4-900b-e656f19ffb59")}
         };
 
-        public Task<IEnumerable<Note>> GetAllNotesAsync()
-            => Task.FromResult(Notes.AsEnumerable());
+        private readonly IMongoCollection<Note> _persistedNotes;
 
-        public Task<Note> GetNoteByIdAsync(Guid id)
-            => Task.FromResult(Notes[0]);
+        public NotesRepository(IDatabaseConnectionLoader loader)
+        {
+            var connectionString = loader.GetNotesDatabaseConnectionString();
+            var mongoClient = new MongoClient(connectionString);
+            var databaseName = new MongoUrl(connectionString).DatabaseName;
+            var database = mongoClient.GetDatabase(databaseName);
 
-        public Task<Note> CreateNoteAsync(Note note)
-            => Task.FromResult(Notes[1]);
+            _persistedNotes = database.GetCollection<Note>("notes");
+        }
+
+        public async Task<IEnumerable<Note>> GetAllNotesAsync()
+            => (await _persistedNotes.FindAsync<Note>(FilterDefinition<Note>.Empty)).ToEnumerable();
+
+        public async Task<Note> GetNoteByIdAsync(Guid id)
+            => (await _persistedNotes.FindAsync(persistedNote => persistedNote.Id == id)).FirstOrDefault();
+
+        public async Task<Note> CreateNoteAsync(Note note)
+        {
+            await _persistedNotes.InsertOneAsync(note);
+
+            return note;
+        }
 
         public Task<Note> UpdateNoteAsync(Note note)
             => Task.FromResult(Notes[2]);
