@@ -5,7 +5,7 @@ using Notes.Contracts.ApiServices;
 
 namespace Notes.Api.Services.Services
 {
-    public class UrlLocationHelper : IUrlLocationHelper
+    internal class UrlLocationHelper : IUrlLocationHelper
     {
         private readonly HttpRequestMessage _httpRequestMessage;
 

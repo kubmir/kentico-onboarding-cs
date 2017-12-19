@@ -8,7 +8,7 @@ using Notes.Contracts.Repository;
 
 namespace Notes.Repository.Repository
 {
-    public class NotesRepository : INotesRepository
+    internal class NotesRepository : INotesRepository
     {
         private static readonly Note[] Notes = {
             new Note {Text = "First note", Id = new Guid("2c00d1c2-fd2b-4c06-8f2d-130e88f719c2")},

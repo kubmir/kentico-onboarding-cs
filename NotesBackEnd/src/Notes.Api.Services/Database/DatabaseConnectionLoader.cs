@@ -3,7 +3,7 @@ using Notes.Contracts.ApiServices;
 
 namespace Notes.Api.Services.Database
 {
-    public class DatabaseConnectionLoader : IDatabaseConnectionLoader
+    internal class DatabaseConnectionLoader : IDatabaseConnectionLoader
     {
         public string GetNotesDatabaseConnectionString()
         {
