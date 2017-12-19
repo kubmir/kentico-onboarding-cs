@@ -34,6 +34,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiServices\IDatabaseConnectionLoader.cs" />
     <Compile Include="ApiServices\IUrlLocationHelper.cs" />
     <Compile Include="Dependency\IBootstrapper.cs" />
     <Compile Include="Dependency\IDependencyContainer.cs" />
