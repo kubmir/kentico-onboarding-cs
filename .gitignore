@@ -4,7 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # Connection strings
-ConnectionStrings.config
+./NotesBackEnd/src/Notes.Api/ConnectionStrings.config
 
 # User-specific files
 *.suo
