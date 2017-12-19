@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using Notes.Api.Services.Services;
-using Notes.Contracts.ApiHelpers;
+using Notes.Contracts.ApiServices;
 using Notes.Contracts.Dependency;
 
 namespace Notes.Api.Services.Dependency

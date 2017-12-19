@@ -2,11 +2,11 @@
 using System.Net.Http;
 using System.Web.Http;
 using Notes.Api.Services.Services;
-using Notes.Contracts.ApiHelpers;
+using Notes.Contracts.ApiServices;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Notes.Api.Services.Tests.Helpers
+namespace Notes.Api.Services.Tests.Services
 {
     [TestFixture]
     internal class UrlLocationHelperTest

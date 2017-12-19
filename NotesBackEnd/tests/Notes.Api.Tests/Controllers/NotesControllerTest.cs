@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Notes.Api.Tests.Comparers;
-using Notes.Contracts.ApiHelpers;
+using Notes.Contracts.ApiServices;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
 using NSubstitute;

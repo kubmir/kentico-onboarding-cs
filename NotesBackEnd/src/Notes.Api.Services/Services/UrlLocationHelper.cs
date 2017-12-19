@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Web.Http.Routing;
-using Notes.Contracts.ApiHelpers;
+using Notes.Contracts.ApiServices;
 
 namespace Notes.Api.Services.Services
 {
