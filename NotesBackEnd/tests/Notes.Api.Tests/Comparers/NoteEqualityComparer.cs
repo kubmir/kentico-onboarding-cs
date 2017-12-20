@@ -27,7 +27,9 @@ namespace Notes.Api.Tests.Comparers
                 return false;
             }
 
-            return x.Id == y.Id && x.Text == y.Text;
+            return x.Id == y.Id && x.Text == y.Text &&
+                   x.CreationDate == y.CreationDate &&
+                   x.LastModificationDate == y.LastModificationDate;
         }
 
         public int GetHashCode(Note obj)
