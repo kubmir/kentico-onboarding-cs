@@ -11,6 +11,7 @@ using Notes.Api.Tests.Comparers;
 using Notes.Contracts.ApiServices;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
+using Notes.Contracts.Services.Notes;
 using NSubstitute;
 
 namespace Notes.Api.Tests.Controllers
@@ -18,11 +19,13 @@ namespace Notes.Api.Tests.Controllers
     [TestFixture]
     internal class NotesControllerTest
     {
-        private static readonly Note Note1 = new Note {Text = "First note", Id = new Guid("2c00d1c2-fd2b-4c06-8f2d-130e88f719c2")};
-        private static readonly Note Note2 = new Note {Text = "Second note", Id = new Guid("ebcb3d81-af4e-428f-a22d-e7852d70d3a0")};
-        private static readonly Note Note3 = new Note {Text = "Third note", Id = new Guid("599442c0-ae28-4157-9a3f-0491bb4ba6c1")};
-        private static readonly Note Note4 = new Note {Text = "Fourth note", Id = new Guid("4785546e-824d-42a4-900b-e656f19ffb59")};
-        private static readonly Note[] AllNotes = {Note1, Note2, Note3, Note4};
+        private static readonly Note Note1 = new Note { Text = "First note", Id = new Guid("2c00d1c2-fd2b-4c06-8f2d-130e88f719c2"), CreationDate = DateTime.MinValue, LastModificationDate = DateTime.MaxValue };
+        private static readonly Note Note2 = new Note { Text = "Second note", Id = new Guid("ebcb3d81-af4e-428f-a22d-e7852d70d3a0"), CreationDate = DateTime.MinValue, LastModificationDate = DateTime.MaxValue };
+        private static readonly Note Note3 = new Note { Text = "Third note", Id = new Guid("599442c0-ae28-4157-9a3f-0491bb4ba6c1"), CreationDate = DateTime.MinValue, LastModificationDate = DateTime.MaxValue };
+        private static readonly Note Note4 = new Note { Text = "Fourth note", Id = new Guid("4785546e-824d-42a4-900b-e656f19ffb59"), CreationDate = DateTime.MinValue, LastModificationDate = DateTime.MaxValue };
+        private static readonly Note[] AllNotes = { Note1, Note2, Note3, Note4 };
+
+        private static readonly Note Note2Dto = new Note {Text = "test text"};
 
         private NotesController _controller;
 
@@ -31,8 +34,9 @@ namespace Notes.Api.Tests.Controllers
         {
             var mockedNotesRepository = MockNotesRepository();
             var mockedLocationHelper = MockLocationHelper();
+            var mockedNotesServices = MockNotesServices();
 
-            _controller = new NotesController(mockedNotesRepository, mockedLocationHelper)
+            _controller = new NotesController(mockedNotesRepository, mockedLocationHelper, mockedNotesServices)
             {
                 Configuration = new HttpConfiguration(),
                 Request = new HttpRequestMessage()
@@ -75,7 +79,7 @@ namespace Notes.Api.Tests.Controllers
             string id = expectedNote.Id.ToString();
             var expectedUri = new Uri($"http://test/{id}/test");
 
-            var (actualNote, responseMessage) = await GetExecutedResponse<Note>(() => _controller.PostAsync(new Note { Text = "test text" }));
+            var (actualNote, responseMessage) = await GetExecutedResponse<Note>(() => _controller.PostAsync(Note2Dto));
 
             Assert.Multiple(() =>
             {
@@ -141,6 +145,25 @@ namespace Notes.Api.Tests.Controllers
             mockedLocationHelper.GetUrlWithId(Arg.Any<String>(), Arg.Any<Guid>()).Returns("http://test/ebcb3d81-af4e-428f-a22d-e7852d70d3a0/test");
 
             return mockedLocationHelper;
+        }
+
+        private INotesServices MockNotesServices()
+        {
+            var mockedNotesServices = Substitute.For<INotesServices>();
+
+            mockedNotesServices
+                .CreateNoteAsync(Note2Dto)
+                .Returns(Note2);
+
+            mockedNotesServices
+                .GetAllNotesAsync()
+                .Returns(AllNotes);
+
+            mockedNotesServices
+                .GetNoteAsync(Note1.Id)
+                .Returns(Note1);
+
+            return mockedNotesServices;
         }
     }
 }
