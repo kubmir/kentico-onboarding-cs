@@ -41,6 +41,8 @@
     <Compile Include="Model\Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\INotesRepository.cs" />
+    <Compile Include="Services\Date\IDateService.cs" />
+    <Compile Include="Services\Notes\INotesServices.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
