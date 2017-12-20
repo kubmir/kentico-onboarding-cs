@@ -5,6 +5,7 @@ using Microsoft.Web.Http;
 using Notes.Contracts.ApiServices;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
+using Notes.Contracts.Services.Notes;
 
 namespace Notes.Api.Controllers
 {
@@ -15,30 +16,32 @@ namespace Notes.Api.Controllers
         internal const string NotesRouteName = "Notes";
         private readonly INotesRepository _repository;
         private readonly IUrlLocationHelper _locationHelper;
+        private readonly INotesServices _notesServices;
 
-        public NotesController(INotesRepository repository, IUrlLocationHelper locationHelper)
+        public NotesController(INotesRepository repository, IUrlLocationHelper locationHelper, INotesServices notesServices)
         {
             _repository = repository;
             _locationHelper = locationHelper;
+            _notesServices = notesServices;
         }
 
         public async Task<IHttpActionResult> GetAsync()
         {
-            var notes = await _repository.GetAllNotesAsync();
+            var notes = await _notesServices.GetAllNotesAsync();
 
             return await Task.FromResult(Ok(notes));
         }
 
         public async Task<IHttpActionResult> GetAsync(Guid id)
         {
-            var foundNote = await _repository.GetNoteByIdAsync(id);
+            var foundNote = await _notesServices.GetNoteAsync(id);
 
             return await Task.FromResult(Ok(foundNote));
         }
 
         public async Task<IHttpActionResult> PostAsync(Note noteToAdd)
         {
-            Note addedNote = await _repository.CreateNoteAsync(noteToAdd);
+            Note addedNote = await _notesServices.CreateNoteAsync(noteToAdd);
 
             return await Task.FromResult(Created(_locationHelper.GetUrlWithId(NotesRouteName, addedNote.Id), addedNote));
         }
