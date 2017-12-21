@@ -33,11 +33,21 @@ namespace Notes.Api.Controllers
         {
             var foundNote = await _notesServices.GetNoteAsync(id);
 
+            if (foundNote == null)
+            {
+                return NotFound();
+            }
+
             return Ok(foundNote);
         }
 
         public async Task<IHttpActionResult> PostAsync(Note noteToAdd)
         {
+            if (!IsNoteValid(noteToAdd))
+            {
+                return BadRequest(ModelState);
+            }
+
             Note addedNote = await _notesServices.CreateNoteAsync(noteToAdd);
 
             return Created(_locationHelper.GetUrlWithId(RouteDictionary.NotesRouteName, addedNote.Id), addedNote);
@@ -55,6 +65,48 @@ namespace Notes.Api.Controllers
             var deletedNote = await _notesServices.DeleteNoteAsync(id);
 
             return Ok(deletedNote);
+        }
+
+        private bool IsNoteValid(Note note)
+        {
+            if (note == null)
+            {
+                return NoteIsNotValid(nameof(note), 
+                    "Note cannot be null!");
+            }
+
+            if (note.Text.Trim() == String.Empty)
+            {
+                return NoteIsNotValid(nameof(note),
+                    "Text of note cannot be empty and cannot consist just of white spaces!");
+            }
+
+            if (note.Id != Guid.Empty)
+            {
+                return NoteIsNotValid(nameof(note), 
+                    "Note id cannot be specified at this point!");
+            }
+
+            if (note.CreationDate != default(DateTime))
+            {
+                return NoteIsNotValid(nameof(note), 
+                    "Creation date of note cannot be specified at this point!");
+            }
+
+            if (note.LastModificationDate != default(DateTime))
+            {
+                return NoteIsNotValid(nameof(note),
+                    "Last modification date of note cannot be specified at this point!");
+
+            }
+
+            return true;
+        }
+
+        private bool NoteIsNotValid(string noteName, string message)
+        {
+            ModelState.AddModelError(noteName, message);
+            return false;
         }
     }
 }
