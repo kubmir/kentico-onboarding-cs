@@ -26,35 +26,35 @@ namespace Notes.Api.Controllers
         {
             var notes = await _repository.GetAllNotesAsync();
 
-            return await Task.FromResult(Ok(notes));
+            return Ok(notes);
         }
 
         public async Task<IHttpActionResult> GetAsync(Guid id)
         {
             var foundNote = await _repository.GetNoteByIdAsync(id);
 
-            return await Task.FromResult(Ok(foundNote));
+            return Ok(foundNote);
         }
 
         public async Task<IHttpActionResult> PostAsync(Note noteToAdd)
         {
             Note addedNote = await _repository.CreateNoteAsync(noteToAdd);
 
-            return await Task.FromResult(Created(_locationHelper.GetUrlWithId(NotesRouteName, addedNote.Id), addedNote));
+            return Created(_locationHelper.GetUrlWithId(NotesRouteName, addedNote.Id), addedNote);
         }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, Note noteToUpdate)
         {
             var updatedNote = await _repository.UpdateNoteAsync(noteToUpdate);
 
-            return await Task.FromResult(Ok(updatedNote));
+            return Ok(updatedNote);
         }
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
             var deletedNote = await _repository.DeleteNoteByIdAsync(id);
 
-            return await Task.FromResult(Ok(deletedNote));
+            return Ok(deletedNote);
         }
     }
 }
