@@ -5,7 +5,7 @@ using Notes.Contracts.Dependency;
 
 namespace Notes.Api.Services.Dependency
 {
-    public class ApiServicesTypesRegistration : IBootstrapper
+    public class ApiServicesBootstrapper : IBootstrapper
     {
         public IDependencyContainer RegisterType(IDependencyContainer container)
             => container

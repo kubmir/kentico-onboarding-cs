@@ -34,7 +34,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dependency\RepositoryTypesRegistration.cs" />
+    <Compile Include="Dependency\RepositoryTypesBootstrapper.cs" />
     <Compile Include="Repository\NotesRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

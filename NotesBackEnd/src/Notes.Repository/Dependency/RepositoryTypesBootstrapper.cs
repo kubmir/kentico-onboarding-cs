@@ -4,7 +4,7 @@ using Notes.Repository.Repository;
 
 namespace Notes.Repository.Dependency
 {
-    public class RepositoryTypesRegistration : IBootstrapper
+    public class RepositoryTypesBootstrapper : IBootstrapper
     {
         public IDependencyContainer RegisterType(IDependencyContainer container)
             => container.RegisterType<INotesRepository, NotesRepository>();
