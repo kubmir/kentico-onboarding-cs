@@ -5,14 +5,14 @@ using Microsoft.Web.Http;
 using Notes.Contracts.ApiServices;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
+using Notes.Contracts.Routes;
 
 namespace Notes.Api.Controllers
 {
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/notes/{id?}", Name = NotesRouteName)]
+    [Route(RouteDictionary.NotesRoute, Name = RouteDictionary.NotesRouteName)]
     public class NotesController : ApiController
     {
-        internal const string NotesRouteName = "Notes";
         private readonly INotesRepository _repository;
         private readonly IUrlLocationHelper _locationHelper;
 
@@ -40,7 +40,7 @@ namespace Notes.Api.Controllers
         {
             Note addedNote = await _repository.CreateNoteAsync(noteToAdd);
 
-            return Created(_locationHelper.GetUrlWithId(NotesRouteName, addedNote.Id), addedNote);
+            return Created(_locationHelper.GetUrlWithId(RouteDictionary.NotesRouteName, addedNote.Id), addedNote);
         }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, Note noteToUpdate)
