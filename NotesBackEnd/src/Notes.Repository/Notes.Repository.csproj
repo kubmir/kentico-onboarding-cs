@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\MongoDatabaseContext.cs" />
-    <Compile Include="Dependency\RepositoryTypesRegistration.cs" />
+    <Compile Include="Dependency\RepositoryTypesBootstrapper.cs" />
     <Compile Include="Repository\NotesRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

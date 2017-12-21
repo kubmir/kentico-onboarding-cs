@@ -22,9 +22,16 @@ namespace Notes.Dependency.Containers
             _unityContainer = container;
         }
 
-        public IDependencyContainer RegisterType<TFrom>()
+        public IDependencyContainer RegisterType<TType>(object injectedObject)
         {
-            _unityContainer.RegisterType<TFrom>(new InjectionFactory(GetHttpRequestMessage));
+            _unityContainer.RegisterType<TType>(new InjectionConstructor(injectedObject));
+
+            return this;
+        }
+
+        public IDependencyContainer RegisterHttpRequestMessage<TType>()
+        {
+            _unityContainer.RegisterType<TType>(new InjectionFactory(GetHttpRequestMessage));
 
             return this;
         }

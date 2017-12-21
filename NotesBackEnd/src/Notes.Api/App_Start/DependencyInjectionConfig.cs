@@ -13,14 +13,15 @@ namespace Notes.Api
         internal static void Register(HttpConfiguration config)
         {
             IDependencyContainer container = new DependencyContainer()
-                .RegisterDependency(new RepositoryTypesRegistration())
-                .RegisterDependency(new ApiServicesTypesRegistration())
-                .RegisterDependency(new ServicesTypesRegistration());
+                .RegisterDependency(new ServicesTypesRegistration())
+                .RegisterDependency(new RepositoryTypesBootstrapper())
+                .RegisterDependency(new ApiServicesBootstrapper());
+
 
             config.DependencyResolver = new ContainerResolver(container);
         }
 
-        private static IDependencyContainer RegisterDependency(this IDependencyContainer container, IBootstrapper registrationClass)
-            => registrationClass.RegisterType(container);
+        private static IDependencyContainer RegisterDependency(this IDependencyContainer container, IBootstrapper bootstrapper)
+            => bootstrapper.RegisterType(container);
     }
 }

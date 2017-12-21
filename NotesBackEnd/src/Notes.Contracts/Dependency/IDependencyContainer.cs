@@ -5,9 +5,11 @@ namespace Notes.Contracts.Dependency
 {
     public interface IDependencyContainer
     {
-        IDependencyContainer RegisterType<TFrom>();
+        IDependencyContainer RegisterType<TType>(object injectedObject);
 
         IDependencyContainer RegisterType<TFrom, TTo>() where TTo : TFrom;
+
+        IDependencyContainer RegisterHttpRequestMessage<TType>();
 
         object Resolve(Type serviceType);
 
