@@ -22,9 +22,9 @@ namespace Notes.Dependency.Containers
             _unityContainer = container;
         }
 
-        public IDependencyContainer RegisterType<TType>(object injectedObject)
+        public IDependencyContainer RegisterType<TFrom, TTo>(object injectedObject) where TTo : TFrom
         {
-            _unityContainer.RegisterType<TType>(new InjectionConstructor(injectedObject));
+            _unityContainer.RegisterType<TFrom, TTo>(new InjectionConstructor(injectedObject));
 
             return this;
         }

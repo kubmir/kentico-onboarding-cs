@@ -5,7 +5,7 @@ namespace Notes.Contracts.Dependency
 {
     public interface IDependencyContainer
     {
-        IDependencyContainer RegisterType<TType>(object injectedObject);
+        IDependencyContainer RegisterType<TFrom, TTo>(object injectedObject) where TTo : TFrom;
 
         IDependencyContainer RegisterType<TFrom, TTo>() where TTo : TFrom;
 
