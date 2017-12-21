@@ -24,7 +24,7 @@ namespace Notes.Api.Tests.Controllers
         private static readonly Note Note4 = new Note { Text = "Fourth note", Id = new Guid("4785546e-824d-42a4-900b-e656f19ffb59"), CreationDate = DateTime.MinValue, LastModificationDate = DateTime.MaxValue };
         private static readonly Note[] AllNotes = { Note1, Note2, Note3, Note4 };
 
-        private static readonly Note Note2Dto = new Note {Text = "test text"};
+        private static readonly Note Note2Dto = new Note { Text = "test text" };
 
         private NotesController _controller;
 
@@ -71,6 +71,15 @@ namespace Notes.Api.Tests.Controllers
         }
 
         [Test]
+        public async Task GetAsync_NonExistingId()
+        {
+            var (_, responseMessage) = await GetExecutedResponse<Note>(() => _controller.GetAsync(Guid.Empty));
+
+            Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+        }
+
+
+        [Test]
         public async Task PostAsync_AddNewValidNote()
         {
             var expectedNote = Note2;
@@ -85,6 +94,50 @@ namespace Notes.Api.Tests.Controllers
                 Assert.That(responseMessage.Headers.Location, Is.EqualTo(expectedUri));
                 Assert.That(actualNote, Is.EqualTo(expectedNote).UsingNoteComparer());
             });
+        }
+
+        [Test]
+        public async Task PostAsync_AddNewNoteWithEmptyText()
+        {
+            var (_, responseMessage) = await GetExecutedResponse<Note>(() => _controller.PostAsync(new Note { Text = "" }));
+
+            Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        }
+
+        [Test]
+        public async Task PostAsync_AddNewNullNote()
+        {
+            var (_, responseMessage) = await GetExecutedResponse<Note>(() => _controller.PostAsync(null));
+
+            Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        }
+
+        [Test]
+        public async Task PostAsync_AddNewNoteWithId()
+        {
+            var (_, responseMessage) = await GetExecutedResponse<Note>(() => _controller.PostAsync(Note1));
+
+            Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        }
+
+        [Test]
+        public async Task PostAsync_AddNewNoteWithCreationDate()
+        {
+            var invalidNote = new Note { CreationDate = DateTime.MaxValue, Text = "txt", Id = Guid.Empty };
+
+            var (_, responseMessage) = await GetExecutedResponse<Note>(() => _controller.PostAsync(invalidNote));
+
+            Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        }
+
+        [Test]
+        public async Task PostAsync_AddNewNoteWithLastModificationDate()
+        {
+            var invalidNote = new Note { LastModificationDate = DateTime.MaxValue, Text = "txt", Id = Guid.Empty };
+
+            var (_, responseMessage) = await GetExecutedResponse<Note>(() => _controller.PostAsync(invalidNote));
+
+            Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         [Test]
