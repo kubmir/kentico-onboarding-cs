@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
@@ -21,6 +22,9 @@ namespace Notes.Services.Tests.Notes
 
         private static readonly Note Note2Dto = new Note { Text = "test text" };
 
+        private static readonly DateTime TestDateTime =
+            DateTime.ParseExact("21/10/2017 18:00", "g", new CultureInfo("fr-FR"));
+
         private INotesServices _notesServices;
 
         [SetUp]
@@ -36,8 +40,8 @@ namespace Notes.Services.Tests.Notes
         public async Task CreateNoteAsync_CreateCorrectNotes()
         {
             var expectedNote = Note2;
-            expectedNote.CreationDate = DateTime.Parse("21.10.2017 18:00:01");
-            expectedNote.LastModificationDate = DateTime.Parse("21.10.2017 18:00:01");
+            expectedNote.CreationDate = TestDateTime;
+            expectedNote.LastModificationDate = TestDateTime;
 
             var actualNote = await _notesServices.CreateNoteAsync(Note2Dto);
 
@@ -79,7 +83,7 @@ namespace Notes.Services.Tests.Notes
         private IDateService MockDateService()
         {
             var mockedDateService = Substitute.For<IDateService>();
-            mockedDateService.GetCurrentDateTime().Returns(DateTime.Parse("21.10.2017 18:00:01"));
+            mockedDateService.GetCurrentDateTime().Returns(TestDateTime);
 
             return mockedDateService;
         }
