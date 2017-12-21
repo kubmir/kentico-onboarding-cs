@@ -20,7 +20,7 @@ namespace Notes.Api
             config.DependencyResolver = new ContainerResolver(container);
         }
 
-        private static IDependencyContainer RegisterDependency(this IDependencyContainer container, IBootstrapper registrationClass)
-            => registrationClass.RegisterType(container);
+        private static IDependencyContainer RegisterDependency(this IDependencyContainer container, IBootstrapper bootstrapper)
+            => bootstrapper.RegisterType(container);
     }
 }
