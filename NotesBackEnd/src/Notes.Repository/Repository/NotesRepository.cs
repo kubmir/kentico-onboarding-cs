@@ -19,14 +19,9 @@ namespace Notes.Repository.Repository
 
         private readonly IMongoCollection<Note> _persistedNotes;
 
-        public NotesRepository(IDatabaseConnectionLoader loader)
+        public NotesRepository(IDatabaseContext databaseContext)
         {
-            var connectionString = loader.GetNotesDatabaseConnectionString();
-            var mongoClient = new MongoClient(connectionString);
-            var databaseName = new MongoUrl(connectionString).DatabaseName;
-            var database = mongoClient.GetDatabase(databaseName);
-
-            _persistedNotes = database.GetCollection<Note>("notes");
+            _persistedNotes = databaseContext.GetPersistedNotes();
         }
 
         public async Task<IEnumerable<Note>> GetAllNotesAsync()

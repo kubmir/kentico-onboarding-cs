@@ -46,7 +46,6 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\DatabaseConnectionLoader.cs" />
     <Compile Include="Dependency\ApiServicesTypesRegistration.cs" />
     <Compile Include="Services\ContainerResolver.cs" />
     <Compile Include="Services\UrlLocationHelper.cs" />
