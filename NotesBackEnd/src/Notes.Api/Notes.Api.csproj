@@ -134,7 +134,7 @@
       <Name>Notes.Dependency</Name>
     </ProjectReference>
     <ProjectReference Include="..\Notes.Repository\Notes.Repository.csproj">
-      <Project>{614f0f07-b16e-48ca-988a-a6181e80fc38}</Project>
+      <Project>{614F0F07-B16E-48CA-988A-A6181E80FC38}</Project>
       <Name>Notes.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\Notes.Services\Notes.Services.csproj">

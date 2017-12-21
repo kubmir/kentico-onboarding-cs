@@ -4,7 +4,6 @@ using System.Web.Http;
 using Microsoft.Web.Http;
 using Notes.Contracts.ApiServices;
 using Notes.Contracts.Model;
-using Notes.Contracts.Repository;
 using Notes.Contracts.Services.Notes;
 
 namespace Notes.Api.Controllers
@@ -14,13 +13,11 @@ namespace Notes.Api.Controllers
     public class NotesController : ApiController
     {
         internal const string NotesRouteName = "Notes";
-        private readonly INotesRepository _repository;
         private readonly IUrlLocationHelper _locationHelper;
         private readonly INotesServices _notesServices;
 
-        public NotesController(INotesRepository repository, IUrlLocationHelper locationHelper, INotesServices notesServices)
+        public NotesController(IUrlLocationHelper locationHelper, INotesServices notesServices)
         {
-            _repository = repository;
             _locationHelper = locationHelper;
             _notesServices = notesServices;
         }
@@ -29,35 +26,35 @@ namespace Notes.Api.Controllers
         {
             var notes = await _notesServices.GetAllNotesAsync();
 
-            return await Task.FromResult(Ok(notes));
+            return Ok(notes);
         }
 
         public async Task<IHttpActionResult> GetAsync(Guid id)
         {
             var foundNote = await _notesServices.GetNoteAsync(id);
 
-            return await Task.FromResult(Ok(foundNote));
+            return Ok(foundNote);
         }
 
         public async Task<IHttpActionResult> PostAsync(Note noteToAdd)
         {
             Note addedNote = await _notesServices.CreateNoteAsync(noteToAdd);
 
-            return await Task.FromResult(Created(_locationHelper.GetUrlWithId(NotesRouteName, addedNote.Id), addedNote));
+            return Created(_locationHelper.GetUrlWithId(NotesRouteName, addedNote.Id), addedNote);
         }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, Note noteToUpdate)
         {
-            var updatedNote = await _repository.UpdateNoteAsync(noteToUpdate);
+            var updatedNote = await _notesServices.UpdateNoteAsync(noteToUpdate);
 
-            return await Task.FromResult(Ok(updatedNote));
+            return Ok(updatedNote);
         }
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
-            var deletedNote = await _repository.DeleteNoteByIdAsync(id);
+            var deletedNote = await _notesServices.DeleteNoteAsync(id);
 
-            return await Task.FromResult(Ok(deletedNote));
+            return Ok(deletedNote);
         }
     }
 }

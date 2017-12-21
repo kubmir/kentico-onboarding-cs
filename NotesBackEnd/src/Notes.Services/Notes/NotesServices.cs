@@ -38,5 +38,15 @@ namespace Notes.Services.Notes
         {
             return await _repository.GetAllNotesAsync();
         }
+
+        public async Task<Note> UpdateNoteAsync(Note note)
+        {
+            return await _repository.UpdateNoteAsync(note);
+        }
+
+        public async Task<Note> DeleteNoteAsync(Guid id)
+        {
+            return await _repository.DeleteNoteByIdAsync(id);
+        }
     }
 }

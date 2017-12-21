@@ -10,7 +10,6 @@ using System.Web.Http;
 using Notes.Api.Tests.Comparers;
 using Notes.Contracts.ApiServices;
 using Notes.Contracts.Model;
-using Notes.Contracts.Repository;
 using Notes.Contracts.Services.Notes;
 using NSubstitute;
 
@@ -32,11 +31,10 @@ namespace Notes.Api.Tests.Controllers
         [SetUp]
         public void Init()
         {
-            var mockedNotesRepository = MockNotesRepository();
             var mockedLocationHelper = MockLocationHelper();
             var mockedNotesServices = MockNotesServices();
 
-            _controller = new NotesController(mockedNotesRepository, mockedLocationHelper, mockedNotesServices)
+            _controller = new NotesController(mockedLocationHelper, mockedNotesServices)
             {
                 Configuration = new HttpConfiguration(),
                 Request = new HttpRequestMessage()
@@ -127,18 +125,6 @@ namespace Notes.Api.Tests.Controllers
             return (actualContent, executedResponse);
         }
 
-        private INotesRepository MockNotesRepository()
-        {
-            var mockedRepository = Substitute.For<INotesRepository>();
-            mockedRepository.GetAllNotesAsync().Returns(AllNotes);
-            mockedRepository.GetNoteByIdAsync(Arg.Any<Guid>()).Returns(Note1);
-            mockedRepository.CreateNoteAsync(Arg.Any<Note>()).Returns(Note2);
-            mockedRepository.UpdateNoteAsync(Arg.Any<Note>()).Returns(Note3);
-            mockedRepository.DeleteNoteByIdAsync(Arg.Any<Guid>()).Returns(Note4);
-
-            return mockedRepository;
-        }
-
         private IUrlLocationHelper MockLocationHelper()
         {
             var mockedLocationHelper = Substitute.For<IUrlLocationHelper>();
@@ -162,6 +148,14 @@ namespace Notes.Api.Tests.Controllers
             mockedNotesServices
                 .GetNoteAsync(Note1.Id)
                 .Returns(Note1);
+
+            mockedNotesServices
+                .UpdateNoteAsync(Arg.Any<Note>())
+                .Returns(Note3);
+
+            mockedNotesServices
+                .DeleteNoteAsync(Arg.Any<Guid>())
+                .Returns(Note4);
 
             return mockedNotesServices;
         }

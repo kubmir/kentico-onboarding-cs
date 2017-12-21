@@ -12,5 +12,9 @@ namespace Notes.Contracts.Services.Notes
         Task<Note> GetNoteAsync(Guid id);
 
         Task<IEnumerable<Note>> GetAllNotesAsync();
+
+        Task<Note> UpdateNoteAsync(Note note);
+
+        Task<Note> DeleteNoteAsync(Guid id);
     }
 }
