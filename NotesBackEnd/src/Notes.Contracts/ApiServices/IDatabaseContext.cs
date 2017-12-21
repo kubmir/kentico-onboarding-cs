@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using Notes.Contracts.Model;
 
 namespace Notes.Contracts.ApiServices
