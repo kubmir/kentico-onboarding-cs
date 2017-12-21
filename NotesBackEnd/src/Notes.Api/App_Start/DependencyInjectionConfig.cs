@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+﻿using System.Net.Http;
+using System.Web;
+using System.Web.Http;
 using Notes.Api.Services.Dependency;
 using Notes.Api.Services.Services;
 using Notes.Contracts.Dependency;

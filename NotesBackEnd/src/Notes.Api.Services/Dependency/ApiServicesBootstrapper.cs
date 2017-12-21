@@ -10,6 +10,6 @@ namespace Notes.Api.Services.Dependency
         public IDependencyContainer RegisterType(IDependencyContainer container)
             => container
                 .RegisterType<IUrlLocationHelper, UrlLocationHelper>()
-                .RegisterType<HttpRequestMessage>();
+                .RegisterHttpRequestMessage<HttpRequestMessage>();
     }
 }
