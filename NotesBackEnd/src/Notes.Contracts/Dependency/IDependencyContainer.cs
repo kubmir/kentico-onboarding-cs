@@ -6,9 +6,9 @@ namespace Notes.Contracts.Dependency
 {
     public interface IDependencyContainer : IDisposable
     {
-        IDependencyContainer RegisterType<TType>(object injectedObject);
+        IDependencyContainer RegisterType<TType>(object injectedObject, LifetimeTypes lifetimeManager = LifetimeTypes.Transient);
 
-        IDependencyContainer RegisterType<TFrom, TTo>() where TTo : TFrom;
+        IDependencyContainer RegisterType<TFrom, TTo>(LifetimeTypes lifetimeManager = LifetimeTypes.Transient) where TTo : TFrom;
 
         IDependencyContainer RegisterHttpRequestMessage(Func<HttpRequestMessage> getHttpRequestMessageFunc);
 

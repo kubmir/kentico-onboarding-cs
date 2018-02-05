@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using Notes.Contracts.Dependency;
+using Notes.Dependency.LifeTimeManagers;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
@@ -22,9 +23,11 @@ namespace Notes.Dependency.Containers
             _unityContainer = container;
         }
 
-        public IDependencyContainer RegisterType<TType>(object injectedObject)
+        public IDependencyContainer RegisterType<TType>(object injectedObject, LifetimeTypes lifetimeType = LifetimeTypes.Transient)
         {
-            _unityContainer.RegisterType<TType>(new InjectionConstructor(injectedObject));
+            var lifetimeManager = LifetimeManagersController.GetLifetimeManager(lifetimeType);
+
+            _unityContainer.RegisterType<TType>(lifetimeManager, new InjectionConstructor(injectedObject));
 
             return this;
         }
@@ -32,13 +35,15 @@ namespace Notes.Dependency.Containers
         public IDependencyContainer RegisterHttpRequestMessage(Func<HttpRequestMessage> getHttpRequestMessageFunc)
         {
             _unityContainer.RegisterType<HttpRequestMessage>(new HierarchicalLifetimeManager(), new InjectionFactory(_ => getHttpRequestMessageFunc()));
-
+            
             return this;
         }
 
-        public IDependencyContainer RegisterType<TFrom, TTo>() where TTo : TFrom
+        public IDependencyContainer RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType = LifetimeTypes.Transient) where TTo : TFrom
         {
-            _unityContainer.RegisterType<TFrom, TTo>();
+            var lifetimeManager = LifetimeManagersController.GetLifetimeManager(lifetimeType);
+
+            _unityContainer.RegisterType<TFrom, TTo>(lifetimeManager);
 
             return this;
         }
