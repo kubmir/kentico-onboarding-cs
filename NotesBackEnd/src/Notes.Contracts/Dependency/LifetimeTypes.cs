@@ -2,9 +2,8 @@
 {
     public enum LifetimeTypes
     {
-        GlobalSingleton, 
-        ThreadSingleton,
-        HierarchicalSingleton,
-        Transient,
+        PerApplicationSingleton, 
+        PerRequestSingleton,
+        PerInstanceSingleton,
     }
 }

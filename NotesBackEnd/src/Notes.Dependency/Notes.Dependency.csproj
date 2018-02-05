@@ -62,7 +62,7 @@
   <ItemGroup>
     <Compile Include="ContainersBuilders\DependencyContainerBuilder.cs" />
     <Compile Include="Containers\DependencyContainer.cs" />
-    <Compile Include="LifeTimeManagers\LifetimeManagersController.cs" />
+    <Compile Include="LifeTimeManagers\LifetimeTypesExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
