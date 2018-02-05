@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Notes.Contracts.Dependency
 {
-    public interface IDependencyContainer
+    public interface IDependencyContainer : IDisposable
     {
         IDependencyContainer RegisterType<TType>(object injectedObject);
 
@@ -16,7 +16,5 @@ namespace Notes.Contracts.Dependency
         IEnumerable<object> ResolveAll(Type serviceType);
 
         IDependencyContainer CreateChildContainer();
-
-        void Dispose();
     }
 }
