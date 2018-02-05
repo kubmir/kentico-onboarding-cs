@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 
 namespace Notes.Contracts.Dependency
 {
@@ -9,7 +10,7 @@ namespace Notes.Contracts.Dependency
 
         IDependencyContainer RegisterType<TFrom, TTo>() where TTo : TFrom;
 
-        IDependencyContainer RegisterHttpRequestMessage<TType>();
+        IDependencyContainer RegisterHttpRequestMessage(Func<HttpRequestMessage> getHttpRequestMessageFunc);
 
         object Resolve(Type serviceType);
 

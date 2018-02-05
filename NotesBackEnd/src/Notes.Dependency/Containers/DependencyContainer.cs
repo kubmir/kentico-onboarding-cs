@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Web;
 using Notes.Contracts.Dependency;
 using Unity;
 using Unity.Injection;
+using Unity.Lifetime;
 
 namespace Notes.Dependency.Containers
 {
@@ -29,9 +29,9 @@ namespace Notes.Dependency.Containers
             return this;
         }
 
-        public IDependencyContainer RegisterHttpRequestMessage<TType>()
+        public IDependencyContainer RegisterHttpRequestMessage(Func<HttpRequestMessage> getHttpRequestMessageFunc)
         {
-            _unityContainer.RegisterType<TType>(new InjectionFactory(GetHttpRequestMessage));
+            _unityContainer.RegisterType<HttpRequestMessage>(new HierarchicalLifetimeManager(), new InjectionFactory(_ => getHttpRequestMessageFunc()));
 
             return this;
         }
@@ -70,8 +70,5 @@ namespace Notes.Dependency.Containers
         {
             _unityContainer.Dispose();
         }
-
-        private HttpRequestMessage GetHttpRequestMessage(IUnityContainer container)
-            => (HttpRequestMessage)HttpContext.Current.Items["MS_HttpRequestMessage"];
     }
 }
