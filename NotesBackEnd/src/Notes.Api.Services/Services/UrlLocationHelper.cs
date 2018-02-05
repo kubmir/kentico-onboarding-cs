@@ -15,8 +15,6 @@ namespace Notes.Api.Services.Services
         }
 
         public String GetUrlWithId(String routeName, Guid id)
-        {
-            return new UrlHelper(_httpRequestMessage).Route(routeName,  new { id });
-        }
+            => new UrlHelper(_httpRequestMessage).Route(routeName,  new { id });
     }
 }

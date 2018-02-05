@@ -57,18 +57,12 @@ namespace Notes.Dependency.Containers
         }
 
         public IEnumerable<object> ResolveAll(Type serviceType)
-        {
-            return _unityContainer.ResolveAll(serviceType);
-        }
+           => _unityContainer.ResolveAll(serviceType);
 
         public IDependencyContainer CreateChildContainer()
-        {
-            return new DependencyContainer(_unityContainer.CreateChildContainer());
-        }
-
+            => new DependencyContainer(_unityContainer.CreateChildContainer());
+        
         public void Dispose()
-        {
-            _unityContainer.Dispose();
-        }
+            => _unityContainer.Dispose();
     }
 }
