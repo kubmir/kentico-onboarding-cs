@@ -9,7 +9,7 @@ using Unity.Lifetime;
 
 namespace Notes.Dependency.Containers
 {
-    public class DependencyContainer : IDependencyContainer
+    public class DependencyContainer : IDependencyContainerRegister, IDependencyContainerResolver
     {
         private readonly IUnityContainer _unityContainer;
 
@@ -23,25 +23,18 @@ namespace Notes.Dependency.Containers
             _unityContainer = container;
         }
 
-        public IDependencyContainer RegisterType<TType>(object injectedObject, LifetimeTypes lifetimeType = LifetimeTypes.Transient)
+        public IDependencyContainerRegister RegisterType<TTo>(Func<TTo> getObjectFunc, LifetimeTypes lifetimeType)
         {
-            var lifetimeManager = LifetimeManagersController.GetLifetimeManager(lifetimeType);
+            var lifetimeManager = lifetimeType.GetUnityLifetimeManager();
 
-            _unityContainer.RegisterType<TType>(lifetimeManager, new InjectionConstructor(injectedObject));
-
-            return this;
-        }
-
-        public IDependencyContainer RegisterHttpRequestMessage(Func<HttpRequestMessage> getHttpRequestMessageFunc)
-        {
-            _unityContainer.RegisterType<HttpRequestMessage>(new HierarchicalLifetimeManager(), new InjectionFactory(_ => getHttpRequestMessageFunc()));
+            _unityContainer.RegisterType<HttpRequestMessage>(lifetimeManager, new InjectionFactory(_ => getObjectFunc()));
             
             return this;
         }
 
-        public IDependencyContainer RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType = LifetimeTypes.Transient) where TTo : TFrom
+        public IDependencyContainerRegister RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType) where TTo : TFrom
         {
-            var lifetimeManager = LifetimeManagersController.GetLifetimeManager(lifetimeType);
+            var lifetimeManager = lifetimeType.GetUnityLifetimeManager();
 
             _unityContainer.RegisterType<TFrom, TTo>(lifetimeManager);
 
@@ -64,7 +57,7 @@ namespace Notes.Dependency.Containers
         public IEnumerable<object> ResolveAll(Type serviceType)
            => _unityContainer.ResolveAll(serviceType);
 
-        public IDependencyContainer CreateChildContainer()
+        public IDependencyContainerResolver CreateChildContainer()
             => new DependencyContainer(_unityContainer.CreateChildContainer());
         
         public void Dispose()

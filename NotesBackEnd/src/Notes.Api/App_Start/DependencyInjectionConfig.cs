@@ -9,7 +9,7 @@ namespace Notes.Api
     {
         internal static void Register(HttpConfiguration config)
         {
-            IDependencyContainer container = DependencyContainerBuilder.SetUpContainer();
+            IDependencyContainerResolver container = DependencyContainerBuilder.SetUpContainer();
 
             config.DependencyResolver = new ContainerResolver(container);
         }

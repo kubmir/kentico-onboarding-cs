@@ -8,10 +8,10 @@ namespace Notes.Api.Services.Dependency
 {
     public class ApiServicesBootstrapper : IBootstrapper
     {
-        public IDependencyContainer RegisterType(IDependencyContainer container)
+        public IDependencyContainerRegister RegisterType(IDependencyContainerRegister container)
             => container
-                .RegisterHttpRequestMessage(GetHttpRequestMessage)
-                .RegisterType<IUrlLocationHelper, UrlLocationHelper>();
+                .RegisterType(GetHttpRequestMessage, LifetimeTypes.PerRequestSingleton)
+                .RegisterType<IUrlLocationHelper, UrlLocationHelper>(LifetimeTypes.PerApplicationSingleton);
 
         private static HttpRequestMessage GetHttpRequestMessage()
             => (HttpRequestMessage)HttpContext.Current.Items["MS_HttpRequestMessage"];

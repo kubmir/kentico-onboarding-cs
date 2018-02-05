@@ -7,12 +7,18 @@ namespace Notes.Dependency.ContainersBuilders
 {
     public static class DependencyContainerBuilder
     {
-        public static IDependencyContainer SetUpContainer() =>
-            new DependencyContainer()
+        public static IDependencyContainerResolver SetUpContainer()
+        {
+            var container = new DependencyContainer();
+
+            container
                 .RegisterDependency(new RepositoryTypesBootstrapper())
                 .RegisterDependency(new ApiServicesBootstrapper());
 
-        private static IDependencyContainer RegisterDependency(this IDependencyContainer container, IBootstrapper bootstrapper)
+            return container;
+        }
+
+        private static IDependencyContainerRegister RegisterDependency(this IDependencyContainerRegister container, IBootstrapper bootstrapper)
             => bootstrapper.RegisterType(container);
     }
 }
