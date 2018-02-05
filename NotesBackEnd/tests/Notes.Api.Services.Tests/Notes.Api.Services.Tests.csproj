@@ -51,7 +51,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -78,10 +77,6 @@
     <ProjectReference Include="..\..\src\Notes.Contracts\Notes.Contracts.csproj">
       <Project>{a5a4fc43-cddb-4fb8-9a54-3971f2834b35}</Project>
       <Name>Notes.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Notes.Api.Tests\Notes.Api.Tests.csproj">
-      <Project>{32d175ad-f8d8-4856-bf48-e96c64f5f76c}</Project>
-      <Name>Notes.Api.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

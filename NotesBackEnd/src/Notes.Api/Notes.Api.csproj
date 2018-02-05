@@ -56,7 +56,6 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -124,10 +123,6 @@
     <ProjectReference Include="..\Notes.Dependency\Notes.Dependency.csproj">
       <Project>{FE3CB194-A368-4EFA-9B18-18E3B4480E48}</Project>
       <Name>Notes.Dependency</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Notes.Repository\Notes.Repository.csproj">
-      <Project>{614f0f07-b16e-48ca-988a-a6181e80fc38}</Project>
-      <Name>Notes.Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
