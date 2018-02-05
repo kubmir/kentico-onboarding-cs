@@ -43,7 +43,7 @@
     <Compile Include="Model\Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\INotesRepository.cs" />
-    <Compile Include="Routes\RouteDictionary.cs" />
+    <Compile Include="Routes\RoutesRegister.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

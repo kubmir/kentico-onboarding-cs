@@ -10,7 +10,7 @@ using Notes.Contracts.Routes;
 namespace Notes.Api.Controllers
 {
     [ApiVersion("1.0")]
-    [Route(RouteDictionary.NotesRoute, Name = RouteDictionary.NotesRouteName)]
+    [Route(RoutesRegister.NotesRoute, Name = RoutesRegister.NotesRouteName)]
     public class NotesController : ApiController
     {
         private readonly INotesRepository _repository;
@@ -40,7 +40,7 @@ namespace Notes.Api.Controllers
         {
             Note addedNote = await _repository.CreateNoteAsync(noteToAdd);
 
-            return Created(_locationHelper.GetUrlWithId(RouteDictionary.NotesRouteName, addedNote.Id), addedNote);
+            return Created(_locationHelper.GetUrlWithId(RoutesRegister.NotesRouteName, addedNote.Id), addedNote);
         }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, Note noteToUpdate)
