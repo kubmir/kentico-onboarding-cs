@@ -22,7 +22,7 @@ namespace Notes.Api.Services.Tests.Services
             _urlHelper = Substitute.For<UrlHelper>();
             _routeManager = Substitute.For<IRouteManager>();
 
-            _urlHelper.Route(Arg.Any<string>(), Guid.Parse(Id)).Returns($"/{Id}/test");
+            _urlHelper.Route(Arg.Any<string>(), Arg.Any<object>()).Returns($"/{Id}/test");
             _routeManager.GetNotesRouteName().Returns("test");
 
             _urlLocationHelper = new UrlLocationHelper(_urlHelper, _routeManager);
