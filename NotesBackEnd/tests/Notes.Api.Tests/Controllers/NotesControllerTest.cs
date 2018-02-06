@@ -181,7 +181,7 @@ namespace Notes.Api.Tests.Controllers
         private IUrlLocationHelper MockLocationHelper()
         {
             var mockedLocationHelper = Substitute.For<IUrlLocationHelper>();
-            mockedLocationHelper.GetUrlWithId(Arg.Any<String>(), Arg.Any<Guid>()).Returns("http://test/ebcb3d81-af4e-428f-a22d-e7852d70d3a0/test");
+            mockedLocationHelper.GetNotesUrlWithId(Arg.Any<Guid>()).Returns("http://test/ebcb3d81-af4e-428f-a22d-e7852d70d3a0/test");
 
             return mockedLocationHelper;
         }

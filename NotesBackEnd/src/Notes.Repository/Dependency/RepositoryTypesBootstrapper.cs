@@ -9,13 +9,13 @@ namespace Notes.Repository.Dependency
 {
     public class RepositoryTypesBootstrapper : IBootstrapper
     {
-        public IDependencyContainer RegisterType(IDependencyContainer container)
+        public IDependencyContainerRegister RegisterType(IDependencyContainerRegister container)
         {
             var connectionString = WebConfigurationManager.ConnectionStrings["MongoDb_Notes_Connection"].ConnectionString;
 
             return container
-                .RegisterType<INotesRepository, NotesRepository>()
-                .RegisterType<IDatabaseContext, MongoDatabaseContext>(connectionString);
+                .RegisterType<INotesRepository, NotesRepository>(LifetimeTypes.PerApplicationSingleton)
+                .RegisterType<IDatabaseContext, MongoDatabaseContext>(LifetimeTypes.PerApplicationSingleton, connectionString);
         }
     }
 }

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Web;
 using Notes.Contracts.Dependency;
+using Notes.Dependency.LifeTimeManagers;
 using Unity;
 using Unity.Injection;
 
 namespace Notes.Dependency.Containers
 {
-    public class DependencyContainer : IDependencyContainer
+    public class DependencyContainer : IDependencyContainerRegister, IDependencyContainerResolver
     {
         private readonly IUnityContainer _unityContainer;
 
@@ -21,24 +20,20 @@ namespace Notes.Dependency.Containers
         {
             _unityContainer = container;
         }
-
-        public IDependencyContainer RegisterType<TFrom, TTo>(object injectedObject) where TTo : TFrom
+        public IDependencyContainerRegister RegisterType<TTo>(Func<TTo> getObjectFunc, LifetimeTypes lifetimeType)
         {
-            _unityContainer.RegisterType<TFrom, TTo>(new InjectionConstructor(injectedObject));
+            var lifetimeManager = lifetimeType.GetUnityLifetimeManager();
 
+            _unityContainer.RegisterType<TTo>(lifetimeManager, new InjectionFactory(_ => getObjectFunc()));
+            
             return this;
         }
 
-        public IDependencyContainer RegisterHttpRequestMessage<TType>()
+        public IDependencyContainerRegister RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType) where TTo : TFrom
         {
-            _unityContainer.RegisterType<TType>(new InjectionFactory(GetHttpRequestMessage));
+            var lifetimeManager = lifetimeType.GetUnityLifetimeManager();
 
-            return this;
-        }
-
-        public IDependencyContainer RegisterType<TFrom, TTo>() where TTo : TFrom
-        {
-            _unityContainer.RegisterType<TFrom, TTo>();
+            _unityContainer.RegisterType<TFrom, TTo>(lifetimeManager);
 
             return this;
         }
@@ -57,21 +52,12 @@ namespace Notes.Dependency.Containers
         }
 
         public IEnumerable<object> ResolveAll(Type serviceType)
-        {
-            return _unityContainer.ResolveAll(serviceType);
-        }
+           => _unityContainer.ResolveAll(serviceType);
 
-        public IDependencyContainer CreateChildContainer()
-        {
-            return new DependencyContainer(_unityContainer.CreateChildContainer());
-        }
-
+        public IDependencyContainerResolver CreateChildContainer()
+            => new DependencyContainer(_unityContainer.CreateChildContainer());
+        
         public void Dispose()
-        {
-            _unityContainer.Dispose();
-        }
-
-        private HttpRequestMessage GetHttpRequestMessage(IUnityContainer container)
-            => (HttpRequestMessage)HttpContext.Current.Items["MS_HttpRequestMessage"];
+            => _unityContainer.Dispose();
     }
 }

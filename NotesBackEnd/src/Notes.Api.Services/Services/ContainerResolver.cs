@@ -7,37 +7,26 @@ namespace Notes.Api.Services.Services
 {
     public class ContainerResolver : IDependencyResolver
     {
-        protected IDependencyContainer Container;
+        protected IDependencyContainerResolver Container;
 
-        public ContainerResolver(IDependencyContainer container)
+        public ContainerResolver(IDependencyContainerResolver container)
         {
             Container = container ?? throw new ArgumentNullException(nameof(container));
         }
 
         public object GetService(Type serviceType)
-        {
-            return Container.Resolve(serviceType);
-        }
+            => Container.Resolve(serviceType);
 
         public IEnumerable<object> GetServices(Type serviceType)
-        {
-            return Container.ResolveAll(serviceType);
-        }
-
+            => Container.ResolveAll(serviceType);
+        
         public IDependencyScope BeginScope()
-        {
-            var child = Container.CreateChildContainer();
-            return new ContainerResolver(child);
-        }
+            => new ContainerResolver(Container.CreateChildContainer());
 
         public void Dispose()
-        {
-            Dispose(true);
-        }
+            => Dispose(true);
 
         protected virtual void Dispose(bool disposing)
-        {
-            Container.Dispose();
-        }
+            => Container.Dispose();
     }
 }

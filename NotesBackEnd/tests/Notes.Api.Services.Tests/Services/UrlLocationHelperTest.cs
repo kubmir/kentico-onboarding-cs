@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Net.Http;
-using System.Web.Http;
+using System.Web.Http.Routing;
 using Notes.Api.Services.Services;
 using Notes.Contracts.ApiServices;
 using NSubstitute;
@@ -11,39 +10,30 @@ namespace Notes.Api.Services.Tests.Services
     [TestFixture]
     internal class UrlLocationHelperTest
     {
+        private const string Id = "2c00d1c2-fd2b-4c06-8f2d-130e88f719c2";
+
         private IUrlLocationHelper _urlLocationHelper;
-        private HttpRequestMessage _requestMessage;
+        private UrlHelper _urlHelper;
+        private IRouteManager _routeManager;
 
         [SetUp]
         public void Init()
         {
-            _requestMessage = Substitute.For<HttpRequestMessage>();
-            ConfigureRequestMessage();
-            _urlLocationHelper = new UrlLocationHelper(_requestMessage);
+            _urlHelper = Substitute.For<UrlHelper>();
+            _routeManager = Substitute.For<IRouteManager>();
+
+            _urlHelper.Route(Arg.Any<string>(), Guid.Parse(Id)).Returns($"/{Id}/test");
+            _routeManager.GetNotesRouteName().Returns("test");
+
+            _urlLocationHelper = new UrlLocationHelper(_urlHelper, _routeManager);
         }
 
         [Test]
         public void GetUrlWithId_ReturnsCorrectLocation()
         {
-            var actualUrl = _urlLocationHelper.GetUrlWithId("test", new Guid("2c00d1c2-fd2b-4c06-8f2d-130e88f719c2"));
+            var actualUrl = _urlLocationHelper.GetNotesUrlWithId(new Guid(Id));
 
-            Assert.That(actualUrl, Is.EqualTo("/2c00d1c2-fd2b-4c06-8f2d-130e88f719c2/test"));
-        }
-
-        private void ConfigureRequestMessage()
-        {
-            _requestMessage = new HttpRequestMessage
-            {
-                RequestUri = new Uri("http://test")
-            };
-
-            var configuration = new HttpConfiguration();
-            configuration.Routes.MapHttpRoute(
-                name: "test",
-                routeTemplate: "{id}/test"
-            );
-
-            _requestMessage.SetConfiguration(configuration);
+            Assert.That(actualUrl, Is.EqualTo($"/{Id}/test"));
         }
     }
 }
