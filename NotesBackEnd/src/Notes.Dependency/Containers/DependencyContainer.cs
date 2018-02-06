@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using Notes.Contracts.Dependency;
 using Notes.Dependency.LifeTimeManagers;
 using Unity;
@@ -26,7 +25,7 @@ namespace Notes.Dependency.Containers
         {
             var lifetimeManager = lifetimeType.GetUnityLifetimeManager();
 
-            _unityContainer.RegisterType<HttpRequestMessage>(lifetimeManager, new InjectionFactory(_ => getObjectFunc()));
+            _unityContainer.RegisterType<TTo>(lifetimeManager, new InjectionFactory(_ => getObjectFunc()));
             
             return this;
         }
