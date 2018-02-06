@@ -8,6 +8,7 @@ namespace Notes.Api
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configure(DependencyInjectionConfig.Register);
+            GlobalConfiguration.Configure(JsonFormatterConfig.Register);
         }
     }
 }
