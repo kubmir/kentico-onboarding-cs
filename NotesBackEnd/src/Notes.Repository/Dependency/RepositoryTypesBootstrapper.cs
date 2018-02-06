@@ -7,6 +7,6 @@ namespace Notes.Repository.Dependency
     public class RepositoryTypesBootstrapper : IBootstrapper
     {
         public IDependencyContainerRegister RegisterType(IDependencyContainerRegister container)
-            => container.RegisterType<INotesRepository, NotesRepository>(LifetimeTypes.PerInstanceSingleton);
+            => container.RegisterType<INotesRepository, NotesRepository>(LifetimeTypes.PerApplicationSingleton);
     }
 }
