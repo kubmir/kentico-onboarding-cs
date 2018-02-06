@@ -6,6 +6,8 @@ namespace Notes.Contracts.Dependency
     {
         IDependencyContainerRegister RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType) where TTo : TFrom;
 
+        IDependencyContainerRegister RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType, object injectedObject) where TTo : TFrom;
+
         IDependencyContainerRegister RegisterType<TTo>(Func<TTo> getObjectFunc, LifetimeTypes lifetimeType);
     }
 }

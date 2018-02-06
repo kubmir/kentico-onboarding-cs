@@ -20,12 +20,13 @@ namespace Notes.Dependency.Containers
         {
             _unityContainer = container;
         }
-        public IDependencyContainerRegister RegisterType<TTo>(Func<TTo> getObjectFunc, LifetimeTypes lifetimeType)
+
+        public IDependencyContainerRegister RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType, object injectedObject) where TTo : TFrom
         {
             var lifetimeManager = lifetimeType.GetUnityLifetimeManager();
 
-            _unityContainer.RegisterType<TTo>(lifetimeManager, new InjectionFactory(_ => getObjectFunc()));
-            
+            _unityContainer.RegisterType<TFrom, TTo>(lifetimeManager, new InjectionConstructor(injectedObject));
+
             return this;
         }
 
@@ -34,6 +35,15 @@ namespace Notes.Dependency.Containers
             var lifetimeManager = lifetimeType.GetUnityLifetimeManager();
 
             _unityContainer.RegisterType<TFrom, TTo>(lifetimeManager);
+
+            return this;
+        }
+
+        public IDependencyContainerRegister RegisterType<TTo>(Func<TTo> getObjectFunc, LifetimeTypes lifetimeType)
+        {
+            var lifetimeManager = lifetimeType.GetUnityLifetimeManager();
+
+            _unityContainer.RegisterType<TTo>(lifetimeManager, new InjectionFactory(_ => getObjectFunc()));
 
             return this;
         }

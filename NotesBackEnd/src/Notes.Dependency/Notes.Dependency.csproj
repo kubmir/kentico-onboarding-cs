@@ -80,6 +80,10 @@
       <Project>{614F0F07-B16E-48CA-988A-A6181E80FC38}</Project>
       <Name>Notes.Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Notes.Services\Notes.Services.csproj">
+      <Project>{221DC445-667C-439F-B68A-D4729FE6E97F}</Project>
+      <Name>Notes.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
