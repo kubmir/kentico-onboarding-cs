@@ -7,13 +7,15 @@ namespace Notes.Api.Services.Services
     public class UrlLocationHelper : IUrlLocationHelper
     {
         private readonly UrlHelper _urlHelper;
+        private readonly IRouteManager _routeManager;
 
-        public UrlLocationHelper(UrlHelper helper)
+        public UrlLocationHelper(UrlHelper helper, IRouteManager routeManager)
         {
             _urlHelper = helper;
+            _routeManager = routeManager;
         }
 
-        public String GetUrlWithId(String routeName, Guid id)
-            => _urlHelper.Route(routeName, id);
+        public String GetNotesUrlWithId(Guid id)
+            => _urlHelper.Route(_routeManager.GetNotesRouteName(), id);
     }
 }

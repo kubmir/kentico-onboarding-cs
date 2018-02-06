@@ -14,19 +14,24 @@ namespace Notes.Api.Services.Tests.Services
 
         private IUrlLocationHelper _urlLocationHelper;
         private UrlHelper _urlHelper;
+        private IRouteManager _routeManager;
 
         [SetUp]
         public void Init()
         {
             _urlHelper = Substitute.For<UrlHelper>();
+            _routeManager = Substitute.For<IRouteManager>();
+
             _urlHelper.Route(Arg.Any<string>(), Guid.Parse(Id)).Returns($"/{Id}/test");
-            _urlLocationHelper = new UrlLocationHelper(_urlHelper);
+            _routeManager.GetNotesRouteName().Returns("test");
+
+            _urlLocationHelper = new UrlLocationHelper(_urlHelper, _routeManager);
         }
 
         [Test]
         public void GetUrlWithId_ReturnsCorrectLocation()
         {
-            var actualUrl = _urlLocationHelper.GetUrlWithId("test", new Guid(Id));
+            var actualUrl = _urlLocationHelper.GetNotesUrlWithId(new Guid(Id));
 
             Assert.That(actualUrl, Is.EqualTo($"/{Id}/test"));
         }
