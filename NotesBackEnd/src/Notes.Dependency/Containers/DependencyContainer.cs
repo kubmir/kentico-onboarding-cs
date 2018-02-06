@@ -5,7 +5,6 @@ using Notes.Contracts.Dependency;
 using Notes.Dependency.LifeTimeManagers;
 using Unity;
 using Unity.Injection;
-using Unity.Lifetime;
 
 namespace Notes.Dependency.Containers
 {
