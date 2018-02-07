@@ -12,7 +12,7 @@ namespace Notes.Api.Services.Dependency
             => container
                 .RegisterType(GetHttpRequestMessage, LifetimeTypes.PerRequestSingleton)
                 .RegisterType<IUrlLocationHelper, UrlLocationHelper>(LifetimeTypes.PerRequestSingleton)
-                .RegisterType<IRouteManager, RouteManager>(LifetimeTypes.PerInstanceSingleton);
+                .RegisterType<IRouteManager, RouteManager>(LifetimeTypes.PerApplicationSingleton);
 
         private static HttpRequestMessage GetHttpRequestMessage()
             => (HttpRequestMessage)HttpContext.Current.Items["MS_HttpRequestMessage"];
