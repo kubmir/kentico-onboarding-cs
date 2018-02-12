@@ -68,14 +68,34 @@ namespace Notes.Services.Tests.Notes
             Assert.That(actualNotes, Is.EqualTo(expectedNotes));
         }
 
+        [Test]
+        public async Task DeleteNoteAsync_DeleteCorrectNote()
+        {
+            var expectedNote = Note4;
+
+            var actualNote = await _notesServices.DeleteNoteAsync(Note4.Id);
+
+            Assert.That(actualNote, Is.EqualTo(expectedNote));
+        }
+
+        [Test]
+        public async Task UpdateNoteAsync_UpdateCorrectNote()
+        {
+            var expectedNote = Note3;
+
+            var actualNote = await _notesServices.UpdateNoteAsync(Note3);
+
+            Assert.That(actualNote, Is.EqualTo(expectedNote));
+        }
+
         private INotesRepository MockNotesRepository()
         {
             var mockedRepository = Substitute.For<INotesRepository>();
             mockedRepository.GetAllNotesAsync().Returns(AllNotes);
-            mockedRepository.GetNoteByIdAsync(Arg.Any<Guid>()).Returns(Note1);
-            mockedRepository.CreateNoteAsync(Arg.Any<Note>()).Returns(Note2);
-            mockedRepository.UpdateNoteAsync(Arg.Any<Note>()).Returns(Note3);
-            mockedRepository.DeleteNoteByIdAsync(Arg.Any<Guid>()).Returns(Note4);
+            mockedRepository.GetNoteByIdAsync(Note1.Id).Returns(Note1);
+            mockedRepository.CreateNoteAsync(Note2Dto).Returns(Note2);
+            mockedRepository.UpdateNoteAsync(Note3).Returns(Note3);
+            mockedRepository.DeleteNoteByIdAsync(Note4.Id).Returns(Note4);
 
             return mockedRepository;
         }
