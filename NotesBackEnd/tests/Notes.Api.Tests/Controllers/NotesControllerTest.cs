@@ -180,8 +180,9 @@ namespace Notes.Api.Tests.Controllers
 
         private IUrlLocationHelper MockLocationHelper()
         {
+            var mockedId = "ebcb3d81-af4e-428f-a22d-e7852d70d3a0";
             var mockedLocationHelper = Substitute.For<IUrlLocationHelper>();
-            mockedLocationHelper.GetNotesUrlWithId(Arg.Any<Guid>()).Returns("http://test/ebcb3d81-af4e-428f-a22d-e7852d70d3a0/test");
+            mockedLocationHelper.GetNotesUrlWithId(Guid.Parse(mockedId)).Returns($"http://test/{mockedId}/test");
 
             return mockedLocationHelper;
         }
@@ -203,11 +204,11 @@ namespace Notes.Api.Tests.Controllers
                 .Returns(Note1);
 
             mockedNotesServices
-                .UpdateNoteAsync(Arg.Any<Note>())
+                .UpdateNoteAsync(Note3)
                 .Returns(Note3);
 
             mockedNotesServices
-                .DeleteNoteAsync(Arg.Any<Guid>())
+                .DeleteNoteAsync(Note4.Id)
                 .Returns(Note4);
 
             return mockedNotesServices;

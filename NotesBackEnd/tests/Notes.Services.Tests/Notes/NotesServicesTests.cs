@@ -91,11 +91,22 @@ namespace Notes.Services.Tests.Notes
         private INotesRepository MockNotesRepository()
         {
             var mockedRepository = Substitute.For<INotesRepository>();
-            mockedRepository.GetAllNotesAsync().Returns(AllNotes);
-            mockedRepository.GetNoteByIdAsync(Note1.Id).Returns(Note1);
-            mockedRepository.CreateNoteAsync(Note2Dto).Returns(Note2);
-            mockedRepository.UpdateNoteAsync(Note3).Returns(Note3);
-            mockedRepository.DeleteNoteByIdAsync(Note4.Id).Returns(Note4);
+
+            mockedRepository
+                .GetAllNotesAsync()
+                .Returns(AllNotes);
+            mockedRepository
+                .GetNoteByIdAsync(Note1.Id)
+                .Returns(Note1);
+            mockedRepository
+                .CreateNoteAsync(Note2Dto)
+                .Returns(Note2);
+            mockedRepository
+                .UpdateNoteAsync(Note3)
+                .Returns(Note3);
+            mockedRepository
+                .DeleteNoteByIdAsync(Note4.Id)
+                .Returns(Note4);
 
             return mockedRepository;
         }
@@ -103,7 +114,10 @@ namespace Notes.Services.Tests.Notes
         private IDateService MockDateService()
         {
             var mockedDateService = Substitute.For<IDateService>();
-            mockedDateService.GetCurrentDateTime().Returns(TestDateTime);
+
+            mockedDateService
+                .GetCurrentDateTime()
+                .Returns(TestDateTime);
 
             return mockedDateService;
         }
