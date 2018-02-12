@@ -16,6 +16,6 @@ namespace Notes.Api.Services.Services
         }
 
         public String GetNotesUrlWithId(Guid id)
-            => _urlHelper.Route(_routeManager.GetNotesRouteName(), id);
+            => _urlHelper.Route(_routeManager.GetNotesRouteName(), new { id });
     }
 }

@@ -11,7 +11,7 @@ namespace Notes.Api.Services.Dependency
         public IDependencyContainerRegister RegisterType(IDependencyContainerRegister container)
             => container
                 .RegisterType(GetHttpRequestMessage, LifetimeTypes.PerRequestSingleton)
-                .RegisterType<IUrlLocationHelper, UrlLocationHelper>(LifetimeTypes.PerApplicationSingleton)
+                .RegisterType<IUrlLocationHelper, UrlLocationHelper>(LifetimeTypes.PerRequestSingleton)
                 .RegisterType<IRouteManager, RouteManager>(LifetimeTypes.PerApplicationSingleton);
 
         private static HttpRequestMessage GetHttpRequestMessage()

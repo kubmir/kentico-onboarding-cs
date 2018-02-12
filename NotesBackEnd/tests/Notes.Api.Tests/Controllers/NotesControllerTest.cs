@@ -160,7 +160,7 @@ namespace Notes.Api.Tests.Controllers
         {
             var expectedNote = Note4;
 
-            var (actualNote, responseMessage) = await GetExecutedResponse<Note>(() => _controller.DeleteAsync(Guid.NewGuid()));
+            var (actualNote, responseMessage) = await GetExecutedResponse<Note>(() => _controller.DeleteAsync(Note4.Id));
 
             Assert.Multiple(() =>
             {
