@@ -75,7 +75,7 @@ namespace Notes.Api.Tests.Controllers
             string id = expectedNote.Id.ToString();
             var expectedUri = new Uri($"http://test/{id}/test");
 
-            var (actualNote, responseMessage) = await GetExecutedResponse<Note>(() => _controller.PostAsync(new Note { Text = "test text" }));
+            var (actualNote, responseMessage) = await GetExecutedResponse<Note>(() => _controller.PostAsync(Note2));
 
             Assert.Multiple(() =>
             {
@@ -105,7 +105,7 @@ namespace Notes.Api.Tests.Controllers
         {
             var expectedNote = Note4;
 
-            var (actualNote, responseMessage) = await GetExecutedResponse<Note>(() => _controller.DeleteAsync(Guid.NewGuid()));
+            var (actualNote, responseMessage) = await GetExecutedResponse<Note>(() => _controller.DeleteAsync(Note4.Id));
 
             Assert.Multiple(() =>
             {
@@ -127,18 +127,19 @@ namespace Notes.Api.Tests.Controllers
         {
             var mockedRepository = Substitute.For<INotesRepository>();
             mockedRepository.GetAllNotesAsync().Returns(AllNotes);
-            mockedRepository.GetNoteByIdAsync(Arg.Any<Guid>()).Returns(Note1);
-            mockedRepository.CreateNoteAsync(Arg.Any<Note>()).Returns(Note2);
-            mockedRepository.UpdateNoteAsync(Arg.Any<Note>()).Returns(Note3);
-            mockedRepository.DeleteNoteByIdAsync(Arg.Any<Guid>()).Returns(Note4);
+            mockedRepository.GetNoteByIdAsync(Note1.Id).Returns(Note1);
+            mockedRepository.CreateNoteAsync(Note2).Returns(Note2);
+            mockedRepository.UpdateNoteAsync(Note3).Returns(Note3);
+            mockedRepository.DeleteNoteByIdAsync(Note4.Id).Returns(Note4);
 
             return mockedRepository;
         }
 
         private IUrlLocationHelper MockLocationHelper()
         {
+            var mockedId = "ebcb3d81-af4e-428f-a22d-e7852d70d3a0";
             var mockedLocationHelper = Substitute.For<IUrlLocationHelper>();
-            mockedLocationHelper.GetNotesUrlWithId(Arg.Any<Guid>()).Returns("http://test/ebcb3d81-af4e-428f-a22d-e7852d70d3a0/test");
+            mockedLocationHelper.GetNotesUrlWithId(Guid.Parse(mockedId)).Returns($"http://test/{mockedId}/test");
 
             return mockedLocationHelper;
         }
