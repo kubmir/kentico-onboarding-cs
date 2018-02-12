@@ -30,23 +30,17 @@ namespace Notes.Services.Notes
         }
 
         public async Task<Note> GetNoteAsync(Guid id)
-        {
-            return await _repository.GetNoteByIdAsync(id);
-        }
+            => await _repository.GetNoteByIdAsync(id);
 
         public async Task<IEnumerable<Note>> GetAllNotesAsync()
-        {
-            return await _repository.GetAllNotesAsync();
-        }
+            => await _repository.GetAllNotesAsync();
+        
 
         public async Task<Note> UpdateNoteAsync(Note note)
-        {
-            return await _repository.UpdateNoteAsync(note);
-        }
+            => await _repository.UpdateNoteAsync(note);
+        
 
         public async Task<Note> DeleteNoteAsync(Guid id)
-        {
-            return await _repository.DeleteNoteByIdAsync(id);
-        }
+            => await _repository.DeleteNoteByIdAsync(id);
     }
 }
