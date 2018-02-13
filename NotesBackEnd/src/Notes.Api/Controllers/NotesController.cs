@@ -60,7 +60,7 @@ namespace Notes.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var updatedNote = await _notesServices.UpdateNoteAsync(noteToUpdate);
+            var updatedNote = await _notesServices.UpdateNoteAsync(id, noteToUpdate);
 
             if (updatedNote == null)
             {

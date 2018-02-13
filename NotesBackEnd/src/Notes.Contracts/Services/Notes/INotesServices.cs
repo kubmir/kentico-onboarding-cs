@@ -13,7 +13,7 @@ namespace Notes.Contracts.Services.Notes
 
         Task<IEnumerable<Note>> GetAllNotesAsync();
 
-        Task<Note> UpdateNoteAsync(Note note);
+        Task<Note> UpdateNoteAsync(Guid id, Note note);
 
         Task<Note> DeleteNoteAsync(Guid id);
     }

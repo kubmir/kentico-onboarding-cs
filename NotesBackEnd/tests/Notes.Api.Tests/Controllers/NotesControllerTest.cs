@@ -12,7 +12,6 @@ using Notes.Contracts.ApiServices;
 using Notes.Contracts.Model;
 using Notes.Contracts.Services.Notes;
 using NSubstitute;
-using NUnit.Framework.Api;
 
 namespace Notes.Api.Tests.Controllers
 {
@@ -245,7 +244,7 @@ namespace Notes.Api.Tests.Controllers
                 .Returns(Note1);
 
             mockedNotesServices
-                .UpdateNoteAsync(Note3)
+                .UpdateNoteAsync(Note3.Id, Note3)
                 .Returns(Note3);
 
             mockedNotesServices

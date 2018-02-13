@@ -83,7 +83,7 @@ namespace Notes.Services.Tests.Notes
         {
             var expectedNote = Note3;
 
-            var actualNote = await _notesServices.UpdateNoteAsync(Note3);
+            var actualNote = await _notesServices.UpdateNoteAsync(Note3.Id, Note3);
 
             Assert.That(actualNote, Is.EqualTo(expectedNote));
         }
@@ -102,7 +102,7 @@ namespace Notes.Services.Tests.Notes
                 .CreateNoteAsync(Note2Dto)
                 .Returns(Note2);
             mockedRepository
-                .UpdateNoteAsync(Note3)
+                .UpdateNoteAsync(Note3.Id, Note3)
                 .Returns(Note3);
             mockedRepository
                 .DeleteNoteByIdAsync(Note4.Id)

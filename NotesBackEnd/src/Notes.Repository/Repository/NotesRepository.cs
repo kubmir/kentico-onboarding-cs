@@ -30,9 +30,9 @@ namespace Notes.Repository.Repository
             return note;
         }
 
-        public async Task<Note> UpdateNoteAsync(Note note)
+        public async Task<Note> UpdateNoteAsync(Guid id, Note note)
         {
-            var filter = Builders<Note>.Filter.Eq("Id", note.Id);
+            var filter = Builders<Note>.Filter.Eq("Id", id);
             var update = Builders<Note>
                 .Update
                 .Set("Text", note.Text)

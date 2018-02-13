@@ -36,8 +36,8 @@ namespace Notes.Services.Notes
             => await _repository.GetAllNotesAsync();
         
 
-        public async Task<Note> UpdateNoteAsync(Note note)
-            => await _repository.UpdateNoteAsync(note);
+        public async Task<Note> UpdateNoteAsync(Guid id, Note note)
+            => await _repository.UpdateNoteAsync(id, note);
         
 
         public async Task<Note> DeleteNoteAsync(Guid id)

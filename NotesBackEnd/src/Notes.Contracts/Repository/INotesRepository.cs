@@ -15,6 +15,6 @@ namespace Notes.Contracts.Repository
 
         Task<Note> DeleteNoteByIdAsync(Guid id);
 
-        Task<Note> UpdateNoteAsync(Note note);
+        Task<Note> UpdateNoteAsync(Guid id, Note note);
     }
 }
