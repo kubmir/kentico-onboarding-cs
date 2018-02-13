@@ -12,6 +12,7 @@ using Notes.Contracts.ApiServices;
 using Notes.Contracts.Model;
 using Notes.Contracts.Services.Notes;
 using NSubstitute;
+using NUnit.Framework.Api;
 
 namespace Notes.Api.Tests.Controllers
 {
@@ -156,6 +157,38 @@ namespace Notes.Api.Tests.Controllers
         }
 
         [Test]
+        public async Task PutAsync_UpdateNullNote()
+        {
+            var (_, responseMessage) = await GetExecutedResponse<Note>(()
+                => _controller.PutAsync(Note3.Id, null));
+
+
+            Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        }
+
+        [Test]
+        public async Task PutAsync_UpdateNoteWithEmptyText()
+        {
+            var mockedId = new Guid("67b8d269-96e0-4928-983c-86659acd47cb");
+
+            var (_, responseMessage) = await GetExecutedResponse<Note>(()
+                => _controller.PutAsync(mockedId, new Note { Text = "", Id = mockedId }));
+
+            Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        }
+
+        [Test]
+        public async Task PutAsync_UpdateNonExistingNote()
+        {
+            var nonExistingId = new Guid("67b8d269-96e0-4928-983c-86659acd47cb");
+
+            var (_, responseMessage) = await GetExecutedResponse<Note>(()
+                => _controller.PutAsync(nonExistingId, Note1));
+
+            Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+        }
+
+        [Test]
         public async Task DeleteAsync_DeleteNoteById()
         {
             var expectedNote = Note4;
@@ -167,6 +200,14 @@ namespace Notes.Api.Tests.Controllers
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.OK));
                 Assert.That(actualNote, Is.EqualTo(expectedNote).UsingNoteComparer());
             });
+        }
+
+        [Test]
+        public async Task DeleteAsync_DeleteNonExistingNote()
+        {
+            var (_, responseMessage) = await GetExecutedResponse<Note>(() => _controller.DeleteAsync(Guid.Empty));
+
+            Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         }
 
         private async Task<(T ActualContent, HttpResponseMessage ResponseMessage)> GetExecutedResponse<T>(Func<Task<IHttpActionResult>> controllerFunction)

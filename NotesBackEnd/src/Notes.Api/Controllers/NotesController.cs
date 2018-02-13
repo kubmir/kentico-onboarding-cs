@@ -43,7 +43,7 @@ namespace Notes.Api.Controllers
 
         public async Task<IHttpActionResult> PostAsync(Note noteToAdd)
         {
-            if (!IsNoteValid(noteToAdd))
+            if (!IsNoteValidForCreation(noteToAdd))
             {
                 return BadRequest(ModelState);
             }
@@ -55,7 +55,17 @@ namespace Notes.Api.Controllers
 
         public async Task<IHttpActionResult> PutAsync(Guid id, Note noteToUpdate)
         {
+            if (!IsNoteValidForUpdate(noteToUpdate))
+            {
+                return BadRequest(ModelState);
+            }
+
             var updatedNote = await _notesServices.UpdateNoteAsync(noteToUpdate);
+
+            if (updatedNote == null)
+            {
+                return NotFound();
+            }
 
             return Ok(updatedNote);
         }
@@ -64,21 +74,19 @@ namespace Notes.Api.Controllers
         {
             var deletedNote = await _notesServices.DeleteNoteAsync(id);
 
+            if (deletedNote == null)
+            {
+                return NotFound();
+            }
+
             return Ok(deletedNote);
         }
 
-        private bool IsNoteValid(Note note)
+        private bool IsNoteValidForCreation(Note note)
         {
-            if (note == null)
+            if (!IsNoteNotNullWithValidText(note))
             {
-                return NoteIsNotValid(nameof(note), 
-                    "Note cannot be null!");
-            }
-
-            if (note.Text.Trim() == String.Empty)
-            {
-                return NoteIsNotValid(nameof(note),
-                    "Text of note cannot be empty and cannot consist just of white spaces!");
+                return false;
             }
 
             if (note.Id != Guid.Empty)
@@ -98,6 +106,26 @@ namespace Notes.Api.Controllers
                 return NoteIsNotValid(nameof(note),
                     "Last modification date of note cannot be specified at this point!");
 
+            }
+
+            return true;
+        }
+
+        private bool IsNoteValidForUpdate(Note note)
+            => IsNoteNotNullWithValidText(note);
+
+        private bool IsNoteNotNullWithValidText(Note note)
+        {
+            if (note == null)
+            {
+                return NoteIsNotValid(nameof(note),
+                    "Note cannot be null!");
+            }
+
+            if (note.Text.Trim() == String.Empty)
+            {
+                return NoteIsNotValid(nameof(note),
+                    "Text of note cannot be empty and cannot consist just of white spaces!");
             }
 
             return true;
