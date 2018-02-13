@@ -5,6 +5,7 @@ using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
 using Notes.Contracts.Services.Date;
 using Notes.Contracts.Services.Notes;
+using Notes.Contracts.Services.Utils;
 
 namespace Notes.Services.Notes
 {
@@ -12,11 +13,13 @@ namespace Notes.Services.Notes
     {
         private readonly IDateService _dateService;
         private readonly INotesRepository _repository;
+        private readonly IGuidService _guidService;
 
-        public NotesServices(IDateService dateService, INotesRepository repository)
+        public NotesServices(IDateService dateService, INotesRepository repository, IGuidService guidService)
         {
             _dateService = dateService;
             _repository = repository;
+            _guidService = guidService;
         }
 
         public async Task<Note> CreateNoteAsync(Note note)
@@ -25,6 +28,7 @@ namespace Notes.Services.Notes
 
             note.CreationDate = dateTime;
             note.LastModificationDate = dateTime;
+            note.Id = _guidService.GetNewGuid();
 
             return await _repository.CreateNoteAsync(note);
         }

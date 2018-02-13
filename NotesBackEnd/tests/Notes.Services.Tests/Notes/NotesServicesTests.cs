@@ -5,6 +5,7 @@ using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
 using Notes.Contracts.Services.Date;
 using Notes.Contracts.Services.Notes;
+using Notes.Contracts.Services.Utils;
 using Notes.Services.Notes;
 using NSubstitute;
 using NUnit.Framework;
@@ -32,8 +33,9 @@ namespace Notes.Services.Tests.Notes
         {
             var mockedRepository = MockNotesRepository();
             var mockedDateService = MockDateService();
+            var mockedGuidService = MockGuidService();
 
-            _notesServices = new NotesServices(mockedDateService, mockedRepository);
+            _notesServices = new NotesServices(mockedDateService, mockedRepository, mockedGuidService);
         }
 
         [Test]
@@ -120,6 +122,17 @@ namespace Notes.Services.Tests.Notes
                 .Returns(TestDateTime);
 
             return mockedDateService;
+        }
+
+        private IGuidService MockGuidService()
+        {
+            var mockedGuidService = Substitute.For<IGuidService>();
+
+            mockedGuidService
+                .GetNewGuid()
+                .Returns(Note2.Id);
+
+            return mockedGuidService;
         }
     }
 }
