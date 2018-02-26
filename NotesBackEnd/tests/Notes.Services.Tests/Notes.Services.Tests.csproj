@@ -55,7 +55,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Notes\NotesServicesTests.cs" />
+    <Compile Include="Notes\AddNoteServiceTests.cs" />
+    <Compile Include="Notes\UpdateNoteServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

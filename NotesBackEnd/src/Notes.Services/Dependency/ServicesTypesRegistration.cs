@@ -11,7 +11,8 @@ namespace Notes.Services.Dependency
     {
         public IDependencyContainerRegister RegisterType(IDependencyContainerRegister container)
             => container
-                .RegisterType<INotesServices, NotesServices>(LifetimeTypes.PerApplicationSingleton)
+                .RegisterType<IAddNoteService, AddNoteService>(LifetimeTypes.PerRequestSingleton)
+                .RegisterType<IUpdateNoteService, UpdateNoteService>(LifetimeTypes.PerRequestSingleton)
                 .RegisterType<IDateService, DateService>(LifetimeTypes.PerApplicationSingleton)
                 .RegisterType<IGuidService, GuidService>(LifetimeTypes.PerApplicationSingleton);
     }

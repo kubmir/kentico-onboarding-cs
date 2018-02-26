@@ -10,6 +10,7 @@ using System.Web.Http;
 using Notes.Api.Tests.Comparers;
 using Notes.Contracts.ApiServices;
 using Notes.Contracts.Model;
+using Notes.Contracts.Repository;
 using Notes.Contracts.Services.Notes;
 using NSubstitute;
 
@@ -32,9 +33,11 @@ namespace Notes.Api.Tests.Controllers
         public void Init()
         {
             var mockedLocationHelper = MockLocationHelper();
-            var mockedNotesServices = MockNotesServices();
+            var mockedAddService = MockAddService();
+            var mockedUpdateService = MockUpdateService();
+            var mockedNoteRepository = MockNoteRepository();
 
-            _controller = new NotesController(mockedLocationHelper, mockedNotesServices)
+            _controller = new NotesController(mockedLocationHelper, mockedAddService, mockedUpdateService, mockedNoteRepository)
             {
                 Configuration = new HttpConfiguration(),
                 Request = new HttpRequestMessage()
@@ -227,31 +230,46 @@ namespace Notes.Api.Tests.Controllers
             return mockedLocationHelper;
         }
 
-        private INotesServices MockNotesServices()
+        private IUpdateNoteService MockUpdateService()
         {
-            var mockedNotesServices = Substitute.For<INotesServices>();
+            var mockedUpdateService = Substitute.For<IUpdateNoteService>();
 
-            mockedNotesServices
+            mockedUpdateService
+                .UpdateNoteAsync(Note3)
+                .Returns(Note3);
+
+            return mockedUpdateService;
+        }
+
+        private IAddNoteService MockAddService()
+        {
+            var mockedAddService = Substitute.For<IAddNoteService>();
+
+            mockedAddService
                 .CreateNoteAsync(Note2Dto)
                 .Returns(Note2);
 
-            mockedNotesServices
+            return mockedAddService;
+        }
+
+        private INotesRepository MockNoteRepository()
+        {
+            var mockedRepository = Substitute.For<INotesRepository>();
+
+            mockedRepository
                 .GetAllNotesAsync()
                 .Returns(AllNotes);
 
-            mockedNotesServices
-                .GetNoteAsync(Note1.Id)
+            mockedRepository
+                .GetNoteByIdAsync(Note1.Id)
                 .Returns(Note1);
 
-            mockedNotesServices
-                .UpdateNoteAsync(Note3.Id, Note3)
-                .Returns(Note3);
-
-            mockedNotesServices
-                .DeleteNoteAsync(Note4.Id)
+            mockedRepository
+                .DeleteNoteByIdAsync(Note4.Id)
                 .Returns(Note4);
 
-            return mockedNotesServices;
+            return mockedRepository;
+
         }
     }
 }

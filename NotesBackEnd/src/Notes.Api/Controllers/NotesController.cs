@@ -5,6 +5,7 @@ using Microsoft.Web.Http;
 using Notes.Api.Services.Services;
 using Notes.Contracts.ApiServices;
 using Notes.Contracts.Model;
+using Notes.Contracts.Repository;
 using Notes.Contracts.Services.Notes;
 
 namespace Notes.Api.Controllers
@@ -14,24 +15,28 @@ namespace Notes.Api.Controllers
     public class NotesController : ApiController
     {
         private readonly IUrlLocationHelper _locationHelper;
-        private readonly INotesServices _notesServices;
+        private readonly IAddNoteService _addNoteService;
+        private readonly IUpdateNoteService _updateService;
+        private readonly INotesRepository _notesRepository;
 
-        public NotesController(IUrlLocationHelper locationHelper, INotesServices notesServices)
+        public NotesController(IUrlLocationHelper locationHelper, IAddNoteService addService, IUpdateNoteService updateService, INotesRepository notesRepository)
         {
             _locationHelper = locationHelper;
-            _notesServices = notesServices;
+            _addNoteService = addService;
+            _updateService = updateService;
+            _notesRepository = notesRepository;
         }
 
         public async Task<IHttpActionResult> GetAsync()
         {
-            var notes = await _notesServices.GetAllNotesAsync();
+            var notes = await _notesRepository.GetAllNotesAsync();
 
             return Ok(notes);
         }
 
         public async Task<IHttpActionResult> GetAsync(Guid id)
         {
-            var foundNote = await _notesServices.GetNoteAsync(id);
+            var foundNote = await _notesRepository.GetNoteByIdAsync(id);
 
             if (foundNote == null)
             {
@@ -48,7 +53,7 @@ namespace Notes.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            Note addedNote = await _notesServices.CreateNoteAsync(noteToAdd);
+            Note addedNote = await _addNoteService.CreateNoteAsync(noteToAdd);
 
             return Created(_locationHelper.GetNotesUrlWithId(addedNote.Id), addedNote);
         }
@@ -60,7 +65,7 @@ namespace Notes.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var updatedNote = await _notesServices.UpdateNoteAsync(id, noteToUpdate);
+            var updatedNote = await _updateService.UpdateNoteAsync(noteToUpdate);
 
             if (updatedNote == null)
             {
@@ -72,7 +77,7 @@ namespace Notes.Api.Controllers
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
-            var deletedNote = await _notesServices.DeleteNoteAsync(id);
+            var deletedNote = await _notesRepository.DeleteNoteByIdAsync(id);
 
             if (deletedNote == null)
             {

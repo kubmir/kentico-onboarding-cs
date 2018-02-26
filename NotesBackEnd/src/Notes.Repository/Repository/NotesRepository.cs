@@ -30,15 +30,13 @@ namespace Notes.Repository.Repository
             return note;
         }
 
-        public async Task<Note> UpdateNoteAsync(Guid id, Note note)
+        public async Task<Note> UpdateNoteAsync(Guid id, Note noteToUpdate)
         {
-            var filter = Builders<Note>.Filter.Eq("Id", id);
-            var update = Builders<Note>
+            var updateDefinition = Builders<Note>
                 .Update
-                .Set("Text", note.Text)
-                .CurrentDate("LastModificationDate");
+                .Set(databaseNote => databaseNote, noteToUpdate);
 
-            return await _persistedNotes.FindOneAndUpdateAsync(filter, update);
+            return await _persistedNotes.FindOneAndUpdateAsync(databaseNote => databaseNote.Id == id, updateDefinition);
         }
 
         public async Task<Note> DeleteNoteByIdAsync(Guid id)
