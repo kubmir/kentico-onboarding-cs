@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Notes.Services.Tests.Notes
 {
-    class AddNoteServiceTests
+    internal class AddNoteServiceTests
     {
         private static readonly Note Note = new Note { Text = "Test note", Id = new Guid("ebcb3d81-af4e-428f-a22d-e7852d70d3a0"), CreationDate = DateTime.MinValue, LastModificationDate = DateTime.MaxValue };
         private static readonly Note NoteDto = new Note { Text = "test text" };

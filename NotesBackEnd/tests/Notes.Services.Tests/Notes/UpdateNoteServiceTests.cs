@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Notes.Services.Tests.Notes
 {
-    class UpdateNoteServiceTests
+    internal class UpdateNoteServiceTests
     {
         private static readonly Note Note = new Note { Text = "Third note", Id = new Guid("599442c0-ae28-4157-9a3f-0491bb4ba6c1"), CreationDate = DateTime.MinValue, LastModificationDate = DateTime.MaxValue };
         private static readonly DateTime TestDateTime = DateTime.ParseExact("21/10/2017 18:00", "g", new CultureInfo("fr-FR"));
