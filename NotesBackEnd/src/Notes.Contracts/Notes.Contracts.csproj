@@ -64,6 +64,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\INotesRepository.cs" />
     <Compile Include="Services\Notes\IAddNoteService.cs" />
+    <Compile Include="Services\Notes\IGetNoteService.cs" />
     <Compile Include="Services\Notes\IUpdateNoteService.cs" />
     <Compile Include="Services\Utils\IDateService.cs" />
     <Compile Include="Services\Utils\IGuidService.cs" />
