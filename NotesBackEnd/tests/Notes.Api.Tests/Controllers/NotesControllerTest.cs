@@ -24,6 +24,7 @@ namespace Notes.Api.Tests.Controllers
         private static readonly Note Note3 = new Note { Text = "Third note", Id = new Guid("599442c0-ae28-4157-9a3f-0491bb4ba6c1"), CreationDate = DateTime.MinValue, LastModificationDate = DateTime.MaxValue };
         private static readonly Note Note4 = new Note { Text = "Fourth note", Id = new Guid("4785546e-824d-42a4-900b-e656f19ffb59"), CreationDate = DateTime.MinValue, LastModificationDate = DateTime.MaxValue };
         private static readonly Note[] AllNotes = { Note1, Note2, Note3, Note4 };
+        private static readonly Guid NotExistingGuid = new Guid("67b8d269-96e0-4928-983c-86659acd47cb");
 
         private static readonly Note Note2Dto = new Note { Text = "test text" };
 
@@ -36,8 +37,9 @@ namespace Notes.Api.Tests.Controllers
             var mockedAddService = MockAddService();
             var mockedUpdateService = MockUpdateService();
             var mockedNoteRepository = MockNoteRepository();
+            var mockedGetService = MockGetService();
 
-            _controller = new NotesController(mockedLocationHelper, mockedAddService, mockedUpdateService, mockedNoteRepository)
+            _controller = new NotesController(mockedLocationHelper, mockedAddService, mockedUpdateService, mockedNoteRepository, mockedGetService)
             {
                 Configuration = new HttpConfiguration(),
                 Request = new HttpRequestMessage()
@@ -87,7 +89,7 @@ namespace Notes.Api.Tests.Controllers
         {
             var expectedNote = Note2;
             string id = expectedNote.Id.ToString();
-            var expectedUri = new Uri($"http://test/{id}/test");
+            var expectedUri = new Uri($"http://test/{id}/post");
 
             var (actualNote, responseMessage) = await GetExecutedResponse<Note>(() => _controller.PostAsync(Note2Dto));
 
@@ -180,14 +182,21 @@ namespace Notes.Api.Tests.Controllers
         }
 
         [Test]
-        public async Task PutAsync_UpdateNonExistingNote()
+        public async Task PutAsync_UpdateNonExistingNote_CreateNewNote()
         {
-            var nonExistingId = new Guid("67b8d269-96e0-4928-983c-86659acd47cb");
+            var expectedNote = Note1;
+            string id = expectedNote.Id.ToString();
+            var expectedUri = new Uri($"http://test/{id}/put");
 
-            var (_, responseMessage) = await GetExecutedResponse<Note>(()
-                => _controller.PutAsync(nonExistingId, Note1));
+            var (actualNote, responseMessage) = await GetExecutedResponse<Note>(()
+                => _controller.PutAsync(NotExistingGuid, Note1));
 
-            Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.Created));
+                Assert.That(responseMessage.Headers.Location, Is.EqualTo(expectedUri));
+                Assert.That(actualNote, Is.EqualTo(expectedNote).UsingNoteComparer());
+            });
         }
 
         [Test]
@@ -225,7 +234,14 @@ namespace Notes.Api.Tests.Controllers
         {
             var mockedId = "ebcb3d81-af4e-428f-a22d-e7852d70d3a0";
             var mockedLocationHelper = Substitute.For<IUrlLocationHelper>();
-            mockedLocationHelper.GetNotesUrlWithId(Guid.Parse(mockedId)).Returns($"http://test/{mockedId}/test");
+
+            mockedLocationHelper
+                .GetNotesUrlWithId(Guid.Parse(mockedId))
+                .Returns($"http://test/{mockedId}/post");
+
+            mockedLocationHelper
+                .GetNotesUrlWithId(Note1.Id)
+                .Returns($"http://test/{Note1.Id}/put");
 
             return mockedLocationHelper;
         }
@@ -249,7 +265,39 @@ namespace Notes.Api.Tests.Controllers
                 .CreateNoteAsync(Note2Dto)
                 .Returns(Note2);
 
+            mockedAddService
+                .CreateNoteAsync(Note1)
+                .Returns(Note1);
+
             return mockedAddService;
+        }
+
+
+        private IGetNoteService MockGetService()
+        {
+            var mockedGetService = Substitute.For<IGetNoteService>();
+
+            mockedGetService
+                .GetNoteByIdAsync(Note1.Id)
+                .Returns(Note1);
+
+            mockedGetService
+                .IsNoteExistingAsync(Note1.Id)
+                .Returns(true);
+
+            mockedGetService
+                .IsNoteExistingAsync(Note3.Id)
+                .Returns(true);
+
+            mockedGetService
+                .IsNoteExistingAsync(Note4.Id)
+                .Returns(true);
+
+            mockedGetService
+                .IsNoteExistingAsync(NotExistingGuid)
+                .Returns(false);
+
+            return mockedGetService;
         }
 
         private INotesRepository MockNoteRepository()
