@@ -21,11 +21,11 @@ namespace Notes.Dependency.Containers
             _unityContainer = container;
         }
 
-        public IDependencyContainerRegister RegisterType<TTo>(Func<TTo> getObjectFunc, LifetimeTypes lifetimeType)
+        public IDependencyContainerRegister RegisterType<TType>(Func<TType> getObjectFunc, LifetimeTypes lifetimeType)
         {
             var lifetimeManager = lifetimeType.GetUnityLifetimeManager();
 
-            _unityContainer.RegisterType<TTo>(lifetimeManager, new InjectionFactory(_ => getObjectFunc()));
+            _unityContainer.RegisterType<TType>(lifetimeManager, new InjectionFactory(_ => getObjectFunc()));
             
             return this;
         }
