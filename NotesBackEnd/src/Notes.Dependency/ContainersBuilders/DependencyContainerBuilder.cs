@@ -12,13 +12,16 @@ namespace Notes.Dependency.ContainersBuilders
             var container = new DependencyContainer();
 
             container
-                .RegisterDependency(new RepositoryTypesBootstrapper())
-                .RegisterDependency(new ApiServicesBootstrapper());
+                .RegisterDependency<RepositoryTypesBootstrapper>()
+                .RegisterDependency<ApiServicesBootstrapper>();
 
             return container;
         }
 
-        private static IDependencyContainerRegister RegisterDependency(this IDependencyContainerRegister container, IBootstrapper bootstrapper)
-            => bootstrapper.RegisterType(container);
+        private static IDependencyContainerRegister RegisterDependency<T>(this IDependencyContainerRegister container) where T : IBootstrapper, new()
+        {
+            var bootstrapper = new T();
+            return bootstrapper.RegisterType(container);
+        }
     }
 }
