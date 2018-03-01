@@ -1,4 +1,6 @@
-﻿using Notes.Api.Services.Dependency;
+﻿using System;
+using Notes.Api.Services.Dependency;
+using Notes.Contracts.ApiServices;
 using Notes.Contracts.Dependency;
 using Notes.Dependency.Containers;
 using Notes.Repository.Dependency;
@@ -7,18 +9,24 @@ namespace Notes.Dependency.ContainersBuilders
 {
     public static class DependencyContainerBuilder
     {
-        public static IDependencyContainerResolver SetUpContainer()
+        public static IDependencyContainerResolver SetUpApiContainer(Func<IRouteManager> getRouteManager)
         {
             var container = new DependencyContainer();
 
-            container
-                .RegisterDependency<RepositoryTypesBootstrapper>()
-                .RegisterDependency<ApiServicesBootstrapper>();
+            RegisterApiDependencies(getRouteManager, container);
 
             return container;
         }
 
-        private static IDependencyContainerRegister RegisterDependency<T>(this IDependencyContainerRegister container) where T : IBootstrapper, new()
+        internal static void RegisterApiDependencies(Func<IRouteManager> getRouteManager, IDependencyContainerRegister container)
+           => container
+                .RegisterType(getRouteManager, LifetimeTypes.PerApplicationSingleton)
+                .RegisterType(() => (IDependencyContainerResolver)container, LifetimeTypes.PerApplicationSingleton)
+                .RegisterDependency<RepositoryTypesBootstrapper>()
+                .RegisterDependency<ApiServicesBootstrapper>();
+
+        private static IDependencyContainerRegister RegisterDependency<T>(this IDependencyContainerRegister container) 
+            where T : IBootstrapper, new()
         {
             var bootstrapper = new T();
             return bootstrapper.RegisterType(container);
