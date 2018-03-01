@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Web.Http.Dependencies;
 using Notes.Contracts.ApiServices;
 using Notes.Contracts.Dependency;
+using Notes.Dependency.Containers;
 using Notes.Dependency.ContainersBuilders;
 using NSubstitute;
 using NUnit.Framework;
@@ -51,7 +52,7 @@ namespace Notes.Dependency.Tests.ContainersBuilder
             => new MockedIDependencyContainerRegister();
     }
 
-    internal class MockedIDependencyContainerRegister : IDependencyContainerRegister
+    internal class MockedIDependencyContainerRegister : IDependencyContainer
     {
         public List<Type> RegisteredTypes { get; }
 
@@ -71,5 +72,16 @@ namespace Notes.Dependency.Tests.ContainersBuilder
             RegisteredTypes.Add(typeof(TType));
             return this;
         }
+
+        public void Dispose() { }
+
+        public object Resolve(Type serviceType)
+            => null;
+
+        public IEnumerable<object> ResolveAll(Type serviceType)
+            => null;
+
+        public IDependencyContainerResolver CreateChildContainer()
+            => null;
     }
 }

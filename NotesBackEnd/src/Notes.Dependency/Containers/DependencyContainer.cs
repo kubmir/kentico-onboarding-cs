@@ -7,7 +7,7 @@ using Unity.Injection;
 
 namespace Notes.Dependency.Containers
 {
-    public class DependencyContainer : IDependencyContainerRegister, IDependencyContainerResolver
+    public class DependencyContainer : IDependencyContainer
     {
         private readonly IUnityContainer _unityContainer;
 

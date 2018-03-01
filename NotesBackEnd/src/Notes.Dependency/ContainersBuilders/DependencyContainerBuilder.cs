@@ -18,10 +18,10 @@ namespace Notes.Dependency.ContainersBuilders
             return container;
         }
 
-        internal static void RegisterApiDependencies(Func<IRouteManager> getRouteManager, IDependencyContainerRegister container)
+        internal static void RegisterApiDependencies(Func<IRouteManager> getRouteManager, IDependencyContainer container)
            => container
                 .RegisterType(getRouteManager, LifetimeTypes.PerApplicationSingleton)
-                .RegisterType(() => (IDependencyContainerResolver)container, LifetimeTypes.PerApplicationSingleton)
+                .RegisterType<IDependencyContainerResolver>(() => container, LifetimeTypes.PerApplicationSingleton)
                 .RegisterDependency<RepositoryTypesBootstrapper>()
                 .RegisterDependency<ApiServicesBootstrapper>();
 
