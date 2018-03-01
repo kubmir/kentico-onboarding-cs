@@ -1,6 +1,6 @@
 ﻿using Notes.Contracts.ApiServices;
 
-namespace Notes.Api.Services.Services
+namespace Notes.Api.Routes
 {
     internal class RouteManager : IRouteManager
     {

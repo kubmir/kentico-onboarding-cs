@@ -14,7 +14,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: InternalsVisibleTo("Notes.Api")]
 [assembly: InternalsVisibleTo("Notes.Api.Services.Tests")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

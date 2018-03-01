@@ -5,7 +5,7 @@ using Notes.Contracts.Dependency;
 
 namespace Notes.Api.Services.Services
 {
-    public class ContainerResolver : IDependencyResolver
+    internal class ContainerResolver : IDependencyResolver
     {
         protected IDependencyContainerResolver Container;
 

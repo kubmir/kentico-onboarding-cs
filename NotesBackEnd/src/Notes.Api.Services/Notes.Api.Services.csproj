@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="Dependency\ApiServicesBootstrapper.cs" />
     <Compile Include="Services\ContainerResolver.cs" />
-    <Compile Include="Services\RouteManager.cs" />
     <Compile Include="Services\UrlLocationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
