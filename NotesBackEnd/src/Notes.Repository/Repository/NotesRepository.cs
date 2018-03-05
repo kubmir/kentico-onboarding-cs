@@ -11,10 +11,15 @@ namespace Notes.Repository.Repository
     internal class NotesRepository : INotesRepository
     {
         private readonly IMongoCollection<Note> _persistedNotes;
+        private const string NoteCollectionName = "notes";
 
-        public NotesRepository(IDatabaseContext databaseContext)
+        public NotesRepository(string connectionString)
         {
-            _persistedNotes = databaseContext.GetPersistedNotes();
+            var mongoClient = new MongoClient(connectionString);
+            var databaseName = new MongoUrl(connectionString).DatabaseName;
+            var database = mongoClient.GetDatabase(databaseName);
+
+            _persistedNotes = database.GetCollection<Note>(NoteCollectionName);
         }
 
         public async Task<IEnumerable<Note>> GetAllNotesAsync()
