@@ -7,7 +7,7 @@ using Unity.Injection;
 
 namespace Notes.Dependency.Containers
 {
-    public class DependencyContainer : IDependencyContainerRegister, IDependencyContainerResolver
+    public class DependencyContainer : IDependencyContainer
     {
         private readonly IUnityContainer _unityContainer;
 
@@ -49,20 +49,11 @@ namespace Notes.Dependency.Containers
         }
 
         public object Resolve(Type serviceType)
-        {
-            try
-            {
-                return _unityContainer.Resolve(serviceType);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            => _unityContainer.Resolve(serviceType);
 
-        }
 
         public IEnumerable<object> ResolveAll(Type serviceType)
-           => _unityContainer.ResolveAll(serviceType);
+            => _unityContainer.ResolveAll(serviceType);
 
         public IDependencyContainerResolver CreateChildContainer()
             => new DependencyContainer(_unityContainer.CreateChildContainer());

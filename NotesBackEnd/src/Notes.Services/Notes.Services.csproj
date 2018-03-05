@@ -44,7 +44,7 @@
     <Compile Include="Notes\GetNoteService.cs" />
     <Compile Include="Notes\UpdateNoteService.cs" />
     <Compile Include="Utils\DateService.cs" />
-    <Compile Include="Dependency\ServicesTypesRegistration.cs" />
+    <Compile Include="Dependency\ServicesTypesBootstrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\GuidService.cs" />
   </ItemGroup>

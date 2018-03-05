@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Web;
+using System.Web.Http.Dependencies;
 using Notes.Api.Services.Services;
 using Notes.Contracts.ApiServices;
 using Notes.Contracts.Dependency;
@@ -11,8 +12,8 @@ namespace Notes.Api.Services.Dependency
         public IDependencyContainerRegister RegisterType(IDependencyContainerRegister container)
             => container
                 .RegisterType(GetHttpRequestMessage, LifetimeTypes.PerRequestSingleton)
-                .RegisterType<IUrlLocationHelper, UrlLocationHelper>(LifetimeTypes.PerRequestSingleton)
-                .RegisterType<IRouteManager, RouteManager>(LifetimeTypes.PerApplicationSingleton);
+                .RegisterType<IDependencyResolver, ContainerResolver>(LifetimeTypes.PerApplicationSingleton)
+                .RegisterType<IUrlLocationHelper, UrlLocationHelper>(LifetimeTypes.PerRequestSingleton);
 
         private static HttpRequestMessage GetHttpRequestMessage()
             => (HttpRequestMessage)HttpContext.Current.Items["MS_HttpRequestMessage"];

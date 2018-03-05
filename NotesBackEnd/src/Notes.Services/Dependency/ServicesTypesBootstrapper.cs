@@ -7,7 +7,7 @@ using Notes.Services.Utils;
 
 namespace Notes.Services.Dependency
 {
-    public class ServicesTypesRegistration : IBootstrapper
+    public class ServicesTypesBootstrapper : IBootstrapper
     {
         public IDependencyContainerRegister RegisterType(IDependencyContainerRegister container)
             => container
