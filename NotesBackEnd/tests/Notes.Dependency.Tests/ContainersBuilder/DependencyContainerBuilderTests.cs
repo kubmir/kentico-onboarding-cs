@@ -35,12 +35,17 @@ namespace Notes.Dependency.Tests.ContainersBuilder
         public void SetUp()
         {
             var routeManager = Substitute.For<IRouteManager>();
+            var connectionManager = Substitute.For<IConnectionStringManager>();
+
             IRouteManager GetRouteManager()
                 => routeManager;
 
+            IConnectionStringManager GetConnectionManager()
+                => connectionManager;
+
             _container = MockContainer();
 
-            DependencyContainerBuilder.RegisterApiDependencies(GetRouteManager, _container);
+            DependencyContainerBuilder.RegisterApiDependencies(GetRouteManager, GetConnectionManager, _container);
             _actualTypes = _container.RegisteredTypes;
         }
 
@@ -62,12 +67,6 @@ namespace Notes.Dependency.Tests.ContainersBuilder
         }
 
         public IDependencyContainerRegister RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType) where TTo : TFrom
-        {
-            RegisteredTypes.Add(typeof(TFrom));
-            return this;
-        }
-
-        public IDependencyContainerRegister RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType, object injectedObject) where TTo : TFrom
         {
             RegisteredTypes.Add(typeof(TFrom));
             return this;

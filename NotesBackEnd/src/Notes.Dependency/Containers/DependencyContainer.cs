@@ -21,15 +21,6 @@ namespace Notes.Dependency.Containers
             _unityContainer = container;
         }
 
-        public IDependencyContainerRegister RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType, object injectedObject) where TTo : TFrom
-        {
-            var lifetimeManager = lifetimeType.GetUnityLifetimeManager();
-
-            _unityContainer.RegisterType<TFrom, TTo>(lifetimeManager, new InjectionConstructor(injectedObject));
-
-            return this;
-        }
-
         public IDependencyContainerRegister RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType) where TTo : TFrom
         {
             var lifetimeManager = lifetimeType.GetUnityLifetimeManager();
