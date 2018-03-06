@@ -2,7 +2,7 @@
 using System.Web.Http.Routing;
 using Microsoft.Web.Http.Routing;
 
-namespace Notes.API
+namespace Notes.Api
 {
     internal static class WebApiConfig
     {
