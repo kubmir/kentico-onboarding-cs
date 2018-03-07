@@ -28,11 +28,8 @@ namespace Notes.Dependency.ContainersBuilders
                 .RegisterDependency<ApiServicesBootstrapper>()
                 .RegisterDependency<ServicesTypesBootstrapper>();
 
-        private static IDependencyContainerRegister RegisterDependency<T>(this IDependencyContainerRegister container) 
-            where T : IBootstrapper, new()
-        {
-            var bootstrapper = new T();
-            return bootstrapper.RegisterType(container);
-        }
+        private static IDependencyContainerRegister RegisterDependency<TBootstrapper>(this IDependencyContainerRegister container) 
+            where TBootstrapper : IBootstrapper, new()
+                => new TBootstrapper().RegisterType(container);
     }
 }
