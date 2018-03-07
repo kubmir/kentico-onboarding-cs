@@ -21,7 +21,8 @@ namespace Notes.Dependency.Containers
             _unityContainer = container;
         }
 
-        public IDependencyContainerRegister RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType) where TTo : TFrom
+        public IDependencyContainerRegister RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType) 
+            where TTo : TFrom
         {
             var lifetimeManager = lifetimeType.GetUnityLifetimeManager();
 

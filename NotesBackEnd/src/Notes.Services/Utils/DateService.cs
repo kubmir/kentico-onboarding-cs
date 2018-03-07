@@ -1,5 +1,5 @@
 ﻿using System;
-using Notes.Contracts.Services.Date;
+using Notes.Contracts.Services.Utils;
 
 namespace Notes.Services.Utils
 {

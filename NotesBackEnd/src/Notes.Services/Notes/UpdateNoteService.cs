@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
-using Notes.Contracts.Services.Date;
 using Notes.Contracts.Services.Notes;
+using Notes.Contracts.Services.Utils;
 
 namespace Notes.Services.Notes
 {
