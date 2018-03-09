@@ -78,7 +78,7 @@ namespace Notes.Api.Controllers
                 return Created(_locationHelper.GetNotesUrlWithId(addedNote.Id), addedNote);
             }
 
-            var updatedNote = await _updateNoteService.UpdateNoteAsync(noteToUpdate);
+            var updatedNote = await _updateNoteService.UpdateNoteAsync(id, noteToUpdate);
 
             return Ok(updatedNote);
         }

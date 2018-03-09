@@ -32,7 +32,7 @@ namespace Notes.Services.Tests.Notes
         {
             var expectedNote = Note;
 
-            var actualNote = await _updateService.UpdateNoteAsync(Note);
+            var actualNote = await _updateService.UpdateNoteAsync(Note.Id, Note);
 
             Assert.That(actualNote, Is.EqualTo(expectedNote));
         }

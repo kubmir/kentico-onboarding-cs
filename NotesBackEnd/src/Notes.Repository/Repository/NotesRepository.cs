@@ -37,13 +37,7 @@ namespace Notes.Repository.Repository
         }
 
         public async Task<Note> UpdateNoteAsync(Guid id, Note noteToUpdate)
-        {
-            var updateDefinition = Builders<Note>
-                .Update
-                .Set(databaseNote => databaseNote, noteToUpdate);
-
-            return await _persistedNotes.FindOneAndUpdateAsync(databaseNote => databaseNote.Id == id, updateDefinition);
-        }
+            => await _persistedNotes.FindOneAndReplaceAsync(databaseNote => databaseNote.Id == id, noteToUpdate);      
 
         public async Task<Note> DeleteNoteByIdAsync(Guid id)
             => await _persistedNotes.FindOneAndDeleteAsync(note => note.Id == id);

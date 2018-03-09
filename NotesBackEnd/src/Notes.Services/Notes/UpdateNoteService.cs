@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
 using Notes.Contracts.Services.Notes;
@@ -17,12 +18,12 @@ namespace Notes.Services.Notes
             _repository = repository;
         }
 
-        public async Task<Note> UpdateNoteAsync(Note note)
+        public async Task<Note> UpdateNoteAsync(Guid updateNoteId, Note note)
         {
             var updateTime = _dateService.GetCurrentDateTime();
-            Note noteToUpdate = new Note { Id = note.Id, Text = note.Text, CreationDate = note.CreationDate, LastModificationDate = updateTime };
+            Note noteToUpdate = new Note { Id = updateNoteId, Text = note.Text, CreationDate = note.CreationDate, LastModificationDate = updateTime };
 
-            var updatedNote = await _repository.UpdateNoteAsync(note.Id, noteToUpdate);
+            var updatedNote = await _repository.UpdateNoteAsync(updateNoteId, noteToUpdate);
 
             return updatedNote;
         }

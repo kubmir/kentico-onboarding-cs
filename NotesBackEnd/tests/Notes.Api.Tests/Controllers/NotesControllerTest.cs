@@ -251,7 +251,7 @@ namespace Notes.Api.Tests.Controllers
             var mockedUpdateService = Substitute.For<IUpdateNoteService>();
 
             mockedUpdateService
-                .UpdateNoteAsync(Note3)
+                .UpdateNoteAsync(Note3.Id, Note3)
                 .Returns(Note3);
 
             return mockedUpdateService;
