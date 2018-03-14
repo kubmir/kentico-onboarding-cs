@@ -6,7 +6,7 @@ using Notes.Contracts.Services.Utils;
 
 namespace Notes.Services.Notes
 {
-    public class AddNoteService : IAddNoteService
+    internal class AddNoteService : IAddNoteService
     {
         private readonly IDateService _dateService;
         private readonly INotesRepository _repository;

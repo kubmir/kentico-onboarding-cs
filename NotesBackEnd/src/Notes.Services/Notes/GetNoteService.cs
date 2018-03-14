@@ -6,16 +6,13 @@ using Notes.Contracts.Services.Notes;
 
 namespace Notes.Services.Notes
 {
-    public class GetNoteService : IGetNoteService
+    internal class GetNoteService : IGetNoteService
     {
         private readonly INotesRepository _repository;
         private Note _cachedNote;
 
-        public GetNoteService(INotesRepository repository)
-        {
-            _cachedNote = null;
-            _repository = repository;
-        }
+        public GetNoteService(INotesRepository repository) 
+            => _repository = repository;
 
         public async Task<Note> GetByIdAsync(Guid id)
         {

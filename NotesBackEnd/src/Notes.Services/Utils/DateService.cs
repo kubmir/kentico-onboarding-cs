@@ -3,11 +3,9 @@ using Notes.Contracts.Services.Utils;
 
 namespace Notes.Services.Utils
 {
-    class DateService : IDateService
+    internal class DateService : IDateService
     {
         public DateTime GetCurrentDateTime()
-        {
-            return DateTime.Now;
-        }
+            => DateTime.Now;
     }
 }

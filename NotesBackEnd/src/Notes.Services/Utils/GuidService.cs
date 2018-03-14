@@ -3,11 +3,9 @@ using Notes.Contracts.Services.Utils;
 
 namespace Notes.Services.Utils
 {
-    class GuidService : IGuidService
+    internal class GuidService : IGuidService
     {
         public Guid GetNew()
-        {
-            return Guid.NewGuid();
-        }
+            => Guid.NewGuid();
     }
 }
