@@ -78,11 +78,18 @@ namespace Notes.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_NonExistingId()
         {
-            var (_, responseMessage) = await GetExecutedResponse<Note>(() => _controller.GetAsync(Guid.Empty));
+            var (_, responseMessage) = await GetExecutedResponse<Note>(() => _controller.GetAsync(NotExistingGuid));
 
             Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         }
 
+        [Test]
+        public async Task GetAsync_EmptyId_ReturnBadRequest()
+        {
+            var (_, responseMessage) = await GetExecutedResponse<Note>(() => _controller.GetAsync(Guid.Empty));
+
+            Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        }
 
         [Test]
         public async Task PostAsync_AddNewValidNote()
