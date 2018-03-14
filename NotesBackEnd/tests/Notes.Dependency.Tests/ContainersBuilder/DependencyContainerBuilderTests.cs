@@ -76,6 +76,9 @@ namespace Notes.Dependency.Tests.ContainersBuilder
 
         public void Dispose() { }
 
+        public TType Resolve<TType>()
+            => default(TType);
+
         public object Resolve(Type serviceType)
             => null;
 

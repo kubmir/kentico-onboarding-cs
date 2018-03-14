@@ -43,6 +43,8 @@ namespace Notes.Dependency.Containers
         public object Resolve(Type serviceType)
             => _unityContainer.Resolve(serviceType);
 
+        public TType Resolve<TType>()
+            => _unityContainer.Resolve<TType>();
 
         public IEnumerable<object> ResolveAll(Type serviceType)
             => _unityContainer.ResolveAll(serviceType);
