@@ -2,6 +2,6 @@
 {
     public interface IConnectionOptions
     {
-        string GetDatabaseConnectionString();
+        string GetNotesDatabaseConnectionString();
     }
 }

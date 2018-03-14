@@ -15,7 +15,7 @@ namespace Notes.Repository.Repository
 
         public NotesRepository(IConnectionOptions connectionOptions)
         {
-            var connectionString = connectionOptions.GetDatabaseConnectionString();
+            var connectionString = connectionOptions.GetNotesDatabaseConnectionString();
             var mongoClient = new MongoClient(connectionString);
             var databaseName = new MongoUrl(connectionString).DatabaseName;
             var database = mongoClient.GetDatabase(databaseName);
