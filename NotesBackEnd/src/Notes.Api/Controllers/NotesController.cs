@@ -78,6 +78,11 @@ namespace Notes.Api.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (id != noteToUpdate.Id)
+            {
+                return Conflict();
+            }
+
             if (!await _getNoteService.Exists(id))
             {
                 var addedNote = await _addNoteService.CreateAsync(noteToUpdate);

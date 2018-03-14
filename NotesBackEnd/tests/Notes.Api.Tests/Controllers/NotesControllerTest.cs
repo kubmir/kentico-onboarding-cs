@@ -168,6 +168,16 @@ namespace Notes.Api.Tests.Controllers
         }
 
         [Test]
+        public async Task PutAsync_UpdateWithDifferentIdInUrlAndBody_ReturnConflict()
+        {
+            var (_, responseMessage) = await GetExecutedResponse<Note>(()
+                => _controller.PutAsync(Note3.Id, Note2));
+
+
+            Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
+        }
+
+        [Test]
         public async Task PutAsync_UpdateNullNote()
         {
             var (_, responseMessage) = await GetExecutedResponse<Note>(()
@@ -192,6 +202,7 @@ namespace Notes.Api.Tests.Controllers
         public async Task PutAsync_UpdateNonExistingNote_CreateNewNote()
         {
             var expectedNote = Note1;
+            Note1.Id = NotExistingGuid;
             string id = expectedNote.Id.ToString();
             var expectedUri = new Uri($"http://test/{id}/put");
 
@@ -247,8 +258,8 @@ namespace Notes.Api.Tests.Controllers
                 .Returns($"http://test/{mockedId}/post");
 
             mockedLocationHelper
-                .GetNotesUrlWithId(Note1.Id)
-                .Returns($"http://test/{Note1.Id}/put");
+                .GetNotesUrlWithId(NotExistingGuid)
+                .Returns($"http://test/{NotExistingGuid}/put");
 
             return mockedLocationHelper;
         }
