@@ -31,19 +31,19 @@ namespace Notes.Api.Controllers
 
         public async Task<IHttpActionResult> GetAsync()
         {
-            var notes = await _notesRepository.GetAllNotesAsync();
+            var notes = await _notesRepository.GetAllAsync();
 
             return Ok(notes);
         }
 
         public async Task<IHttpActionResult> GetAsync(Guid id)
         {
-            if (!await _getNoteService.IsNoteExistingAsync(id))
+            if (!await _getNoteService.Exists(id))
             {
                 return NotFound();
             }
 
-            var foundNote = await _getNoteService.GetNoteByIdAsync(id);
+            var foundNote = await _getNoteService.GetByIdAsync(id);
 
             return Ok(foundNote);
         }
@@ -57,7 +57,7 @@ namespace Notes.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            Note addedNote = await _addNoteService.CreateNoteAsync(noteToAdd);
+            Note addedNote = await _addNoteService.CreateAsync(noteToAdd);
 
             return Created(_locationHelper.GetNotesUrlWithId(addedNote.Id), addedNote);
         }
@@ -71,26 +71,26 @@ namespace Notes.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (!await _getNoteService.IsNoteExistingAsync(id))
+            if (!await _getNoteService.Exists(id))
             {
-                var addedNote = await _addNoteService.CreateNoteAsync(noteToUpdate);
+                var addedNote = await _addNoteService.CreateAsync(noteToUpdate);
 
                 return Created(_locationHelper.GetNotesUrlWithId(addedNote.Id), addedNote);
             }
 
-            var updatedNote = await _updateNoteService.UpdateNoteAsync(id, noteToUpdate);
+            var updatedNote = await _updateNoteService.UpdateAsync(id, noteToUpdate);
 
             return Ok(updatedNote);
         }
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
-            if (!await _getNoteService.IsNoteExistingAsync(id))
+            if (!await _getNoteService.Exists(id))
             {
                 return NotFound();
             }
 
-            var deletedNote = await _notesRepository.DeleteNoteByIdAsync(id);
+            var deletedNote = await _notesRepository.DeleteByIdAsync(id);
 
             return Ok(deletedNote);
         }

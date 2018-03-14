@@ -251,7 +251,7 @@ namespace Notes.Api.Tests.Controllers
             var mockedUpdateService = Substitute.For<IUpdateNoteService>();
 
             mockedUpdateService
-                .UpdateNoteAsync(Note3.Id, Note3)
+                .UpdateAsync(Note3.Id, Note3)
                 .Returns(Note3);
 
             return mockedUpdateService;
@@ -262,11 +262,11 @@ namespace Notes.Api.Tests.Controllers
             var mockedAddService = Substitute.For<IAddNoteService>();
 
             mockedAddService
-                .CreateNoteAsync(Note2Dto)
+                .CreateAsync(Note2Dto)
                 .Returns(Note2);
 
             mockedAddService
-                .CreateNoteAsync(Note1)
+                .CreateAsync(Note1)
                 .Returns(Note1);
 
             return mockedAddService;
@@ -278,23 +278,23 @@ namespace Notes.Api.Tests.Controllers
             var mockedGetService = Substitute.For<IGetNoteService>();
 
             mockedGetService
-                .GetNoteByIdAsync(Note1.Id)
+                .GetByIdAsync(Note1.Id)
                 .Returns(Note1);
 
             mockedGetService
-                .IsNoteExistingAsync(Note1.Id)
+                .Exists(Note1.Id)
                 .Returns(true);
 
             mockedGetService
-                .IsNoteExistingAsync(Note3.Id)
+                .Exists(Note3.Id)
                 .Returns(true);
 
             mockedGetService
-                .IsNoteExistingAsync(Note4.Id)
+                .Exists(Note4.Id)
                 .Returns(true);
 
             mockedGetService
-                .IsNoteExistingAsync(NotExistingGuid)
+                .Exists(NotExistingGuid)
                 .Returns(false);
 
             return mockedGetService;
@@ -305,15 +305,15 @@ namespace Notes.Api.Tests.Controllers
             var mockedRepository = Substitute.For<INotesRepository>();
 
             mockedRepository
-                .GetAllNotesAsync()
+                .GetAllAsync()
                 .Returns(AllNotes);
 
             mockedRepository
-                .GetNoteByIdAsync(Note1.Id)
+                .GetByIdAsync(Note1.Id)
                 .Returns(Note1);
 
             mockedRepository
-                .DeleteNoteByIdAsync(Note4.Id)
+                .DeleteByIdAsync(Note4.Id)
                 .Returns(Note4);
 
             return mockedRepository;

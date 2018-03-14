@@ -36,7 +36,7 @@ namespace Notes.Services.Tests.Notes
             expectedNote.CreationDate = TestDateTime;
             expectedNote.LastModificationDate = TestDateTime;
 
-            var actualNote = await _addService.CreateNoteAsync(NoteDto);
+            var actualNote = await _addService.CreateAsync(NoteDto);
 
             Assert.That(actualNote, Is.EqualTo(expectedNote));
         }
@@ -46,7 +46,7 @@ namespace Notes.Services.Tests.Notes
             var mockedRepository = Substitute.For<INotesRepository>();
 
             mockedRepository
-                .CreateNoteAsync(NoteDto)
+                .CreateAsync(NoteDto)
                 .Returns(Note);
 
             return mockedRepository;
@@ -68,7 +68,7 @@ namespace Notes.Services.Tests.Notes
             var mockedGuidService = Substitute.For<IGuidService>();
 
             mockedGuidService
-                .GetNewGuid()
+                .GetNew()
                 .Returns(Note.Id);
 
             return mockedGuidService;

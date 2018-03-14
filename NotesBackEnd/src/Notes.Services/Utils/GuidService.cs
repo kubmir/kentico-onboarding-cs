@@ -5,7 +5,7 @@ namespace Notes.Services.Utils
 {
     class GuidService : IGuidService
     {
-        public Guid GetNewGuid()
+        public Guid GetNew()
         {
             return Guid.NewGuid();
         }

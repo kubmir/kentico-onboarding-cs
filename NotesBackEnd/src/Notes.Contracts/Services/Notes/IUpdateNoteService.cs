@@ -6,6 +6,6 @@ namespace Notes.Contracts.Services.Notes
 {
     public interface IUpdateNoteService
     {
-        Task<Note> UpdateNoteAsync(Guid id, Note note);
+        Task<Note> UpdateAsync(Guid id, Note note);
     }
 }

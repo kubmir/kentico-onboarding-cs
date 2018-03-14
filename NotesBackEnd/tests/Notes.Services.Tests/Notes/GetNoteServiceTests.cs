@@ -29,7 +29,7 @@ namespace Notes.Services.Tests.Notes
         {
             var expectedNote = Note;
 
-            var actualNote = await _getService.GetNoteByIdAsync(Note.Id);
+            var actualNote = await _getService.GetByIdAsync(Note.Id);
 
             Assert.That(actualNote, Is.EqualTo(expectedNote));
         }
@@ -39,8 +39,8 @@ namespace Notes.Services.Tests.Notes
         {
             var expectedNote = Note;
 
-            var noteFromRepository = await _getService.GetNoteByIdAsync(Note.Id);
-            var noteFromCache = await _getService.GetNoteByIdAsync(Note.Id);
+            var noteFromRepository = await _getService.GetByIdAsync(Note.Id);
+            var noteFromCache = await _getService.GetByIdAsync(Note.Id);
 
             Assert.Multiple(() =>
             {
@@ -53,7 +53,7 @@ namespace Notes.Services.Tests.Notes
         [Test]
         public async Task IsNoteExistingAsync_ReturnTrueForExistingNote()
         {
-            var isExisting = await _getService.IsNoteExistingAsync(Note.Id);
+            var isExisting = await _getService.Exists(Note.Id);
 
             Assert.That(isExisting, Is.True);
         }
@@ -61,8 +61,8 @@ namespace Notes.Services.Tests.Notes
         [Test]
         public async Task IsNoteExistingAsync_ReturnTrueForExistingNote_FromCache()
         {
-            var isExistingFromRepository = await _getService.IsNoteExistingAsync(Note.Id);
-            var isExistingFromCache = await _getService.IsNoteExistingAsync(Note.Id);
+            var isExistingFromRepository = await _getService.Exists(Note.Id);
+            var isExistingFromCache = await _getService.Exists(Note.Id);
 
             Assert.Multiple(() =>
             {
@@ -75,7 +75,7 @@ namespace Notes.Services.Tests.Notes
         [Test]
         public async Task IsNoteExistingAsync_ReturnFalseForNotExistingNote()
         {
-            var isExisting = await _getService.IsNoteExistingAsync(Guid.Empty);
+            var isExisting = await _getService.Exists(Guid.Empty);
 
             Assert.That(isExisting, Is.False);
         }
@@ -85,7 +85,7 @@ namespace Notes.Services.Tests.Notes
             var mockedRepository = Substitute.For<INotesRepository>();
 
             mockedRepository
-                .GetNoteByIdAsync(Note.Id)
+                .GetByIdAsync(Note.Id)
                 .Returns(Note);
 
             return mockedRepository;

@@ -19,15 +19,15 @@ namespace Notes.Services.Notes
             _guidService = guidService;
         }
 
-        public async Task<Note> CreateNoteAsync(Note note)
+        public async Task<Note> CreateAsync(Note note)
         {
             var dateTime = _dateService.GetCurrentDateTime();
 
             note.CreationDate = dateTime;
             note.LastModificationDate = dateTime;
-            note.Id = _guidService.GetNewGuid();
+            note.Id = _guidService.GetNew();
 
-            return await _repository.CreateNoteAsync(note);
+            return await _repository.CreateAsync(note);
         }
     }
 }

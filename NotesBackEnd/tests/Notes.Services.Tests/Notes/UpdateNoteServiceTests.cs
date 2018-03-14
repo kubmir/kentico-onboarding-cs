@@ -32,7 +32,7 @@ namespace Notes.Services.Tests.Notes
         {
             var expectedNote = Note;
 
-            var actualNote = await _updateService.UpdateNoteAsync(Note.Id, Note);
+            var actualNote = await _updateService.UpdateAsync(Note.Id, Note);
 
             Assert.That(actualNote, Is.EqualTo(expectedNote));
         }
@@ -42,7 +42,7 @@ namespace Notes.Services.Tests.Notes
             var mockedRepository = Substitute.For<INotesRepository>();
 
             mockedRepository
-                .UpdateNoteAsync(Note.Id, Arg.Is<Note>(repositoryNote => repositoryNote.Id == Note.Id))
+                .UpdateAsync(Note.Id, Arg.Is<Note>(repositoryNote => repositoryNote.Id == Note.Id))
                 .Returns(Note);
 
             return mockedRepository;

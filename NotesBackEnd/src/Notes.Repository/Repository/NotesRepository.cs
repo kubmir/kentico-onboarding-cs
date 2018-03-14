@@ -23,23 +23,23 @@ namespace Notes.Repository.Repository
             _persistedNotes = database.GetCollection<Note>(NoteCollectionName);
         }
 
-        public async Task<IEnumerable<Note>> GetAllNotesAsync()
+        public async Task<IEnumerable<Note>> GetAllAsync()
             => (await _persistedNotes.FindAsync<Note>(FilterDefinition<Note>.Empty)).ToEnumerable();
 
-        public async Task<Note> GetNoteByIdAsync(Guid id)
+        public async Task<Note> GetByIdAsync(Guid id)
             => (await _persistedNotes.FindAsync(persistedNote => persistedNote.Id == id)).FirstOrDefault();
 
-        public async Task<Note> CreateNoteAsync(Note note)
+        public async Task<Note> CreateAsync(Note note)
         {
             await _persistedNotes.InsertOneAsync(note);
 
             return note;
         }
 
-        public async Task<Note> UpdateNoteAsync(Guid id, Note noteToUpdate)
+        public async Task<Note> UpdateAsync(Guid id, Note noteToUpdate)
             => await _persistedNotes.FindOneAndReplaceAsync(databaseNote => databaseNote.Id == id, noteToUpdate);      
 
-        public async Task<Note> DeleteNoteByIdAsync(Guid id)
+        public async Task<Note> DeleteByIdAsync(Guid id)
             => await _persistedNotes.FindOneAndDeleteAsync(note => note.Id == id);
     }
 }

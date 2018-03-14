@@ -18,12 +18,12 @@ namespace Notes.Services.Notes
             _repository = repository;
         }
 
-        public async Task<Note> UpdateNoteAsync(Guid updateNoteId, Note note)
+        public async Task<Note> UpdateAsync(Guid updateNoteId, Note note)
         {
             var updateTime = _dateService.GetCurrentDateTime();
             Note noteToUpdate = new Note { Id = updateNoteId, Text = note.Text, CreationDate = note.CreationDate, LastModificationDate = updateTime };
 
-            var updatedNote = await _repository.UpdateNoteAsync(updateNoteId, noteToUpdate);
+            var updatedNote = await _repository.UpdateAsync(updateNoteId, noteToUpdate);
 
             return updatedNote;
         }

@@ -17,17 +17,17 @@ namespace Notes.Services.Notes
             _repository = repository;
         }
 
-        public async Task<Note> GetNoteByIdAsync(Guid id)
+        public async Task<Note> GetByIdAsync(Guid id)
         {
             if (_cachedNote?.Id != id)
             {
-                _cachedNote = await _repository.GetNoteByIdAsync(id);
+                _cachedNote = await _repository.GetByIdAsync(id);
             }
 
             return _cachedNote;
         }
 
-        public async Task<Boolean> IsNoteExistingAsync(Guid id)
-            => await GetNoteByIdAsync(id) != null;
+        public async Task<Boolean> Exists(Guid id)
+            => await GetByIdAsync(id) != null;
     }
 }

@@ -6,8 +6,8 @@ namespace Notes.Contracts.Services.Notes
 {
     public interface IGetNoteService
     {
-        Task<Note> GetNoteByIdAsync(Guid id);
+        Task<Note> GetByIdAsync(Guid id);
 
-        Task<Boolean> IsNoteExistingAsync(Guid id);
+        Task<Boolean> Exists(Guid id);
     }
 }
