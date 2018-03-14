@@ -7,19 +7,15 @@ using Unity.Injection;
 
 namespace Notes.Dependency.Containers
 {
-    public class DependencyContainer : IDependencyContainer
+    internal class DependencyContainer : IDependencyContainer
     {
         private readonly IUnityContainer _unityContainer;
 
-        public DependencyContainer()
-        {
-            _unityContainer = new UnityContainer();
-        }
+        public DependencyContainer() 
+            => _unityContainer = new UnityContainer();
 
-        private DependencyContainer(IUnityContainer container)
-        {
-            _unityContainer = container;
-        }
+        private DependencyContainer(IUnityContainer container) 
+            => _unityContainer = container;
 
         public IDependencyContainerRegister RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType) 
             where TTo : TFrom
