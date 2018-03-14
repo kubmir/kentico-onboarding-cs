@@ -2,7 +2,7 @@
 
 namespace Notes.Api.Routes
 {
-    internal class RouteManager : IRouteManager
+    internal class RouteOptions : IRouteOptions
     {
         internal const string NotesRouteName = "Notes";
         internal const string NotesRoute = "api/v{version:apiVersion}/notes/{id?}";

@@ -34,18 +34,14 @@ namespace Notes.Dependency.Tests.ContainersBuilder
         [SetUp]
         public void SetUp()
         {
-            var routeManager = Substitute.For<IRouteManager>();
-            var connectionManager = Substitute.For<IConnectionStringManager>();
+            var routeManager = Substitute.For<IRouteOptions>();
 
-            IRouteManager GetRouteManager()
+            IRouteOptions GetRouteOptions()
                 => routeManager;
-
-            IConnectionStringManager GetConnectionManager()
-                => connectionManager;
 
             _container = MockContainer();
 
-            DependencyContainerBuilder.RegisterApiDependencies(GetRouteManager, GetConnectionManager, _container);
+            DependencyContainerBuilder.RegisterApiDependencies(GetRouteOptions, _container);
             _actualTypes = _container.RegisteredTypes;
         }
 

@@ -10,19 +10,18 @@ namespace Notes.Dependency.ContainersBuilders
 {
     public static class DependencyContainerBuilder
     {
-        public static IDependencyContainerResolver SetUpApiContainer(Func<IRouteManager> getRouteManager, Func<IConnectionStringManager> getConnectionString)
+        public static IDependencyContainerResolver SetUpApiContainer(Func<IRouteOptions> getRouteOptions)
         {
             var container = new DependencyContainer();
 
-            RegisterApiDependencies(getRouteManager, getConnectionString, container);
+            RegisterApiDependencies(getRouteOptions, container);
 
             return container;
         }
 
-        internal static void RegisterApiDependencies(Func<IRouteManager> getRouteManager, Func<IConnectionStringManager> getConnectionString, IDependencyContainer container)
+        internal static void RegisterApiDependencies(Func<IRouteOptions> getRouteOptions, IDependencyContainer container)
             => container
-                .RegisterType(getRouteManager, LifetimeTypes.PerApplicationSingleton)
-                .RegisterType(getConnectionString, LifetimeTypes.PerApplicationSingleton)
+                .RegisterType(getRouteOptions, LifetimeTypes.PerApplicationSingleton)
                 .RegisterType<IDependencyContainerResolver>(() => container, LifetimeTypes.PerApplicationSingleton)
                 .RegisterDependency<RepositoryTypesBootstrapper>()
                 .RegisterDependency<ApiServicesBootstrapper>()

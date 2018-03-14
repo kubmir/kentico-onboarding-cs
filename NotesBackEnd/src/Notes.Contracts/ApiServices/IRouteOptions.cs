@@ -1,6 +1,6 @@
 ﻿namespace Notes.Contracts.ApiServices
 {
-    public interface IRouteManager
+    public interface IRouteOptions
     {
         string GetNotesRoute();
 

@@ -11,7 +11,7 @@ using Notes.Contracts.Services.Notes;
 namespace Notes.Api.Controllers
 {
     [ApiVersion("1.0")]
-    [Route(RouteManager.NotesRoute, Name = RouteManager.NotesRouteName)]
+    [Route(RouteOptions.NotesRoute, Name = RouteOptions.NotesRouteName)]
     public class NotesController : ApiController
     {
         private readonly IUrlLocationHelper _locationHelper;

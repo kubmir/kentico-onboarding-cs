@@ -1,6 +1,6 @@
 ﻿namespace Notes.Contracts.ApiServices
 {
-    public interface IConnectionStringManager
+    public interface IConnectionOptions
     {
         string GetDatabaseConnectionString();
     }

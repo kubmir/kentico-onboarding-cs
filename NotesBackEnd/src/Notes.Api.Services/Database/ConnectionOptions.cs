@@ -1,13 +1,13 @@
 ﻿using System.Web.Configuration;
 using Notes.Contracts.ApiServices;
 
-namespace Notes.Api.Database
+namespace Notes.Api.Services.Database
 {
-    internal class DatabaseConnectionManager : IConnectionStringManager
+    internal class ConnectionOptions : IConnectionOptions
     {
         private readonly string _mongoDatabaseConnectionString;
 
-        public DatabaseConnectionManager()
+        public ConnectionOptions()
             => _mongoDatabaseConnectionString = WebConfigurationManager.ConnectionStrings["MongoDb_Notes_Connection"].ConnectionString;
 
         public string GetDatabaseConnectionString()

@@ -14,23 +14,23 @@ namespace Notes.Api.Services.Tests.Services
 
         private IUrlLocationHelper _urlLocationHelper;
         private UrlHelper _urlHelper;
-        private IRouteManager _routeManager;
+        private IRouteOptions _routeOptions;
 
         [SetUp]
         public void Init()
         {
             _urlHelper = Substitute.For<UrlHelper>();
-            _routeManager = Substitute.For<IRouteManager>();
+            _routeOptions = Substitute.For<IRouteOptions>();
 
             _urlHelper
                 .Route("test", Arg.Is<object>(value => (Guid) new HttpRouteValueDictionary(value)["id"] == new Guid(Id)))
                 .Returns($"/{Id}/test");
 
-            _routeManager
+            _routeOptions
                 .GetNotesRouteName()
                 .Returns("test");
 
-            _urlLocationHelper = new UrlLocationHelper(_urlHelper, _routeManager);
+            _urlLocationHelper = new UrlLocationHelper(_urlHelper, _routeOptions);
         }
 
         [Test]

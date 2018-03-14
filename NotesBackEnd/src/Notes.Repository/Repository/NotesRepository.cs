@@ -13,9 +13,9 @@ namespace Notes.Repository.Repository
         private readonly IMongoCollection<Note> _persistedNotes;
         private const string NoteCollectionName = "notes";
 
-        public NotesRepository(IConnectionStringManager connectionManager)
+        public NotesRepository(IConnectionOptions connectionOptions)
         {
-            var connectionString = connectionManager.GetDatabaseConnectionString();
+            var connectionString = connectionOptions.GetDatabaseConnectionString();
             var mongoClient = new MongoClient(connectionString);
             var databaseName = new MongoUrl(connectionString).DatabaseName;
             var database = mongoClient.GetDatabase(databaseName);
