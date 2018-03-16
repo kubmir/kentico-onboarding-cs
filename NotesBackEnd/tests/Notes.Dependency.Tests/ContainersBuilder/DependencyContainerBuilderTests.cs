@@ -17,14 +17,14 @@ namespace Notes.Dependency.Tests.ContainersBuilder
     {
         private static readonly List<Type> ExpectedTypes;
         private IEnumerable<Type> _actualTypes;
-        private MockedIDependencyContainerRegister _container;
+        private MockedIContainer _container;
 
         static DependencyContainerBuilderTests()
         {
             ExpectedTypes = typeof(IUrlLocationHelper)
                 .Assembly
                 .ExportedTypes
-                .Where(type => type.IsInterface && type != typeof(IDependencyContainerRegister) && type != typeof(IBootstrapper))
+                .Where(type => type.IsInterface && type != typeof(IContainer) && type != typeof(IBootstrapper))
                 .ToList();
 
             ExpectedTypes.Add(typeof(HttpRequestMessage));
@@ -49,26 +49,26 @@ namespace Notes.Dependency.Tests.ContainersBuilder
         public void RegisterApiDependencies_AllInterfacesAreRegistered(Type requestedType)
             => Assert.That(_actualTypes, Contains.Item(requestedType));
 
-        private MockedIDependencyContainerRegister MockContainer()
-            => new MockedIDependencyContainerRegister();
+        private MockedIContainer MockContainer()
+            => new MockedIContainer();
     }
 
-    internal class MockedIDependencyContainerRegister : IDependencyContainer
+    internal class MockedIContainer : IDependencyContainer
     {
         public List<Type> RegisteredTypes { get; }
 
-        public MockedIDependencyContainerRegister()
+        public MockedIContainer()
         {
             RegisteredTypes = new List<Type>();
         }
 
-        public IDependencyContainerRegister RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType) where TTo : TFrom
+        public IContainer RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType) where TTo : TFrom
         {
             RegisteredTypes.Add(typeof(TFrom));
             return this;
         }
 
-        public IDependencyContainerRegister RegisterType<TType>(Func<TType> getObjectFunc, LifetimeTypes lifetimeType)
+        public IContainer RegisterType<TType>(Func<TType> getObjectFunc, LifetimeTypes lifetimeType)
         {
             RegisteredTypes.Add(typeof(TType));
             return this;
@@ -85,7 +85,7 @@ namespace Notes.Dependency.Tests.ContainersBuilder
         public IEnumerable<object> ResolveAll(Type serviceType)
             => null;
 
-        public IDependencyContainerResolver CreateChildContainer()
+        public IResolver CreateChildContainer()
             => null;
     }
 }

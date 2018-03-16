@@ -38,8 +38,8 @@
     <Compile Include="ApiServices\IRouteOptions.cs" />
     <Compile Include="ApiServices\IUrlLocationHelper.cs" />
     <Compile Include="Dependency\IBootstrapper.cs" />
-    <Compile Include="Dependency\IDependencyContainerRegister.cs" />
-    <Compile Include="Dependency\IDependencyContainerResolver.cs" />
+    <Compile Include="Dependency\IContainer.cs" />
+    <Compile Include="Dependency\IResolver.cs" />
     <Compile Include="Dependency\LifetimeTypes.cs" />
     <Compile Include="Model\Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

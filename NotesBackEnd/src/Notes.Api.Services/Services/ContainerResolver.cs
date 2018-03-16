@@ -28,18 +28,18 @@ namespace Notes.Api.Services.Services
             ModelValidatorCacheException
         };
 
-        protected IDependencyContainerResolver Container;
+        protected IResolver Resolver;
 
-        public ContainerResolver(IDependencyContainerResolver container)
+        public ContainerResolver(IResolver resolver)
         {
-            Container = container ?? throw new ArgumentNullException(nameof(container));
+            Resolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
         }
 
         public object GetService(Type serviceType)
         {
             try
             {
-                return Container.Resolve(serviceType);
+                return Resolver.Resolve(serviceType);
             }
             catch (Exception)
                 when (ExcludedTypes.Contains(serviceType?.FullName))
@@ -52,7 +52,7 @@ namespace Notes.Api.Services.Services
         {
             try
             {
-                return Container.ResolveAll(serviceType);
+                return Resolver.ResolveAll(serviceType);
             }
             catch (Exception)
                 when (ExcludedTypes.Contains(serviceType?.FullName))
@@ -62,12 +62,12 @@ namespace Notes.Api.Services.Services
         }
         
         public IDependencyScope BeginScope()
-            => new ContainerResolver(Container.CreateChildContainer());
+            => new ContainerResolver(Resolver.CreateChildContainer());
 
         public void Dispose()
             => Dispose(true);
 
         protected virtual void Dispose(bool disposing)
-            => Container.Dispose();
+            => Resolver.Dispose();
     }
 }

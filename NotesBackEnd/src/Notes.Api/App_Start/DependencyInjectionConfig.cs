@@ -11,7 +11,7 @@ namespace Notes.Api
     {
         internal static void Register(HttpConfiguration config)
         {
-            IDependencyContainerResolver container = DependencyContainerBuilder.SetUpApiContainer(GetRouteOptions);
+            IResolver container = DependencyContainerBuilder.SetUpApiContainer(GetRouteOptions);
             config.DependencyResolver = (IDependencyResolver) container.Resolve<IDependencyResolver>();
         }
 

@@ -8,7 +8,7 @@ namespace Notes.Services.Dependency
 {
     public class ServicesTypesBootstrapper : IBootstrapper
     {
-        public IDependencyContainerRegister RegisterType(IDependencyContainerRegister container)
+        public IContainer RegisterType(IContainer container)
             => container
                 .RegisterType<IAddNoteService, AddNoteService>(LifetimeTypes.PerRequestSingleton)
                 .RegisterType<IUpdateNoteService, UpdateNoteService>(LifetimeTypes.PerRequestSingleton)

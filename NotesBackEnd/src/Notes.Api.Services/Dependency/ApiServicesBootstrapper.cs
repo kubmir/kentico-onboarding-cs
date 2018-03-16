@@ -10,7 +10,7 @@ namespace Notes.Api.Services.Dependency
 {
     public class ApiServicesBootstrapper : IBootstrapper
     {
-        public IDependencyContainerRegister RegisterType(IDependencyContainerRegister container)
+        public IContainer RegisterType(IContainer container)
             => container
                 .RegisterType(GetHttpRequestMessage, LifetimeTypes.PerRequestSingleton)
                 .RegisterType<IDependencyResolver, ContainerResolver>(LifetimeTypes.PerApplicationSingleton)

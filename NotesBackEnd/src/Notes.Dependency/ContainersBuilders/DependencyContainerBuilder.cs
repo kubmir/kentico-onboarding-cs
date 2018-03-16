@@ -10,7 +10,7 @@ namespace Notes.Dependency.ContainersBuilders
 {
     public static class DependencyContainerBuilder
     {
-        public static IDependencyContainerResolver SetUpApiContainer(Func<IRouteOptions> getRouteOptions)
+        public static IResolver SetUpApiContainer(Func<IRouteOptions> getRouteOptions)
         {
             var container = new DependencyContainer();
 
@@ -22,12 +22,12 @@ namespace Notes.Dependency.ContainersBuilders
         internal static void RegisterApiDependencies(Func<IRouteOptions> getRouteOptions, IDependencyContainer container)
             => container
                 .RegisterType(getRouteOptions, LifetimeTypes.PerApplicationSingleton)
-                .RegisterType<IDependencyContainerResolver>(() => container, LifetimeTypes.PerApplicationSingleton)
+                .RegisterType<IResolver>(() => container, LifetimeTypes.PerApplicationSingleton)
                 .RegisterDependency<RepositoryTypesBootstrapper>()
                 .RegisterDependency<ApiServicesBootstrapper>()
                 .RegisterDependency<ServicesTypesBootstrapper>();
 
-        private static IDependencyContainerRegister RegisterDependency<TBootstrapper>(this IDependencyContainerRegister container) 
+        private static IContainer RegisterDependency<TBootstrapper>(this IContainer container) 
             where TBootstrapper : IBootstrapper, new()
                 => new TBootstrapper().RegisterType(container);
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Notes.Contracts.Dependency
 {
-    public interface IDependencyContainerResolver: IDisposable
+    public interface IResolver : IDisposable
     {
         TType Resolve<TType>();
 
@@ -11,6 +11,6 @@ namespace Notes.Contracts.Dependency
 
         IEnumerable<object> ResolveAll(Type serviceType);
 
-        IDependencyContainerResolver CreateChildContainer();
+        IResolver CreateChildContainer();
     }
 }

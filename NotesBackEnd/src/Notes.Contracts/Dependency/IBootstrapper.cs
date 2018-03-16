@@ -2,6 +2,6 @@
 {
     public interface IBootstrapper
     {
-        IDependencyContainerRegister RegisterType(IDependencyContainerRegister container);
+        IContainer RegisterType(IContainer container);
     }
 }

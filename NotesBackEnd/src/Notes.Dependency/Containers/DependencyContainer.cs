@@ -17,7 +17,7 @@ namespace Notes.Dependency.Containers
         private DependencyContainer(IUnityContainer container) 
             => _unityContainer = container;
 
-        public IDependencyContainerRegister RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType) 
+        public IContainer RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType) 
             where TTo : TFrom
         {
             var lifetimeManager = lifetimeType.GetUnityLifetimeManager();
@@ -27,7 +27,7 @@ namespace Notes.Dependency.Containers
             return this;
         }
 
-        public IDependencyContainerRegister RegisterType<TTo>(Func<TTo> getObjectFunc, LifetimeTypes lifetimeType)
+        public IContainer RegisterType<TTo>(Func<TTo> getObjectFunc, LifetimeTypes lifetimeType)
         {
             var lifetimeManager = lifetimeType.GetUnityLifetimeManager();
 
@@ -45,7 +45,7 @@ namespace Notes.Dependency.Containers
         public IEnumerable<object> ResolveAll(Type serviceType)
             => _unityContainer.ResolveAll(serviceType);
 
-        public IDependencyContainerResolver CreateChildContainer()
+        public IResolver CreateChildContainer()
             => new DependencyContainer(_unityContainer.CreateChildContainer());
         
         public void Dispose()

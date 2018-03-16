@@ -2,7 +2,7 @@
 
 namespace Notes.Dependency.Containers
 {
-    internal interface IDependencyContainer : IDependencyContainerRegister, IDependencyContainerResolver
+    internal interface IDependencyContainer : IContainer, IResolver
     {
 
     }
