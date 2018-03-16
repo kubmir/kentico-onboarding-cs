@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading.Tasks;
+using Notes.Comparers.NoteComparers;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
 using Notes.Contracts.Services.Notes;
@@ -13,9 +14,15 @@ namespace Notes.Services.Tests.Notes
 {
     internal class UpdateNoteServiceTests
     {
-        private static readonly Note Note = new Note { Text = "Third note", Id = new Guid("599442c0-ae28-4157-9a3f-0491bb4ba6c1"), CreationDate = DateTime.MinValue, LastModificationDate = DateTime.MaxValue };
-        private static readonly DateTime TestDateTime = DateTime.ParseExact("21/10/2017 18:00", "g", new CultureInfo("fr-FR"));
+        private static readonly Note Note = new Note
+        {
+            Text = "Third note",
+            Id = new Guid("599442c0-ae28-4157-9a3f-0491bb4ba6c1"),
+            CreationDate = DateTime.MinValue,
+            LastModificationDate = DateTime.MaxValue
+        };
 
+        private static readonly DateTime TestDateTime = DateTime.ParseExact("21/10/2017 18:00", "g", new CultureInfo("fr-FR"));
         private IUpdateNoteService _updateService;
 
         [SetUp]
@@ -29,13 +36,19 @@ namespace Notes.Services.Tests.Notes
         }
 
         [Test]
-        public async Task UpdateNoteAsync_UpdateCorrectNote()
+        public async Task UpdateAsync_CorrectNote_NoteForUpdateReturned()
         {
-            var expectedNote = Note;
+            var expectedNote = new Note
+            {
+                Text = Note.Text,
+                Id = Note.Id,
+                CreationDate = Note.CreationDate,
+                LastModificationDate = TestDateTime
+            };
 
             var actualNote = await _updateService.UpdateAsync(Note.Id, Note);
 
-            Assert.That(actualNote, Is.EqualTo(expectedNote));
+            Assert.That(actualNote, Is.EqualTo(expectedNote).UsingNoteComparer());
         }
 
         private INotesRepository MockNotesRepository()
@@ -43,8 +56,8 @@ namespace Notes.Services.Tests.Notes
             var mockedRepository = Substitute.For<INotesRepository>();
 
             mockedRepository
-                .UpdateAsync(Note.Id, Arg.Is<Note>(repositoryNote => repositoryNote.Id == Note.Id))
-                .Returns(Note);
+                .UpdateAsync(Arg.Any<Guid>(), Arg.Any<Note>())
+                .Returns(parameters => parameters.Arg<Note>());
 
             return mockedRepository;
         }

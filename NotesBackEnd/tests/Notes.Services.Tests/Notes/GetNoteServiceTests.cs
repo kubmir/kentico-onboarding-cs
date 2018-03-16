@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Notes.Comparers.NoteComparers;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
 using Notes.Contracts.Services.Notes;
@@ -12,7 +13,14 @@ namespace Notes.Services.Tests.Notes
 {
     internal class GetNoteServiceTests
     {
-        private static readonly Note Note = new Note { Text = "Test note", Id = new Guid("ebcb3d81-af4e-428f-a22d-e7852d70d3a0"), CreationDate = DateTime.MinValue, LastModificationDate = DateTime.MaxValue };
+        private static readonly Note Note = new Note
+        {
+            Text = "Test note",
+            Id = new Guid("ebcb3d81-af4e-428f-a22d-e7852d70d3a0"),
+            CreationDate = DateTime.MinValue,
+            LastModificationDate = DateTime.MaxValue
+        };
+
         private INotesRepository _mockedNotesRepository;
         private IGetNoteService _getService;
 
@@ -25,17 +33,17 @@ namespace Notes.Services.Tests.Notes
         }
 
         [Test]
-        public async Task GetNoteByIdAsync_ReturnCorrectNote_FromRepository()
+        public async Task GetByIdAsync_FromRepository_CorrectNoteReturned()
         {
             var expectedNote = Note;
 
             var actualNote = await _getService.GetByIdAsync(Note.Id);
 
-            Assert.That(actualNote, Is.EqualTo(expectedNote));
+            Assert.That(actualNote, Is.EqualTo(expectedNote).UsingNoteComparer());
         }
 
         [Test]
-        public async Task GetNoteByIdAsync_ReturnCorrectNote_FromCache()
+        public async Task GetByIdAsync_FromCache_CorrectNoteReturned()
         {
             var expectedNote = Note;
 
@@ -44,14 +52,14 @@ namespace Notes.Services.Tests.Notes
 
             Assert.Multiple(() =>
             {
-                Assert.That(noteFromRepository, Is.EqualTo(expectedNote));
-                Assert.That(noteFromCache, Is.EqualTo(expectedNote));
+                Assert.That(noteFromRepository, Is.EqualTo(expectedNote).UsingNoteComparer());
+                Assert.That(noteFromCache, Is.EqualTo(expectedNote).UsingNoteComparer());
                 Assert.That(_mockedNotesRepository.ReceivedCalls().Count(), Is.EqualTo(1));
             });
         }
 
         [Test]
-        public async Task IsNoteExistingAsync_ReturnTrueForExistingNote()
+        public async Task ExistsAsync_ExistingNote_TrueReturned()
         {
             var isExisting = await _getService.Exists(Note.Id);
 
@@ -59,7 +67,7 @@ namespace Notes.Services.Tests.Notes
         }
 
         [Test]
-        public async Task IsNoteExistingAsync_ReturnTrueForExistingNote_FromCache()
+        public async Task ExistsAsync_ExistingNoteFromCache_TrueReturned()
         {
             var isExistingFromRepository = await _getService.Exists(Note.Id);
             var isExistingFromCache = await _getService.Exists(Note.Id);
@@ -73,7 +81,7 @@ namespace Notes.Services.Tests.Notes
         }
 
         [Test]
-        public async Task IsNoteExistingAsync_ReturnFalseForNotExistingNote()
+        public async Task ExistsAsync_NotExistingNote_FalseReturned()
         {
             var isExisting = await _getService.Exists(Guid.Empty);
 

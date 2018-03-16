@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading.Tasks;
+using Notes.Comparers.NoteComparers;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
 using Notes.Contracts.Services.Notes;
@@ -13,10 +14,16 @@ namespace Notes.Services.Tests.Notes
 {
     internal class AddNoteServiceTests
     {
-        private static readonly Note Note = new Note { Text = "Test note", Id = new Guid("ebcb3d81-af4e-428f-a22d-e7852d70d3a0"), CreationDate = DateTime.MinValue, LastModificationDate = DateTime.MaxValue };
         private static readonly Note NoteDto = new Note { Text = "test text" };
         private static readonly DateTime TestDateTime = DateTime.ParseExact("21/10/2017 18:00", "g", new CultureInfo("fr-FR"));
-   
+        private static readonly Note CreatedNote = new Note
+        {
+            Text = NoteDto.Text,
+            Id = new Guid("ebcb3d81-af4e-428f-a22d-e7852d70d3a0"),
+            CreationDate = TestDateTime,
+            LastModificationDate = TestDateTime
+        };
+
         private IAddNoteService _addService;
 
         [SetUp]
@@ -30,15 +37,13 @@ namespace Notes.Services.Tests.Notes
         }
 
         [Test]
-        public async Task CreateNoteAsync_CreateCorrectNotes()
+        public async Task CreateAsync_CorrectNote_CreatedNoteReturned()
         {
-            var expectedNote = Note;
-            expectedNote.CreationDate = TestDateTime;
-            expectedNote.LastModificationDate = TestDateTime;
+            var expectedNote = CreatedNote;
 
             var actualNote = await _addService.CreateAsync(NoteDto);
 
-            Assert.That(actualNote, Is.EqualTo(expectedNote));
+            Assert.That(actualNote, Is.EqualTo(expectedNote).UsingNoteComparer());
         }
 
         private INotesRepository MockNotesRepository()
@@ -46,8 +51,8 @@ namespace Notes.Services.Tests.Notes
             var mockedRepository = Substitute.For<INotesRepository>();
 
             mockedRepository
-                .CreateAsync(NoteDto)
-                .Returns(Note);
+                .CreateAsync(Arg.Any<Note>())
+                .Returns(parameters => parameters.Arg<Note>());
 
             return mockedRepository;
         }
@@ -69,7 +74,7 @@ namespace Notes.Services.Tests.Notes
 
             mockedGuidService
                 .GetNew()
-                .Returns(Note.Id);
+                .Returns(CreatedNote.Id);
 
             return mockedGuidService;
         }
