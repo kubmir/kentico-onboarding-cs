@@ -3,7 +3,7 @@ using Notes.Contracts.Model;
 
 namespace Notes.Contracts.Services.Notes
 {
-    public interface IAddNoteService
+    public interface ICreationService
     {
         Task<Note> CreateAsync(Note note);
     }

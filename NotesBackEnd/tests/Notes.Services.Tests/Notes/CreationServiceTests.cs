@@ -5,14 +5,14 @@ using Notes.Comparers.NoteComparers;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
 using Notes.Contracts.Services.Notes;
-using Notes.Contracts.Services.Utils;
+using Notes.Contracts.Services.Wrappers;
 using Notes.Services.Notes;
 using NSubstitute;
 using NUnit.Framework;
 
 namespace Notes.Services.Tests.Notes
 {
-    internal class AddNoteServiceTests
+    internal class CreationServiceTests
     {
         private static readonly Note NoteDto = new Note { Text = "test text" };
         private static readonly DateTime TestDateTime = DateTime.ParseExact("21/10/2017 18:00", "g", new CultureInfo("fr-FR"));
@@ -24,16 +24,16 @@ namespace Notes.Services.Tests.Notes
             LastModificationDate = TestDateTime
         };
 
-        private IAddNoteService _addService;
+        private ICreationService _addService;
 
         [SetUp]
         public void SetUp()
         {
             var mockedRepository = MockNotesRepository();
-            var mockedDateService = MockDateService();
-            var mockedGuidService = MockGuidService();
+            var mockedDateWrapper = MockDateWrapper();
+            var mockedGuidWrapper = MockGuidWrapper();
 
-            _addService = new AddNoteService(mockedDateService, mockedRepository, mockedGuidService);
+            _addService = new CreationService(mockedDateWrapper, mockedRepository, mockedGuidWrapper);
         }
 
         [Test]
@@ -57,26 +57,26 @@ namespace Notes.Services.Tests.Notes
             return mockedRepository;
         }
 
-        private IDateService MockDateService()
+        private IDateWrapper MockDateWrapper()
         {
-            var mockedDateService = Substitute.For<IDateService>();
+            var mockedDateWrapper = Substitute.For<IDateWrapper>();
 
-            mockedDateService
+            mockedDateWrapper
                 .GetCurrentDateTime()
                 .Returns(TestDateTime);
 
-            return mockedDateService;
+            return mockedDateWrapper;
         }
 
-        private IGuidService MockGuidService()
+        private IGuidWrapper MockGuidWrapper()
         {
-            var mockedGuidService = Substitute.For<IGuidService>();
+            var mockedGuidWrapper = Substitute.For<IGuidWrapper>();
 
-            mockedGuidService
+            mockedGuidWrapper
                 .GetNew()
                 .Returns(CreatedNote.Id);
 
-            return mockedGuidService;
+            return mockedGuidWrapper;
         }
     }
 }

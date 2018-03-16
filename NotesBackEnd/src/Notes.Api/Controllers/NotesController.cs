@@ -15,18 +15,18 @@ namespace Notes.Api.Controllers
     public class NotesController : ApiController
     {
         private readonly IUrlLocationHelper _locationHelper;
-        private readonly IAddNoteService _addNoteService;
-        private readonly IUpdateNoteService _updateNoteService;
+        private readonly ICreateService _createService;
+        private readonly IUpdateService _updateService;
         private readonly INotesRepository _notesRepository;
-        private readonly IGetNoteService _getNoteService;
+        private readonly IRetrieveService _retrieveService;
 
-        public NotesController(IUrlLocationHelper locationHelper, IAddNoteService addService, IUpdateNoteService updateNoteService, INotesRepository notesRepository, IGetNoteService getService)
+        public NotesController(IUrlLocationHelper locationHelper, ICreateService createService, IUpdateService updateService, INotesRepository notesRepository, IRetrieveService retrieveService)
         {
             _locationHelper = locationHelper;
-            _addNoteService = addService;
-            _updateNoteService = updateNoteService;
+            _createService = createService;
+            _updateService = updateService;
             _notesRepository = notesRepository;
-            _getNoteService = getService;
+            _retrieveService = retrieveService;
         }
 
         public async Task<IHttpActionResult> GetAsync()
@@ -45,12 +45,12 @@ namespace Notes.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (!await _getNoteService.Exists(id))
+            if (!await _retrieveService.Exists(id))
             {
                 return NotFound();
             }
 
-            var foundNote = await _getNoteService.GetByIdAsync(id);
+            var foundNote = await _retrieveService.GetByIdAsync(id);
 
             return Ok(foundNote);
         }
@@ -64,7 +64,7 @@ namespace Notes.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            Note addedNote = await _addNoteService.CreateAsync(noteToAdd);
+            Note addedNote = await _createService.CreateAsync(noteToAdd);
 
             return Created(_locationHelper.GetNotesUrlWithId(addedNote.Id), addedNote);
         }
@@ -83,21 +83,21 @@ namespace Notes.Api.Controllers
                 return Conflict();
             }
 
-            if (!await _getNoteService.Exists(id))
+            if (!await _retrieveService.Exists(id))
             {
-                var addedNote = await _addNoteService.CreateAsync(noteToUpdate);
+                var addedNote = await _createService.CreateAsync(noteToUpdate);
 
                 return Created(_locationHelper.GetNotesUrlWithId(addedNote.Id), addedNote);
             }
 
-            var updatedNote = await _updateNoteService.UpdateAsync(id, noteToUpdate);
+            var updatedNote = await _updateService.UpdateAsync(id, noteToUpdate);
 
             return Ok(updatedNote);
         }
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
-            if (!await _getNoteService.Exists(id))
+            if (!await _retrieveService.Exists(id))
             {
                 return NotFound();
             }

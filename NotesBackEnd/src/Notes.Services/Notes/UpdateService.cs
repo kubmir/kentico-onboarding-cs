@@ -3,33 +3,33 @@ using System.Threading.Tasks;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
 using Notes.Contracts.Services.Notes;
-using Notes.Contracts.Services.Utils;
+using Notes.Contracts.Services.Wrappers;
 
 namespace Notes.Services.Notes
 {
-    internal class UpdateNoteService : IUpdateNoteService
+    internal class UpdateService : IUpdateService
     {
-        private readonly IDateService _dateService;
+        private readonly IDateWrapper _dateWrapper;
         private readonly INotesRepository _repository;
-        private readonly IGetNoteService _getService;
+        private readonly IRetrievalService _retrievalService;
 
-        public UpdateNoteService(IDateService dateService, INotesRepository repository, IGetNoteService getService)
+        public UpdateService(IDateWrapper dateWrapper, INotesRepository repository, IRetrievalService retrievalService)
         {
-            _dateService = dateService;
+            _dateWrapper = dateWrapper;
             _repository = repository;
-            _getService = getService;
+            _retrievalService = retrievalService;
         }
 
         public async Task<Note> UpdateAsync(Guid updateNoteId, Note note)
         {
-            var persistedNote = await _getService.GetByIdAsync(updateNoteId);
+            var persistedNote = await _retrievalService.GetByIdAsync(updateNoteId);
 
             var noteToUpdate = new Note
             {
                 Id = updateNoteId,
                 Text = note.Text,
                 CreationDate = persistedNote.CreationDate,
-                LastModificationDate = _dateService.GetCurrentDateTime()
+                LastModificationDate = _dateWrapper.GetCurrentDateTime()
             };
 
             return await _repository.UpdateAsync(updateNoteId, noteToUpdate);

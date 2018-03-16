@@ -5,14 +5,14 @@ using Notes.Comparers.NoteComparers;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
 using Notes.Contracts.Services.Notes;
-using Notes.Contracts.Services.Utils;
+using Notes.Contracts.Services.Wrappers;
 using Notes.Services.Notes;
 using NSubstitute;
 using NUnit.Framework;
 
 namespace Notes.Services.Tests.Notes
 {
-    internal class UpdateNoteServiceTests
+    internal class UpdateServiceTests
     {
         private static readonly Note Note = new Note
         {
@@ -23,16 +23,16 @@ namespace Notes.Services.Tests.Notes
         };
 
         private static readonly DateTime TestDateTime = DateTime.ParseExact("21/10/2017 18:00", "g", new CultureInfo("fr-FR"));
-        private IUpdateNoteService _updateService;
+        private IUpdateService _updateService;
 
         [SetUp]
         public void SetUp()
         {
             var mockedRepository = MockNotesRepository();
-            var mockedDateService = MockDateService();
-            var mockedGetService = MockGetService();
+            var mockedDateWrapper = MockDateWrapper();
+            var mockedRetrieveService = MockRetrieveService();
 
-            _updateService = new UpdateNoteService(mockedDateService, mockedRepository, mockedGetService);
+            _updateService = new UpdateService(mockedDateWrapper, mockedRepository, mockedRetrieveService);
         }
 
         [Test]
@@ -62,26 +62,26 @@ namespace Notes.Services.Tests.Notes
             return mockedRepository;
         }
 
-        private IDateService MockDateService()
+        private IDateWrapper MockDateWrapper()
         {
-            var mockedDateService = Substitute.For<IDateService>();
+            var mockedDateWrapper = Substitute.For<IDateWrapper>();
 
-            mockedDateService
+            mockedDateWrapper
                 .GetCurrentDateTime()
                 .Returns(TestDateTime);
 
-            return mockedDateService;
+            return mockedDateWrapper;
         }
 
-        private IGetNoteService MockGetService()
+        private IRetrievalService MockRetrieveService()
         {
-            var mockedGetService = Substitute.For<IGetNoteService>();
+            var mockedRetrieveService = Substitute.For<IRetrievalService>();
 
-            mockedGetService
+            mockedRetrieveService
                 .GetByIdAsync(Note.Id)
                 .Returns(Note);
 
-            return mockedGetService;
+            return mockedRetrieveService;
         }
     }
 }

@@ -44,11 +44,11 @@
     <Compile Include="Model\Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\INotesRepository.cs" />
-    <Compile Include="Services\Notes\IAddNoteService.cs" />
-    <Compile Include="Services\Notes\IGetNoteService.cs" />
-    <Compile Include="Services\Notes\IUpdateNoteService.cs" />
-    <Compile Include="Services\Utils\IDateService.cs" />
-    <Compile Include="Services\Utils\IGuidService.cs" />
+    <Compile Include="Services\Notes\ICreationService.cs" />
+    <Compile Include="Services\Notes\IRetrievalService.cs" />
+    <Compile Include="Services\Notes\IUpdateService.cs" />
+    <Compile Include="Services\Wrappers\IDateWrapper.cs" />
+    <Compile Include="Services\Wrappers\IGuidWrapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

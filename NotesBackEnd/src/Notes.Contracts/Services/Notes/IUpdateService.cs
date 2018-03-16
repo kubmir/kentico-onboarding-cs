@@ -4,10 +4,8 @@ using Notes.Contracts.Model;
 
 namespace Notes.Contracts.Services.Notes
 {
-    public interface IGetNoteService
+    public interface IUpdateService
     {
-        Task<Note> GetByIdAsync(Guid id);
-
-        Task<Boolean> Exists(Guid id);
+        Task<Note> UpdateAsync(Guid id, Note note);
     }
 }

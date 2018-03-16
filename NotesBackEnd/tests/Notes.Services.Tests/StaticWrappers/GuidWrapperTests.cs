@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Notes.Contracts.Services.Utils;
-using Notes.Services.StaticWrappers;
+using Notes.Contracts.Services.Wrappers;
+using Notes.Services.Wrappers;
 using NUnit.Framework;
 
 namespace Notes.Services.Tests.StaticWrappers
 {
-    internal class GuidServiceTests
+    internal class GuidWrapperTests
     {
-        private IGuidService _guidService;
+        private IGuidWrapper _guidWrapper;
 
         [SetUp]
         public void SetUp()
-            => _guidService = new GuidService();
+            => _guidWrapper = new GuidWrapper();
         
         [Test]
         public void GenerateGuid_GenerateNewGuid_NonEmptyGuidReturned()
         {
-            var generatedGuid = _guidService.GetNew();
+            var generatedGuid = _guidWrapper.GetNew();
 
             Assert.That(generatedGuid, Is.Not.EqualTo(Guid.Empty));
         }
@@ -30,7 +30,7 @@ namespace Notes.Services.Tests.StaticWrappers
 
             for (int i = 0; i < 100; i++)
             {
-                generatedGuids.Add(_guidService.GetNew());
+                generatedGuids.Add(_guidWrapper.GetNew());
             }
 
             Assert.That(generatedGuids.Distinct().Count(), Is.EqualTo(generatedGuids.Count));

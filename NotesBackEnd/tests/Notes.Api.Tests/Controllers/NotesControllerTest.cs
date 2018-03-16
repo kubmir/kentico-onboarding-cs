@@ -70,12 +70,12 @@ namespace Notes.Api.Tests.Controllers
         public void Init()
         {
             var mockedLocationHelper = MockLocationHelper();
-            var mockedAddService = MockAddService();
-            var mockedUpdateService = MockUpdateService();
+            var mockCreateService = MockCreateService();
+            var mockUpdateService = MockUpdateService();
             var mockedNoteRepository = MockNoteRepository();
-            var mockedGetService = MockGetService();
+            var mockRetrieveService = MockRetrieveService();
 
-            _controller = new NotesController(mockedLocationHelper, mockedAddService, mockedUpdateService, mockedNoteRepository, mockedGetService)
+            _controller = new NotesController(mockedLocationHelper, mockCreateService, mockUpdateService, mockedNoteRepository, mockRetrieveService)
             {
                 Configuration = new HttpConfiguration(),
                 Request = new HttpRequestMessage()
@@ -354,9 +354,9 @@ namespace Notes.Api.Tests.Controllers
             return mockedLocationHelper;
         }
 
-        private IUpdateNoteService MockUpdateService()
+        private IUpdateService MockUpdateService()
         {
-            var mockedUpdateService = Substitute.For<IUpdateNoteService>();
+            var mockedUpdateService = Substitute.For<IUpdateService>();
 
             mockedUpdateService
                 .UpdateAsync(Note3.Id, Note3)
@@ -365,47 +365,47 @@ namespace Notes.Api.Tests.Controllers
             return mockedUpdateService;
         }
 
-        private IAddNoteService MockAddService()
+        private ICreateService MockCreateService()
         {
-            var mockedAddService = Substitute.For<IAddNoteService>();
+            var mockedCreateService = Substitute.For<ICreateService>();
 
-            mockedAddService
+            mockedCreateService
                 .CreateAsync(Note2Dto)
                 .Returns(Note2);
 
-            mockedAddService
+            mockedCreateService
                 .CreateAsync(Note1)
                 .Returns(Note1);
 
-            return mockedAddService;
+            return mockedCreateService;
         }
 
 
-        private IGetNoteService MockGetService()
+        private IRetrieveService MockRetrieveService()
         {
-            var mockedGetService = Substitute.For<IGetNoteService>();
+            var mockedRetrieveService = Substitute.For<IRetrieveService>();
 
-            mockedGetService
+            mockedRetrieveService
                 .GetByIdAsync(Note1.Id)
                 .Returns(Note1);
 
-            mockedGetService
+            mockedRetrieveService
                 .Exists(Note1.Id)
                 .Returns(true);
 
-            mockedGetService
+            mockedRetrieveService
                 .Exists(Note3.Id)
                 .Returns(true);
 
-            mockedGetService
+            mockedRetrieveService
                 .Exists(Note4.Id)
                 .Returns(true);
 
-            mockedGetService
+            mockedRetrieveService
                 .Exists(NotExistingGuid)
                 .Returns(false);
 
-            return mockedGetService;
+            return mockedRetrieveService;
         }
 
         private INotesRepository MockNoteRepository()

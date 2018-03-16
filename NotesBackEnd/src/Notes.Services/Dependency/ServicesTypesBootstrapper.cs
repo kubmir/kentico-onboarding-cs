@@ -1,8 +1,8 @@
 ﻿using Notes.Contracts.Dependency;
-using Notes.Contracts.Services.Utils;
 using Notes.Contracts.Services.Notes;
+using Notes.Contracts.Services.Wrappers;
 using Notes.Services.Notes;
-using Notes.Services.StaticWrappers;
+using Notes.Services.Wrappers;
 
 namespace Notes.Services.Dependency
 {
@@ -10,10 +10,10 @@ namespace Notes.Services.Dependency
     {
         public IContainer RegisterType(IContainer container)
             => container
-                .RegisterType<IAddNoteService, AddNoteService>(LifetimeTypes.PerRequestSingleton)
-                .RegisterType<IUpdateNoteService, UpdateNoteService>(LifetimeTypes.PerRequestSingleton)
-                .RegisterType<IGetNoteService, GetNoteService>(LifetimeTypes.PerRequestSingleton)
-                .RegisterType<IDateService, DateService>(LifetimeTypes.PerApplicationSingleton)
-                .RegisterType<IGuidService, GuidService>(LifetimeTypes.PerApplicationSingleton);
+                .RegisterType<ICreationService, CreationService>(LifetimeTypes.PerRequestSingleton)
+                .RegisterType<IUpdateService, UpdateService>(LifetimeTypes.PerRequestSingleton)
+                .RegisterType<IRetrievalService, RetrievalService>(LifetimeTypes.PerRequestSingleton)
+                .RegisterType<IDateWrapper, DateWrapper>(LifetimeTypes.PerApplicationSingleton)
+                .RegisterType<IGuidWrapper, GuidWrapper>(LifetimeTypes.PerApplicationSingleton);
     }
 }

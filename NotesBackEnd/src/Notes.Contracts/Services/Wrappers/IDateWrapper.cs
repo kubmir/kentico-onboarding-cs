@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Notes.Contracts.Services.Utils
+namespace Notes.Contracts.Services.Wrappers
 {
-    public interface IDateService
+    public interface IDateWrapper
     {
         DateTime GetCurrentDateTime();
     }

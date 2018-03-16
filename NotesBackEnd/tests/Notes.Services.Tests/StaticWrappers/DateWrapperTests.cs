@@ -1,22 +1,22 @@
-﻿using Notes.Contracts.Services.Utils;
-using Notes.Services.StaticWrappers;
+﻿using Notes.Contracts.Services.Wrappers;
+using Notes.Services.Wrappers;
 using NUnit.Framework;
 
 namespace Notes.Services.Tests.StaticWrappers
 {
-    internal class DateServiceTests
+    internal class DateWrapperTests
     {
-        private IDateService _dateService;
+        private IDateWrapper _dateWrapper;
 
         [SetUp]
         public void SetUp()
-            => _dateService = new DateService();
+            => _dateWrapper = new DateWrapper();
 
         [Test]
         public void GetCurrentDateTime_CalledTwice_SecondReturnedTimeBiggerThanFirstReturned()
         {
-            var firstTime = _dateService.GetCurrentDateTime();
-            var secondTime = _dateService.GetCurrentDateTime();
+            var firstTime = _dateWrapper.GetCurrentDateTime();
+            var secondTime = _dateWrapper.GetCurrentDateTime();
 
             Assert.That(secondTime, Is.GreaterThan(firstTime));
         }

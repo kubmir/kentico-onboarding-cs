@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Notes.Services.Tests.Notes
 {
-    internal class GetNoteServiceTests
+    internal class RetrievalServiceTests
     {
         private static readonly Note Note = new Note
         {
@@ -22,14 +22,14 @@ namespace Notes.Services.Tests.Notes
         };
 
         private INotesRepository _mockedNotesRepository;
-        private IGetNoteService _getService;
+        private IRetrievalService _retrievalService;
 
         [SetUp]
         public void SetUp()
         {
             _mockedNotesRepository = MockNotesRepository();
 
-            _getService = new GetNoteService(_mockedNotesRepository);
+            _retrievalService = new RetrievalService(_mockedNotesRepository);
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace Notes.Services.Tests.Notes
         {
             var expectedNote = Note;
 
-            var actualNote = await _getService.GetByIdAsync(Note.Id);
+            var actualNote = await _retrievalService.GetByIdAsync(Note.Id);
 
             Assert.That(actualNote, Is.EqualTo(expectedNote).UsingNoteComparer());
         }
@@ -47,8 +47,8 @@ namespace Notes.Services.Tests.Notes
         {
             var expectedNote = Note;
 
-            var noteFromRepository = await _getService.GetByIdAsync(Note.Id);
-            var noteFromCache = await _getService.GetByIdAsync(Note.Id);
+            var noteFromRepository = await _retrievalService.GetByIdAsync(Note.Id);
+            var noteFromCache = await _retrievalService.GetByIdAsync(Note.Id);
 
             Assert.Multiple(() =>
             {
@@ -61,7 +61,7 @@ namespace Notes.Services.Tests.Notes
         [Test]
         public async Task ExistsAsync_ExistingNote_TrueReturned()
         {
-            var isExisting = await _getService.Exists(Note.Id);
+            var isExisting = await _retrievalService.Exists(Note.Id);
 
             Assert.That(isExisting, Is.True);
         }
@@ -69,8 +69,8 @@ namespace Notes.Services.Tests.Notes
         [Test]
         public async Task ExistsAsync_ExistingNoteFromCache_TrueReturned()
         {
-            var isExistingFromRepository = await _getService.Exists(Note.Id);
-            var isExistingFromCache = await _getService.Exists(Note.Id);
+            var isExistingFromRepository = await _retrievalService.Exists(Note.Id);
+            var isExistingFromCache = await _retrievalService.Exists(Note.Id);
 
             Assert.Multiple(() =>
             {
@@ -83,7 +83,7 @@ namespace Notes.Services.Tests.Notes
         [Test]
         public async Task ExistsAsync_NotExistingNote_FalseReturned()
         {
-            var isExisting = await _getService.Exists(Guid.Empty);
+            var isExisting = await _retrievalService.Exists(Guid.Empty);
 
             Assert.That(isExisting, Is.False);
         }
