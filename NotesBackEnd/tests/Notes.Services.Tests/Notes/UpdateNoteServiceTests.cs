@@ -23,8 +23,9 @@ namespace Notes.Services.Tests.Notes
         {
             var mockedRepository = MockNotesRepository();
             var mockedDateService = MockDateService();
+            var mockedGetService = MockGetService();
 
-            _updateService = new UpdateNoteService(mockedDateService, mockedRepository);
+            _updateService = new UpdateNoteService(mockedDateService, mockedRepository, mockedGetService);
         }
 
         [Test]
@@ -57,6 +58,17 @@ namespace Notes.Services.Tests.Notes
                 .Returns(TestDateTime);
 
             return mockedDateService;
+        }
+
+        private IGetNoteService MockGetService()
+        {
+            var mockedGetService = Substitute.For<IGetNoteService>();
+
+            mockedGetService
+                .GetByIdAsync(Note.Id)
+                .Returns(Note);
+
+            return mockedGetService;
         }
     }
 }

@@ -11,21 +11,28 @@ namespace Notes.Services.Notes
     {
         private readonly IDateService _dateService;
         private readonly INotesRepository _repository;
+        private readonly IGetNoteService _getService;
 
-        public UpdateNoteService(IDateService dateService, INotesRepository repository)
+        public UpdateNoteService(IDateService dateService, INotesRepository repository, IGetNoteService getService)
         {
             _dateService = dateService;
             _repository = repository;
+            _getService = getService;
         }
 
         public async Task<Note> UpdateAsync(Guid updateNoteId, Note note)
         {
-            var updateTime = _dateService.GetCurrentDateTime();
-            Note noteToUpdate = new Note { Id = updateNoteId, Text = note.Text, CreationDate = note.CreationDate, LastModificationDate = updateTime };
+            var persistedNote = await _getService.GetByIdAsync(updateNoteId);
 
-            var updatedNote = await _repository.UpdateAsync(updateNoteId, noteToUpdate);
+            var noteToUpdate = new Note
+            {
+                Id = updateNoteId,
+                Text = note.Text,
+                CreationDate = persistedNote.CreationDate,
+                LastModificationDate = _dateService.GetCurrentDateTime()
+            };
 
-            return updatedNote;
+            return await _repository.UpdateAsync(updateNoteId, noteToUpdate);
         }
     }
 }
