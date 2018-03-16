@@ -58,6 +58,7 @@
     <Compile Include="Notes\GetNoteServiceTests.cs" />
     <Compile Include="Notes\UpdateNoteServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticWrappers\DateServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
