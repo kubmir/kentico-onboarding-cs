@@ -2,7 +2,7 @@
 using Notes.Contracts.Services.Utils;
 using Notes.Contracts.Services.Notes;
 using Notes.Services.Notes;
-using Notes.Services.Utils;
+using Notes.Services.StaticWrappers;
 
 namespace Notes.Services.Dependency
 {
