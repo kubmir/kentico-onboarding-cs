@@ -23,11 +23,15 @@ namespace Notes.Services.Notes
         {
             var dateTime = _dateService.GetCurrentDateTime();
 
-            note.CreationDate = dateTime;
-            note.LastModificationDate = dateTime;
-            note.Id = _guidService.GetNew();
+            var noteToPersist = new Note()
+            {
+                Id = _guidService.GetNew(),
+                Text = note.Text,
+                CreationDate = dateTime,
+                LastModificationDate = dateTime
+            };
 
-            return await _repository.CreateAsync(note);
+            return await _repository.CreateAsync(noteToPersist);
         }
     }
 }
