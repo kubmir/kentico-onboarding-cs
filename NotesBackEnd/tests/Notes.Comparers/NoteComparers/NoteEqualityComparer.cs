@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Notes.Contracts.Model;
 
-namespace Notes.Api.Tests.Comparers
+namespace Notes.Comparers.NoteComparers
 {
     internal sealed class NoteEqualityComparer : IEqualityComparer<Note>
     {

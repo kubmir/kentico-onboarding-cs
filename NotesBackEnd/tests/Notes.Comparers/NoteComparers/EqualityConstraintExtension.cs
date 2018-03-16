@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework.Constraints;
 
-namespace Notes.Api.Tests.Comparers
+namespace Notes.Comparers.NoteComparers
 {
-    internal static class EqualityConstraintExtension
+    public static class EqualityConstraintExtension
     {
         public static EqualConstraint UsingNoteComparer(this EqualConstraint equalConstraint) 
             => equalConstraint.Using(NoteEqualityComparer.Instance);

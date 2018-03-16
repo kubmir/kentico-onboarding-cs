@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.Services", "src\Notes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.Services.Tests", "tests\Notes.Services.Tests\Notes.Services.Tests.csproj", "{1F9730D4-88E6-42B3-82F7-3B20492F7BB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.Comparers", "tests\Notes.Comparers\Notes.Comparers.csproj", "{C9B23FEB-AE02-48F8-B956-367E79C88FD8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{1F9730D4-88E6-42B3-82F7-3B20492F7BB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F9730D4-88E6-42B3-82F7-3B20492F7BB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F9730D4-88E6-42B3-82F7-3B20492F7BB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9B23FEB-AE02-48F8-B956-367E79C88FD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9B23FEB-AE02-48F8-B956-367E79C88FD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9B23FEB-AE02-48F8-B956-367E79C88FD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9B23FEB-AE02-48F8-B956-367E79C88FD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +94,7 @@ Global
 		{FD71A231-4228-4B7D-9E88-466A13B6069C} = {A4205FCB-9295-45C3-8C6C-C0655407C53B}
 		{221DC445-667C-439F-B68A-D4729FE6E97F} = {A2ABF06D-7233-4B8D-B9C6-508105A00431}
 		{1F9730D4-88E6-42B3-82F7-3B20492F7BB9} = {A4205FCB-9295-45C3-8C6C-C0655407C53B}
+		{C9B23FEB-AE02-48F8-B956-367E79C88FD8} = {A4205FCB-9295-45C3-8C6C-C0655407C53B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF70E677-0B3F-4FC8-80A4-161A0BF1D29D}
