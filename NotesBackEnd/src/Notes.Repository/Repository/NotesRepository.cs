@@ -16,18 +16,26 @@ namespace Notes.Repository.Repository
         public NotesRepository(IConnectionOptions connectionOptions)
         {
             var connectionString = connectionOptions.GetNotesDatabaseConnectionString();
-            var mongoClient = new MongoClient(connectionString);
-            var databaseName = new MongoUrl(connectionString).DatabaseName;
-            var database = mongoClient.GetDatabase(databaseName);
+            var mongoUrl = MongoUrl.Create(connectionString);
+            var mongoClient = new MongoClient(mongoUrl);
+            var database = mongoClient.GetDatabase(mongoUrl.DatabaseName);
 
             _persistedNotes = database.GetCollection<Note>(NoteCollectionName);
         }
 
         public async Task<IEnumerable<Note>> GetAllAsync()
-            => (await _persistedNotes.FindAsync<Note>(FilterDefinition<Note>.Empty)).ToEnumerable();
+        {
+            var allLoadedNotes = await _persistedNotes.FindAsync<Note>(FilterDefinition<Note>.Empty);
+
+            return allLoadedNotes.ToEnumerable();
+        }
 
         public async Task<Note> GetByIdAsync(Guid id)
-            => (await _persistedNotes.FindAsync(persistedNote => persistedNote.Id == id)).FirstOrDefault();
+        {
+            var loadedNote = await _persistedNotes.FindAsync(persistedNote => persistedNote.Id == id);
+
+            return loadedNote.FirstOrDefault();
+        }
 
         public async Task<Note> CreateAsync(Note note)
         {
