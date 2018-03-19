@@ -23,7 +23,7 @@ namespace Notes.Services.Notes
         {
             var dateTime = _dateWrapper.GetCurrentDateTime();
 
-            var noteToPersist = new Note()
+            var noteToPersist = new Note
             {
                 Id = _guidWrapper.GetNew(),
                 Text = note.Text,

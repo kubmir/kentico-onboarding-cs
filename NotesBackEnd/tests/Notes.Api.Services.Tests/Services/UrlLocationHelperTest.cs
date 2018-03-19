@@ -34,7 +34,7 @@ namespace Notes.Api.Services.Tests.Services
         }
 
         [Test]
-        public void GetUrlWithId_ReturnsCorrectLocation()
+        public void GetUrlWithId_BuildUrl_ReturnsCorrectLocation()
         {
             var actualUrl = _urlLocationHelper.GetNotesUrlWithId(new Guid(Id));
 

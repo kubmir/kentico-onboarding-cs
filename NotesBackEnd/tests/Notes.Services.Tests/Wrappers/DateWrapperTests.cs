@@ -2,7 +2,7 @@
 using Notes.Services.Wrappers;
 using NUnit.Framework;
 
-namespace Notes.Services.Tests.StaticWrappers
+namespace Notes.Services.Tests.Wrappers
 {
     internal class DateWrapperTests
     {

@@ -24,7 +24,7 @@ namespace Notes.Services.Tests.Notes
             LastModificationDate = TestDateTime
         };
 
-        private ICreationService _addService;
+        private ICreationService _creationService;
 
         [SetUp]
         public void SetUp()
@@ -33,7 +33,7 @@ namespace Notes.Services.Tests.Notes
             var mockedDateWrapper = MockDateWrapper();
             var mockedGuidWrapper = MockGuidWrapper();
 
-            _addService = new CreationService(mockedDateWrapper, mockedRepository, mockedGuidWrapper);
+            _creationService = new CreationService(mockedDateWrapper, mockedRepository, mockedGuidWrapper);
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace Notes.Services.Tests.Notes
         {
             var expectedNote = CreatedNote;
 
-            var actualNote = await _addService.CreateAsync(NoteDto);
+            var actualNote = await _creationService.CreateAsync(NoteDto);
 
             Assert.That(actualNote, Is.EqualTo(expectedNote).UsingNoteComparer());
         }

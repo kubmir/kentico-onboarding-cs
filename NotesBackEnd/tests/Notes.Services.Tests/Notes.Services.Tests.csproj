@@ -58,8 +58,8 @@
     <Compile Include="Notes\RetrievalServiceTests.cs" />
     <Compile Include="Notes\UpdateServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StaticWrappers\DateWrapperTests.cs" />
-    <Compile Include="StaticWrappers\GuidWrapperTests.cs" />
+    <Compile Include="Wrappers\DateWrapperTests.cs" />
+    <Compile Include="Wrappers\GuidWrapperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
