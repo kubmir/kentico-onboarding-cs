@@ -85,9 +85,12 @@ namespace Notes.Api.Controllers
 
             if (!await _retrieveService.Exists(id))
             {
-                var addedNote = await _createService.CreateAsync(noteToUpdate);
+                if (id == Guid.Empty)
+                {
+                    return await PostAsync(noteToUpdate);
+                }
 
-                return Created(_locationHelper.GetNotesUrlWithId(addedNote.Id), addedNote);
+                return NotFound();
             }
 
             var updatedNote = await _updateService.UpdateAsync(id, noteToUpdate);

@@ -60,7 +60,7 @@ namespace Notes.Api.Tests.Controllers
             Note4
         };
 
-        private static readonly Guid NotExistingGuid = new Guid("67b8d269-96e0-4928-983c-86659acd47cb");
+        private static readonly Guid UnknownId = new Guid("67b8d269-96e0-4928-983c-86659acd47cb");
 
         private static readonly Note Note2Dto = new Note { Text = "test text" };
 
@@ -116,7 +116,7 @@ namespace Notes.Api.Tests.Controllers
         [Test]
         public async Task GetAsync_NonExistingId_NotFoundReturned()
         {
-            var (_, responseMessage) = await GetExecutedResponse<Note>(() => _controller.GetAsync(NotExistingGuid));
+            var (_, responseMessage) = await GetExecutedResponse<Note>(() => _controller.GetAsync(UnknownId));
 
             Assert.Multiple(() =>
             {
@@ -143,7 +143,7 @@ namespace Notes.Api.Tests.Controllers
         {
             var expectedNote = Note2;
             string id = expectedNote.Id.ToString();
-            var expectedUri = new Uri($"http://test/{id}/post");
+            var expectedUri = new Uri($"http://test/{id}/test");
 
             var (actualNote, responseMessage) = await GetExecutedResponse<Note>(() => _controller.PostAsync(Note2Dto));
 
@@ -283,15 +283,29 @@ namespace Notes.Api.Tests.Controllers
         }
 
         [Test]
-        public async Task PutAsync_UpdateNonExistingNote_CreatedNoteReturned()
+        public async Task PutAsync_UpdateNoteWithUnknownId_NotFoundReturned()
         {
-            var expectedNote = Note1;
-            Note1.Id = NotExistingGuid;
-            string id = expectedNote.Id.ToString();
-            var expectedUri = new Uri($"http://test/{id}/put");
+            Note1.Id = UnknownId;
+
+            var (_, responseMessage) = await GetExecutedResponse<Note>(()
+                => _controller.PutAsync(UnknownId, Note1));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+                Assert.That(_controller.ModelState.Count, Is.EqualTo(0));
+            });
+        }
+
+
+        [Test]
+        public async Task PutAsync_CreateNewNoteUsingPost_CreatedNoteReturned()
+        {
+            var expectedUri = new Uri($"http://test/{Note2.Id}/test");
+            var expectedNote = Note2;
 
             var (actualNote, responseMessage) = await GetExecutedResponse<Note>(()
-                => _controller.PutAsync(NotExistingGuid, Note1));
+                => _controller.PutAsync(Guid.Empty, Note2Dto));
 
             Assert.Multiple(() =>
             {
@@ -299,6 +313,24 @@ namespace Notes.Api.Tests.Controllers
                 Assert.That(responseMessage.Headers.Location, Is.EqualTo(expectedUri));
                 Assert.That(_controller.ModelState.Count, Is.EqualTo(0));
                 Assert.That(actualNote, Is.EqualTo(expectedNote).UsingNoteComparer());
+            });
+        }
+
+        [Test]
+        public async Task PutAsync_CreateNewNoteUsingPost_PostBadRequestReturned()
+        {
+            Note1.Id = Guid.Empty;
+            Note1.CreationDate = DateTime.MaxValue;
+
+            var (_, responseMessage) = await GetExecutedResponse<Note>(()
+                => _controller.PutAsync(Guid.Empty, Note1));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+                Assert.That(_controller.ModelState.Count, Is.EqualTo(2));
+                Assert.That(_controller.ModelState.Keys, Contains.Item("CreationDate"));
+                Assert.That(_controller.ModelState.Keys, Contains.Item("LastModificationDate"));
             });
         }
 
@@ -340,16 +372,11 @@ namespace Notes.Api.Tests.Controllers
 
         private IUrlLocationHelper MockLocationHelper()
         {
-            var mockedId = "ebcb3d81-af4e-428f-a22d-e7852d70d3a0";
             var mockedLocationHelper = Substitute.For<IUrlLocationHelper>();
 
             mockedLocationHelper
-                .GetNotesUrlWithId(Guid.Parse(mockedId))
-                .Returns($"http://test/{mockedId}/post");
-
-            mockedLocationHelper
-                .GetNotesUrlWithId(NotExistingGuid)
-                .Returns($"http://test/{NotExistingGuid}/put");
+                .GetNotesUrlWithId(Arg.Any<Guid>())
+                .Returns(parameter => $"http://test/{parameter.Arg<Guid>()}/test");
 
             return mockedLocationHelper;
         }
@@ -402,7 +429,7 @@ namespace Notes.Api.Tests.Controllers
                 .Returns(true);
 
             mockedRetrieveService
-                .Exists(NotExistingGuid)
+                .Exists(UnknownId)
                 .Returns(false);
 
             return mockedRetrieveService;
