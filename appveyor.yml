@@ -8,3 +8,13 @@ before_build:
 build:
   verbosity: minimal
   publish_wap: true
+
+test:
+   assemblies:
+     except:
+      - ./NotesBackEnd/tests/Notes.Api.Services.Tests/bin/Release/Notes.Comparers.dll
+      - ./NotesBackEnd/tests/Notes.Api.Tests/bin/Release/Notes.Comparers.dll
+      - ./NotesBackEnd/tests/Notes.Comparers/bin/Release/Notes.Comparers.dll
+      - ./NotesBackEnd/tests/Notes.Services.Tests/bin/Release/Notes.Comparers.dll
+      - ./NotesBackEnd/tests/Dependency.Tests/bin/Release/Notes.Comparers.dll
+      - ./NotesBackEnd/tests/Services.Tests/bin/Release/Notes.Comparers.dll
