@@ -3,11 +3,15 @@ configuration: Release
 image: Visual Studio 2017
 
 before_build:
+  - ps: New-Item C:\projects\kentico-onboarding-cs\NotesBackEnd\src\Notes.Api\ConnectionStrings.config -type file
   - nuget restore ./NotesBackEnd/NotesBackEnd.sln
 
 build:
   verbosity: minimal
   publish_wap: true
+
+after_build:
+- ps: Remove-Item C:\projects\kentico-onboarding-cs\NotesBackEnd\src\Notes.Api\ConnectionStrings.config
 
 test:
    assemblies:
