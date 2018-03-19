@@ -54,7 +54,11 @@
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\NotesControllerTest.cs" />
+    <Compile Include="Controllers\NoteController\DeleteAsyncTests.cs" />
+    <Compile Include="Controllers\NoteController\GetAsyncTests.cs" />
+    <Compile Include="Controllers\NoteController\NoteControllerTestsBase.cs" />
+    <Compile Include="Controllers\NoteController\PostAsyncTests.cs" />
+    <Compile Include="Controllers\NoteController\PutAsyncTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
