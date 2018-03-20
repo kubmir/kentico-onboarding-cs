@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Web.Http;
@@ -38,7 +39,7 @@ namespace Notes.Api.Controllers
 
         public async Task<IHttpActionResult> GetAsync(Guid id)
         {
-            IsIdValid(id);
+            ModelStateIdValidation(id);
 
             if (!ModelState.IsValid)
             {
@@ -57,7 +58,7 @@ namespace Notes.Api.Controllers
 
         public async Task<IHttpActionResult> PostAsync(Note noteToAdd)
         {
-            IsNoteValidForCreation(noteToAdd);
+            ModelStateNoteForCreationValidation(noteToAdd);
 
             if (!ModelState.IsValid)
             {
@@ -71,7 +72,7 @@ namespace Notes.Api.Controllers
 
         public async Task<IHttpActionResult> PutAsync(Guid id, Note noteToUpdate)
         {
-            IsNoteValidForUpdate(noteToUpdate);
+            ModelStateNoteForUpdateValidation(noteToUpdate);
 
             if (!ModelState.IsValid)
             {
@@ -80,7 +81,9 @@ namespace Notes.Api.Controllers
 
             if (id != noteToUpdate.Id)
             {
-                return Conflict();
+                return Content(
+                    HttpStatusCode.Conflict,
+                    $"Identifier provided in URI ({id}) does not match the identifier provided in the body ({noteToUpdate.Id})");
             }
 
             if (!await _retrievalService.Exists(id))
@@ -100,6 +103,11 @@ namespace Notes.Api.Controllers
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
             if (!await _retrievalService.Exists(id))
             {
                 return NotFound();
@@ -110,53 +118,53 @@ namespace Notes.Api.Controllers
             return Ok(deletedNote);
         }
 
-        private void IsNoteValidForCreation(Note note)
+        private void ModelStateNoteForCreationValidation(Note note)
         {
             if (note == null)
             {
-                NoteIsNotValid(nameof(note), "Note cannot be null!");
+                AddValidationError(nameof(note), "Note cannot be null!");
                 return;
             }
 
-            IsNoteTextValid(note);
+            ModelStateTextValidation(note);
 
             if (note.Id != Guid.Empty)
             {
-                NoteIsNotValid(nameof(note.Id), "Note id cannot be specified at this point!");
+                AddValidationError(nameof(note.Id), "Note id cannot be specified at this point!");
             }
 
             if (note.CreationDate != default(DateTime))
             {
-               NoteIsNotValid(nameof(note.CreationDate), "Creation date of note cannot be specified at this point!");
+               AddValidationError(nameof(note.CreationDate), "Creation date of note cannot be specified at this point!");
             }
 
             if (note.LastModificationDate != default(DateTime))
             {
-                NoteIsNotValid(nameof(note.LastModificationDate), "Last modification date of note cannot be specified at this point!");
+                AddValidationError(nameof(note.LastModificationDate), "Last modification date of note cannot be specified at this point!");
 
             }
         }
 
-        private void IsNoteValidForUpdate(Note note)
+        private void ModelStateNoteForUpdateValidation(Note note)
         {
             if (note == null)
             {
-                NoteIsNotValid(nameof(note), "Note cannot be null!");
+                AddValidationError(nameof(note), "Note cannot be null!");
                 return;
             }
 
-            IsNoteTextValid(note);
+            ModelStateTextValidation(note);
         }
 
-        private void IsNoteTextValid(Note note)
+        private void ModelStateTextValidation(Note note)
         {
             if (String.IsNullOrWhiteSpace(note.Text))
             {
-                NoteIsNotValid(nameof(note.Text), "Text of note cannot be empty and cannot consist just of white spaces!");
+                AddValidationError(nameof(note.Text), "Text of note cannot be empty and cannot consist just of white spaces!");
             }
         }
 
-        private void IsIdValid(Guid id)
+        private void ModelStateIdValidation(Guid id)
         {
             if (id == Guid.Empty)
             {
@@ -164,7 +172,7 @@ namespace Notes.Api.Controllers
             }
         }
 
-        private void NoteIsNotValid(String errorField, String message)
+        private void AddValidationError(String errorField, String message)
             => ModelState.AddModelError(errorField, message);
     }
 }
