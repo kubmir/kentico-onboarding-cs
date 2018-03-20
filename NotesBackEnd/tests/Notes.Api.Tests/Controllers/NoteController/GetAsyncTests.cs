@@ -40,7 +40,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
 
             MockedRetrievalService
                 .Exists(Note1.Id)
-                .Returns(true);
+                .Returns(returnThis: true);
 
             var (actualNote, responseMessage) = await GetExecutedResponse<Note>(()
                 => Controller.GetAsync(Note1.Id));
@@ -48,7 +48,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
             Assert.Multiple(() =>
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(0));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 0));
                 Assert.That(actualNote, Is.EqualTo(Note1).UsingNoteComparer());
             });
         }
@@ -58,7 +58,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
         {
             MockedRetrievalService
                 .Exists(UnknownId)
-                .Returns(false);
+                .Returns(returnThis: false);
 
             var (_, responseMessage) = await GetExecutedResponse<Note>(()
                 => Controller.GetAsync(UnknownId));
@@ -66,7 +66,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
             Assert.Multiple(() =>
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(0));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 0));
             });
         }
 
@@ -79,7 +79,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
             Assert.Multiple(() =>
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(1));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 1));
                 Assert.That(Controller.ModelState.First().Key, Is.EqualTo("id"));
             });
         }

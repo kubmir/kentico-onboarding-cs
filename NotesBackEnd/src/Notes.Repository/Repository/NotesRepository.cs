@@ -11,7 +11,7 @@ namespace Notes.Repository.Repository
     internal class NotesRepository : INotesRepository
     {
         private readonly IMongoCollection<Note> _persistedNotes;
-        private const string NoteCollectionName = "notes";
+        private const String NoteCollectionName = "notes";
 
         public NotesRepository(IConnectionOptions connectionOptions)
         {

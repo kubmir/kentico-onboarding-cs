@@ -26,9 +26,9 @@ namespace Notes.Services.Tests.Wrappers
         [Test]
         public void GenerateGuid_Generate100Guids_UniqueGuidsReturned()
         {
-            List<Guid> generatedGuids = new List<Guid>();
+            var generatedGuids = new List<Guid>();
 
-            for (int i = 0; i < 100; i++)
+            for (var i = 0; i < 100; i++)
             {
                 generatedGuids.Add(_guidWrapper.GetNew());
             }

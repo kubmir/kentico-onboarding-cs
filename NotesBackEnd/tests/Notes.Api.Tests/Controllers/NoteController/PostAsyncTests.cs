@@ -33,7 +33,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.Created));
                 Assert.That(responseMessage.Headers.Location, Is.EqualTo(expectedUri));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(0));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 0));
                 Assert.That(actualNote, Is.EqualTo(Note2).UsingNoteComparer());
             });
         }
@@ -49,7 +49,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
             Assert.Multiple(() =>
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(1));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 1));
                 Assert.That(Controller.ModelState.First().Key, Is.EqualTo(nameof(noteWithEmptyText.Text)));
             });
         }
@@ -58,12 +58,12 @@ namespace Notes.Api.Tests.Controllers.NoteController
         public async Task PostAsync_AddNewNullNote_BadRequestReturned()
         {
             var (_, responseMessage) = await GetExecutedResponse<Note>(()
-                => Controller.PostAsync(null));
+                => Controller.PostAsync(noteToAdd: null));
 
             Assert.Multiple(() =>
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(1));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 1));
                 Assert.That(Controller.ModelState.First().Key, Is.EqualTo(NameOfNote));
             });
         }
@@ -79,7 +79,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
             Assert.Multiple(() =>
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(1));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 1));
                 Assert.That(Controller.ModelState.First().Key, Is.EqualTo(nameof(noteWithId.Id)));
             });
         }
@@ -95,7 +95,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
             Assert.Multiple(() =>
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(1));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 1));
                 Assert.That(Controller.ModelState.First().Key, Is.EqualTo(nameof(invalidNote.CreationDate)));
             });
         }
@@ -111,7 +111,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
             Assert.Multiple(() =>
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(1));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 1));
                 Assert.That(Controller.ModelState.First().Key, Is.EqualTo(nameof(invalidNote.LastModificationDate)));
             });
         }

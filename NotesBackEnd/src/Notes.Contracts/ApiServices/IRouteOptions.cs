@@ -1,9 +1,11 @@
-﻿namespace Notes.Contracts.ApiServices
+﻿using System;
+
+namespace Notes.Contracts.ApiServices
 {
     public interface IRouteOptions
     {
-        string GetNotesRoute();
+        String GetNotesRoute();
 
-        string GetNotesRouteName();
+        String GetNotesRouteName();
     }
 }

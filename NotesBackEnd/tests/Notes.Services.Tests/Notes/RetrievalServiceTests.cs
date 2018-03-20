@@ -54,7 +54,7 @@ namespace Notes.Services.Tests.Notes
             {
                 Assert.That(noteFromRepository, Is.EqualTo(expectedNote).UsingNoteComparer());
                 Assert.That(noteFromCache, Is.EqualTo(expectedNote).UsingNoteComparer());
-                Assert.That(_mockedNotesRepository.ReceivedCalls().Count(), Is.EqualTo(1));
+                Assert.That(_mockedNotesRepository.ReceivedCalls().Count(), Is.EqualTo(expected: 1));
             });
         }
 
@@ -76,7 +76,7 @@ namespace Notes.Services.Tests.Notes
             {
                 Assert.That(isExistingFromRepository, Is.True);
                 Assert.That(isExistingFromCache, Is.True);
-                Assert.That(_mockedNotesRepository.ReceivedCalls().Count(), Is.EqualTo(1));
+                Assert.That(_mockedNotesRepository.ReceivedCalls().Count(), Is.EqualTo(expected: 1));
             });
         }
 
@@ -88,7 +88,7 @@ namespace Notes.Services.Tests.Notes
             Assert.That(isExisting, Is.False);
         }
 
-        private INotesRepository MockNotesRepository()
+        private static INotesRepository MockNotesRepository()
         {
             var mockedRepository = Substitute.For<INotesRepository>();
 

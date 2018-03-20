@@ -36,13 +36,13 @@ namespace Notes.Dependency.Containers
             return this;
         }
 
-        public object Resolve(Type serviceType)
+        public Object Resolve(Type serviceType)
             => _unityContainer.Resolve(serviceType);
 
         public TType Resolve<TType>()
             => _unityContainer.Resolve<TType>();
 
-        public IEnumerable<object> ResolveAll(Type serviceType)
+        public IEnumerable<Object> ResolveAll(Type serviceType)
             => _unityContainer.ResolveAll(serviceType);
 
         public IResolver CreateChildContainer()

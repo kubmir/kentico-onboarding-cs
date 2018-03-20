@@ -21,7 +21,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
 
             MockedRetrievalService
                 .Exists(Note3.Id)
-                .Returns(true);
+                .Returns(returnThis: true);
 
             var (actualNote, responseMessage) = await GetExecutedResponse<Note>(()
                 => Controller.PutAsync(Note3.Id, Note3));
@@ -29,7 +29,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
             Assert.Multiple(() =>
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(0));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 0));
                 Assert.That(actualNote, Is.EqualTo(Note3).UsingNoteComparer());
             });
         }
@@ -47,12 +47,12 @@ namespace Notes.Api.Tests.Controllers.NoteController
         public async Task PutAsync_UpdateNullNote_BadRequestReturned()
         {
             var (_, responseMessage) = await GetExecutedResponse<Note>(()
-                => Controller.PutAsync(Note3.Id, null));
+                => Controller.PutAsync(Note3.Id, noteToUpdate: null));
 
             Assert.Multiple(() =>
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(1));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 1));
                 Assert.That(Controller.ModelState.First().Key, Is.EqualTo(NameOfNote));
             });
         }
@@ -61,7 +61,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
         public async Task PutAsync_UpdateNoteWithEmptyText_BadRequestReturned()
         {
             var mockedId = new Guid("67b8d269-96e0-4928-983c-86659acd47cb");
-            var noteWithEmptyText = new Note {Text = String.Empty, Id = mockedId};
+            var noteWithEmptyText = new Note { Text = String.Empty, Id = mockedId };
 
             var (_, responseMessage) = await GetExecutedResponse<Note>(()
                 => Controller.PutAsync(mockedId, noteWithEmptyText));
@@ -69,7 +69,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
             Assert.Multiple(() =>
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(1));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 1));
                 Assert.That(Controller.ModelState.First().Key, Is.EqualTo(nameof(noteWithEmptyText.Text)));
             });
         }
@@ -85,7 +85,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
             Assert.Multiple(() =>
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(0));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 0));
             });
         }
 
@@ -110,7 +110,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.Created));
                 Assert.That(responseMessage.Headers.Location, Is.EqualTo(expectedUri));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(0));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 0));
                 Assert.That(actualNote, Is.EqualTo(Note2).UsingNoteComparer());
             });
         }
@@ -127,7 +127,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
             Assert.Multiple(() =>
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(2));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 2));
                 Assert.That(Controller.ModelState.Keys, Contains.Item(nameof(Note1.CreationDate)));
                 Assert.That(Controller.ModelState.Keys, Contains.Item(nameof(Note1.LastModificationDate)));
             });

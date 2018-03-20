@@ -7,9 +7,9 @@ namespace Notes.Contracts.Dependency
     {
         TType Resolve<TType>();
 
-        object Resolve(Type serviceType);
+        Object Resolve(Type serviceType);
 
-        IEnumerable<object> ResolveAll(Type serviceType);
+        IEnumerable<Object> ResolveAll(Type serviceType);
 
         IResolver CreateChildContainer();
     }

@@ -20,7 +20,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
 
             MockedRetrievalService
                 .Exists(Note4.Id)
-                .Returns(true);
+                .Returns(returnThis: true);
 
 
             var (actualNote, responseMessage) =
@@ -29,7 +29,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
             Assert.Multiple(() =>
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(0));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 0));
                 Assert.That(actualNote, Is.EqualTo(Note4).UsingNoteComparer());
             });
         }
@@ -39,14 +39,14 @@ namespace Notes.Api.Tests.Controllers.NoteController
         {
             MockedRetrievalService
                 .Exists(Guid.Empty)
-                .Returns(false);
+                .Returns(returnThis: false);
 
             var (_, responseMessage) = await GetExecutedResponse<Note>(() => Controller.DeleteAsync(Guid.Empty));
 
             Assert.Multiple(() =>
             {
                 Assert.That(responseMessage.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
-                Assert.That(Controller.ModelState.Count, Is.EqualTo(0));
+                Assert.That(Controller.ModelState.Count, Is.EqualTo(expected: 0));
             });
         }
     }

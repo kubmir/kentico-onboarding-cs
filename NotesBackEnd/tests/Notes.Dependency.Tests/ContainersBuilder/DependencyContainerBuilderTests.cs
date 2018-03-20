@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Notes.Dependency.Tests.ContainersBuilder
 {
     [TestFixture]
-    class DependencyContainerBuilderTests
+    internal class DependencyContainerBuilderTests
     {
         private static readonly List<Type> ExpectedTypes;
         private IEnumerable<Type> _actualTypes;
@@ -49,7 +49,7 @@ namespace Notes.Dependency.Tests.ContainersBuilder
         public void RegisterApiDependencies_AllInterfacesAreRegistered(Type requestedType)
             => Assert.That(_actualTypes, Contains.Item(requestedType));
 
-        private MockedIContainer MockContainer()
+        private static MockedIContainer MockContainer()
             => new MockedIContainer();
     }
 
@@ -57,10 +57,8 @@ namespace Notes.Dependency.Tests.ContainersBuilder
     {
         public List<Type> RegisteredTypes { get; }
 
-        public MockedIContainer()
-        {
-            RegisteredTypes = new List<Type>();
-        }
+        public MockedIContainer() 
+            => RegisteredTypes = new List<Type>();
 
         public IContainer RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType) where TTo : TFrom
         {
@@ -79,10 +77,10 @@ namespace Notes.Dependency.Tests.ContainersBuilder
         public TType Resolve<TType>()
             => default(TType);
 
-        public object Resolve(Type serviceType)
+        public Object Resolve(Type serviceType)
             => null;
 
-        public IEnumerable<object> ResolveAll(Type serviceType)
+        public IEnumerable<Object> ResolveAll(Type serviceType)
             => null;
 
         public IResolver CreateChildContainer()

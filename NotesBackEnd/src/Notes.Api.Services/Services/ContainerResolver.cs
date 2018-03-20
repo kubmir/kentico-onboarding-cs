@@ -13,9 +13,9 @@ namespace Notes.Api.Services.Services
 {
     internal class ContainerResolver : IDependencyResolver
     {
-        private const string ModelValidatorCacheException = "System.Web.Http.Validation.IModelValidatorCache";
+        private const String ModelValidatorCacheException = "System.Web.Http.Validation.IModelValidatorCache";
 
-        private static readonly List<string> ExcludedTypes = new List<string>()
+        private static readonly List<String> ExcludedTypes = new List<String>
         {
             typeof(IHostBufferPolicySelector).FullName,
             typeof(IHttpControllerSelector).FullName,
@@ -30,12 +30,10 @@ namespace Notes.Api.Services.Services
 
         protected IResolver Resolver;
 
-        public ContainerResolver(IResolver resolver)
-        {
-            Resolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
-        }
+        public ContainerResolver(IResolver resolver) 
+            => Resolver = resolver ?? throw new ArgumentNullException(nameof(resolver));
 
-        public object GetService(Type serviceType)
+        public Object GetService(Type serviceType)
         {
             try
             {
@@ -48,7 +46,7 @@ namespace Notes.Api.Services.Services
             }
         }
 
-        public IEnumerable<object> GetServices(Type serviceType)
+        public IEnumerable<Object> GetServices(Type serviceType)
         {
             try
             {
@@ -60,14 +58,14 @@ namespace Notes.Api.Services.Services
                 return null;
             }
         }
-        
+
         public IDependencyScope BeginScope()
             => new ContainerResolver(Resolver.CreateChildContainer());
 
         public void Dispose()
-            => Dispose(true);
+            => Dispose(disposing: true);
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(Boolean disposing)
             => Resolver.Dispose();
     }
 }

@@ -10,7 +10,7 @@ namespace Notes.Api.Services.Tests.Services
     [TestFixture]
     internal class UrlLocationHelperTest
     {
-        private const string Id = "2c00d1c2-fd2b-4c06-8f2d-130e88f719c2";
+        private const String Id = "2c00d1c2-fd2b-4c06-8f2d-130e88f719c2";
 
         private IUrlLocationHelper _urlLocationHelper;
         private UrlHelper _urlHelper;
@@ -23,7 +23,7 @@ namespace Notes.Api.Services.Tests.Services
             _routeOptions = Substitute.For<IRouteOptions>();
 
             _urlHelper
-                .Route("test", Arg.Is<object>(value => (Guid) new HttpRouteValueDictionary(value)["id"] == new Guid(Id)))
+                .Route("test", Arg.Is<Object>(value => (Guid) new HttpRouteValueDictionary(value)["id"] == new Guid(Id)))
                 .Returns($"/{Id}/test");
 
             _routeOptions

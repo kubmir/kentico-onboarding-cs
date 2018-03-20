@@ -15,7 +15,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
 {
     internal class NoteControllerTestsBase
     {
-        protected const string NameOfNote = "note";
+        protected const String NameOfNote = "note";
 
         protected static readonly Note Note1 = new Note
         {
@@ -59,7 +59,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
 
         protected static readonly Guid UnknownId = new Guid("67b8d269-96e0-4928-983c-86659acd47cb");
 
-        protected static readonly Note Note2Dto = new Note {Text = "test text"};
+        protected static readonly Note Note2Dto = new Note { Text = "test text" };
 
         protected IUrlLocationHelper MockedLocationHelper = Substitute.For<IUrlLocationHelper>();
         protected ICreationService MockedCreationService = Substitute.For<ICreationService>();
@@ -82,8 +82,8 @@ namespace Notes.Api.Tests.Controllers.NoteController
         protected async Task<(T ActualContent, HttpResponseMessage ResponseMessage)> GetExecutedResponse<T>(
             Func<Task<IHttpActionResult>> controllerFunction)
         {
-            IHttpActionResult response = await controllerFunction();
-            HttpResponseMessage executedResponse = await response.ExecuteAsync(CancellationToken.None);
+            var response = await controllerFunction();
+            var executedResponse = await response.ExecuteAsync(CancellationToken.None);
             executedResponse.TryGetContentValue(out T actualContent);
 
             return (actualContent, executedResponse);

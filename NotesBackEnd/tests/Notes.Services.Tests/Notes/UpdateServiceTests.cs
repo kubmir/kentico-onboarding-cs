@@ -51,7 +51,7 @@ namespace Notes.Services.Tests.Notes
             Assert.That(actualNote, Is.EqualTo(expectedNote).UsingNoteComparer());
         }
 
-        private INotesRepository MockNotesRepository()
+        private static INotesRepository MockNotesRepository()
         {
             var mockedRepository = Substitute.For<INotesRepository>();
 
@@ -62,7 +62,7 @@ namespace Notes.Services.Tests.Notes
             return mockedRepository;
         }
 
-        private IDateWrapper MockDateWrapper()
+        private static IDateWrapper MockDateWrapper()
         {
             var mockedDateWrapper = Substitute.For<IDateWrapper>();
 
@@ -73,7 +73,7 @@ namespace Notes.Services.Tests.Notes
             return mockedDateWrapper;
         }
 
-        private IRetrievalService MockRetrieveService()
+        private static IRetrievalService MockRetrieveService()
         {
             var mockedRetrieveService = Substitute.For<IRetrievalService>();
 

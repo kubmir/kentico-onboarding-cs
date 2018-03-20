@@ -2,7 +2,6 @@
 using System.Web.Http.Dependencies;
 using Notes.Api.Routes;
 using Notes.Contracts.ApiServices;
-using Notes.Contracts.Dependency;
 using Notes.Dependency.ContainersBuilders;
 
 namespace Notes.Api
@@ -11,8 +10,8 @@ namespace Notes.Api
     {
         internal static void Register(HttpConfiguration config)
         {
-            IResolver container = DependencyContainerBuilder.SetUpApiContainer(GetRouteOptions);
-            config.DependencyResolver = (IDependencyResolver) container.Resolve<IDependencyResolver>();
+            var container = DependencyContainerBuilder.SetUpApiContainer(GetRouteOptions);
+            config.DependencyResolver = container.Resolve<IDependencyResolver>();
         }
 
         private static IRouteOptions GetRouteOptions()

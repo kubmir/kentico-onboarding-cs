@@ -1,7 +1,9 @@
-﻿namespace Notes.Contracts.ApiServices
+﻿using System;
+
+namespace Notes.Contracts.ApiServices
 {
     public interface IConnectionOptions
     {
-        string GetNotesDatabaseConnectionString();
+        String GetNotesDatabaseConnectionString();
     }
 }

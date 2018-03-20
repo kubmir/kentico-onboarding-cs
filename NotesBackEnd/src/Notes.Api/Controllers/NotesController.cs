@@ -64,7 +64,7 @@ namespace Notes.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            Note addedNote = await _creationService.CreateAsync(noteToAdd);
+            var addedNote = await _creationService.CreateAsync(noteToAdd);
 
             return Created(_locationHelper.GetNotesUrlWithId(addedNote.Id), addedNote);
         }
@@ -164,7 +164,7 @@ namespace Notes.Api.Controllers
             }
         }
 
-        private void NoteIsNotValid(string errorField, string message)
+        private void NoteIsNotValid(String errorField, String message)
             => ModelState.AddModelError(errorField, message);
     }
 }
