@@ -32,7 +32,7 @@ namespace Notes.Services.Notes
                 LastModificationDate = _dateWrapper.GetCurrentDateTime()
             };
 
-            return await _repository.UpdateAsync(updateNoteId, noteToUpdate);
+            return await _repository.UpdateAsync(noteToUpdate);
         }
     }
 }

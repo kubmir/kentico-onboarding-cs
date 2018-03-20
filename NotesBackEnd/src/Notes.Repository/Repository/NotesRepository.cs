@@ -44,8 +44,8 @@ namespace Notes.Repository.Repository
             return note;
         }
 
-        public async Task<Note> UpdateAsync(Guid id, Note noteToUpdate)
-            => await _persistedNotes.FindOneAndReplaceAsync(databaseNote => databaseNote.Id == id, noteToUpdate);      
+        public async Task<Note> UpdateAsync(Note noteToUpdate)
+            => await _persistedNotes.FindOneAndReplaceAsync(databaseNote => databaseNote.Id == noteToUpdate.Id, noteToUpdate);      
 
         public async Task<Note> DeleteByIdAsync(Guid id)
             => await _persistedNotes.FindOneAndDeleteAsync(note => note.Id == id);

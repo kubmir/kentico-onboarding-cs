@@ -56,7 +56,7 @@ namespace Notes.Services.Tests.Notes
             var mockedRepository = Substitute.For<INotesRepository>();
 
             mockedRepository
-                .UpdateAsync(Arg.Any<Guid>(), Arg.Any<Note>())
+                .UpdateAsync(Arg.Any<Note>())
                 .Returns(parameters => parameters.Arg<Note>());
 
             return mockedRepository;
