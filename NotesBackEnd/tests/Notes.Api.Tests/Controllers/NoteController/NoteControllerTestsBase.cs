@@ -69,7 +69,7 @@ namespace Notes.Api.Tests.Controllers.NoteController
         protected NotesController Controller;
 
         [SetUp]
-        public void SetUpBaseClass()
+        public void SetUpController()
         {
             Controller = new NotesController(MockedLocationHelper, MockedCreationService, MockedUpdateService,
                 MockedNoteRepository, MockedRetrievalService)
