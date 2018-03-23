@@ -87,21 +87,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="ConnectionStrings.config">
+      <SubType>Designer</SubType>
+    </Resource>
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\DependencyInjectionConfig.cs" />
+    <Compile Include="App_Start\JsonFormatterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Routes\RouteManager.cs" />
+    <Compile Include="Routes\RouteOptions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -113,10 +121,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Notes.Api.Services\Notes.Api.Services.csproj">
-      <Project>{8717683b-3e87-4d9d-803b-cc9e186ade09}</Project>
-      <Name>Notes.Api.Services</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Notes.Contracts\Notes.Contracts.csproj">
       <Project>{a5a4fc43-cddb-4fb8-9a54-3971f2834b35}</Project>
       <Name>Notes.Contracts</Name>

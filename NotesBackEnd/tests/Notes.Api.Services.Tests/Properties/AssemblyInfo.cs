@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Notes.Api.Services.Tests")]
@@ -11,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: ComVisible(false)]
+[assembly: ComVisible(visibility: false)]
 
 [assembly: Guid("20f8c5e6-d69b-4dca-941e-43e6f92b61af")]
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Notes.Contracts.Model;
 
-namespace Notes.Api.Tests.Comparers
+namespace Notes.Comparers.NoteComparers
 {
     internal sealed class NoteEqualityComparer : IEqualityComparer<Note>
     {
@@ -15,25 +15,27 @@ namespace Notes.Api.Tests.Comparers
 
         }
 
-        public bool Equals(Note x, Note y)
+        public Boolean Equals(Note x, Note y)
         {
             if (ReferenceEquals(x, y))
             {
                 return true;
             }
 
-            if (ReferenceEquals(x, null) || ReferenceEquals(null, y))
+            if (ReferenceEquals(x, objB: null) || ReferenceEquals(objA: null, objB: y))
             {
                 return false;
             }
 
-            return x.Id == y.Id && x.Text == y.Text;
+            return x.Id == y.Id && x.Text == y.Text &&
+                   x.CreationDate == y.CreationDate &&
+                   x.LastModificationDate == y.LastModificationDate;
         }
 
-        public int GetHashCode(Note obj)
+        public Int32 GetHashCode(Note obj)
         {
-            int hashCodeText = obj.Text == null ? 0 : obj.Text.GetHashCode();
-            int hashCodeId = obj.Id.GetHashCode();
+            var hashCodeText = obj.Text == null ? 0 : obj.Text.GetHashCode();
+            var hashCodeId = obj.Id.GetHashCode();
 
             return hashCodeId ^ hashCodeText;
         }

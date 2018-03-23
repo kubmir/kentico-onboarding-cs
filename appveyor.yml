@@ -3,8 +3,22 @@ configuration: Release
 image: Visual Studio 2017
 
 before_build:
+  - ps: New-Item C:\projects\kentico-onboarding-cs\NotesBackEnd\src\Notes.Api\ConnectionStrings.config -type file
   - nuget restore ./NotesBackEnd/NotesBackEnd.sln
 
 build:
   verbosity: minimal
   publish_wap: true
+
+after_build:
+- ps: Remove-Item C:\projects\kentico-onboarding-cs\NotesBackEnd\src\Notes.Api\ConnectionStrings.config
+
+test:
+   assemblies:
+     except:
+      - ./NotesBackEnd/tests/Notes.Api.Services.Tests/bin/Release/Notes.Comparers.dll
+      - ./NotesBackEnd/tests/Notes.Api.Tests/bin/Release/Notes.Comparers.dll
+      - ./NotesBackEnd/tests/Notes.Comparers/bin/Release/Notes.Comparers.dll
+      - ./NotesBackEnd/tests/Notes.Services.Tests/bin/Release/Notes.Comparers.dll
+      - ./NotesBackEnd/tests/Dependency.Tests/bin/Release/Notes.Comparers.dll
+      - ./NotesBackEnd/tests/Services.Tests/bin/Release/Notes.Comparers.dll

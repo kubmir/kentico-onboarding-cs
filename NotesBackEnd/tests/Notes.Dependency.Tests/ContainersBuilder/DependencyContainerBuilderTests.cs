@@ -13,18 +13,18 @@ using NUnit.Framework;
 namespace Notes.Dependency.Tests.ContainersBuilder
 {
     [TestFixture]
-    class DependencyContainerBuilderTests
+    internal class DependencyContainerBuilderTests
     {
         private static readonly List<Type> ExpectedTypes;
         private IEnumerable<Type> _actualTypes;
-        private MockedIDependencyContainerRegister _container;
+        private MockedIContainer _container;
 
         static DependencyContainerBuilderTests()
         {
             ExpectedTypes = typeof(IUrlLocationHelper)
                 .Assembly
                 .ExportedTypes
-                .Where(type => type.IsInterface && type != typeof(IDependencyContainerRegister) && type != typeof(IBootstrapper))
+                .Where(type => type.IsInterface && type != typeof(IContainer) && type != typeof(IBootstrapper))
                 .ToList();
 
             ExpectedTypes.Add(typeof(HttpRequestMessage));
@@ -34,13 +34,14 @@ namespace Notes.Dependency.Tests.ContainersBuilder
         [SetUp]
         public void SetUp()
         {
-            var routeManager = Substitute.For<IRouteManager>();
-            IRouteManager GetRouteManager()
+            var routeManager = Substitute.For<IRouteOptions>();
+
+            IRouteOptions GetRouteOptions()
                 => routeManager;
 
             _container = MockContainer();
 
-            DependencyContainerBuilder.RegisterApiDependencies(GetRouteManager, _container);
+            DependencyContainerBuilder.RegisterApiDependencies(GetRouteOptions, _container);
             _actualTypes = _container.RegisteredTypes;
         }
 
@@ -48,26 +49,24 @@ namespace Notes.Dependency.Tests.ContainersBuilder
         public void RegisterApiDependencies_AllInterfacesAreRegistered(Type requestedType)
             => Assert.That(_actualTypes, Contains.Item(requestedType));
 
-        private MockedIDependencyContainerRegister MockContainer()
-            => new MockedIDependencyContainerRegister();
+        private static MockedIContainer MockContainer()
+            => new MockedIContainer();
     }
 
-    internal class MockedIDependencyContainerRegister : IDependencyContainer
+    internal class MockedIContainer : IDependencyContainer
     {
         public List<Type> RegisteredTypes { get; }
 
-        public MockedIDependencyContainerRegister()
-        {
-            RegisteredTypes = new List<Type>();
-        }
+        public MockedIContainer() 
+            => RegisteredTypes = new List<Type>();
 
-        public IDependencyContainerRegister RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType) where TTo : TFrom
+        public IContainer RegisterType<TFrom, TTo>(LifetimeTypes lifetimeType) where TTo : TFrom
         {
             RegisteredTypes.Add(typeof(TFrom));
             return this;
-        } 
+        }
 
-        public IDependencyContainerRegister RegisterType<TType>(Func<TType> getObjectFunc, LifetimeTypes lifetimeType)
+        public IContainer RegisterType<TType>(Func<TType> getObjectFunc, LifetimeTypes lifetimeType)
         {
             RegisteredTypes.Add(typeof(TType));
             return this;
@@ -75,13 +74,16 @@ namespace Notes.Dependency.Tests.ContainersBuilder
 
         public void Dispose() { }
 
-        public object Resolve(Type serviceType)
+        public TType Resolve<TType>()
+            => default(TType);
+
+        public Object Resolve(Type serviceType)
             => null;
 
-        public IEnumerable<object> ResolveAll(Type serviceType)
+        public IEnumerable<Object> ResolveAll(Type serviceType)
             => null;
 
-        public IDependencyContainerResolver CreateChildContainer()
+        public IResolver CreateChildContainer()
             => null;
     }
 }

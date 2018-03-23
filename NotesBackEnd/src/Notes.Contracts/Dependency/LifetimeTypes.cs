@@ -4,6 +4,6 @@
     {
         PerApplicationSingleton, 
         PerRequestSingleton,
-        PerInstanceSingleton,
+        PerInstanceSingleton
     }
 }

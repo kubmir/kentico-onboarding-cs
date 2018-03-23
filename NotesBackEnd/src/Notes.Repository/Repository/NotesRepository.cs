@@ -1,34 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Driver;
+using Notes.Contracts.ApiServices;
 using Notes.Contracts.Model;
 using Notes.Contracts.Repository;
 
 namespace Notes.Repository.Repository
 {
-    public class NotesRepository : INotesRepository
+    internal class NotesRepository : INotesRepository
     {
-        private static readonly Note[] Notes = {
-            new Note {Text = "First note", Id = new Guid("2c00d1c2-fd2b-4c06-8f2d-130e88f719c2")},
-            new Note {Text = "Second note", Id = new Guid("ebcb3d81-af4e-428f-a22d-e7852d70d3a0")},
-            new Note {Text = "Third note", Id = new Guid("599442c0-ae28-4157-9a3f-0491bb4ba6c1")},
-            new Note {Text = "Fourth note", Id = new Guid("4785546e-824d-42a4-900b-e656f19ffb59")}
-        };
+        private readonly IMongoCollection<Note> _persistedNotes;
+        private const String NoteCollectionName = "notes";
 
-        public Task<IEnumerable<Note>> GetAllNotesAsync()
-            => Task.FromResult(Notes.AsEnumerable());
+        public NotesRepository(IConnectionOptions connectionOptions)
+        {
+            var connectionString = connectionOptions.GetNotesDatabaseConnectionString();
+            var mongoUrl = MongoUrl.Create(connectionString);
+            var mongoClient = new MongoClient(mongoUrl);
+            var database = mongoClient.GetDatabase(mongoUrl.DatabaseName);
 
-        public Task<Note> GetNoteByIdAsync(Guid id)
-            => Task.FromResult(Notes[0]);
+            _persistedNotes = database.GetCollection<Note>(NoteCollectionName);
+        }
 
-        public Task<Note> CreateNoteAsync(Note note)
-            => Task.FromResult(Notes[1]);
+        public async Task<IEnumerable<Note>> GetAllAsync()
+        {
+            var allLoadedNotes = await _persistedNotes.FindAsync<Note>(FilterDefinition<Note>.Empty);
 
-        public Task<Note> UpdateNoteAsync(Note note)
-            => Task.FromResult(Notes[2]);
+            return allLoadedNotes.ToEnumerable();
+        }
 
-        public Task<Note> DeleteNoteByIdAsync(Guid id)
-            => Task.FromResult(Notes[3]);
+        public async Task<Note> GetByIdAsync(Guid id)
+        {
+            var loadedNote = await _persistedNotes.FindAsync(persistedNote => persistedNote.Id == id);
+
+            return loadedNote.FirstOrDefault();
+        }
+
+        public async Task<Note> CreateAsync(Note note)
+        {
+            await _persistedNotes.InsertOneAsync(note);
+
+            return note;
+        }
+
+        public async Task<Note> UpdateAsync(Note noteToUpdate)
+            => await _persistedNotes.FindOneAndReplaceAsync(databaseNote => databaseNote.Id == noteToUpdate.Id, noteToUpdate);      
+
+        public async Task<Note> DeleteByIdAsync(Guid id)
+            => await _persistedNotes.FindOneAndDeleteAsync(note => note.Id == id);
     }
 }

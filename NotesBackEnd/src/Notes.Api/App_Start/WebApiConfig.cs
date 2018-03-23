@@ -10,7 +10,7 @@ namespace Notes.Api
         {
             config.AddApiVersioning();
 
-            var constraintResolver = new DefaultInlineConstraintResolver()
+            var constraintResolver = new DefaultInlineConstraintResolver
             {
                 ConstraintMap =
                 {

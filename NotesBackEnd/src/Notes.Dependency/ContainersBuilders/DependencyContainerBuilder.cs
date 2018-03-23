@@ -4,32 +4,31 @@ using Notes.Contracts.ApiServices;
 using Notes.Contracts.Dependency;
 using Notes.Dependency.Containers;
 using Notes.Repository.Dependency;
+using Notes.Services.Dependency;
 
 namespace Notes.Dependency.ContainersBuilders
 {
     public static class DependencyContainerBuilder
     {
-        public static IDependencyContainerResolver SetUpApiContainer(Func<IRouteManager> getRouteManager)
+        public static IResolver SetUpApiContainer(Func<IRouteOptions> getRouteOptions)
         {
             var container = new DependencyContainer();
 
-            RegisterApiDependencies(getRouteManager, container);
+            RegisterApiDependencies(getRouteOptions, container);
 
             return container;
         }
 
-        internal static void RegisterApiDependencies(Func<IRouteManager> getRouteManager, IDependencyContainer container)
-           => container
-                .RegisterType(getRouteManager, LifetimeTypes.PerApplicationSingleton)
-                .RegisterType<IDependencyContainerResolver>(() => container, LifetimeTypes.PerApplicationSingleton)
+        internal static void RegisterApiDependencies(Func<IRouteOptions> getRouteOptions, IDependencyContainer container)
+            => container
+                .RegisterType(getRouteOptions, LifetimeTypes.PerApplicationSingleton)
+                .RegisterType<IResolver>(() => container, LifetimeTypes.PerApplicationSingleton)
                 .RegisterDependency<RepositoryTypesBootstrapper>()
-                .RegisterDependency<ApiServicesBootstrapper>();
+                .RegisterDependency<ApiServicesBootstrapper>()
+                .RegisterDependency<ServicesTypesBootstrapper>();
 
-        private static IDependencyContainerRegister RegisterDependency<T>(this IDependencyContainerRegister container) 
-            where T : IBootstrapper, new()
-        {
-            var bootstrapper = new T();
-            return bootstrapper.RegisterType(container);
-        }
+        private static IContainer RegisterDependency<TBootstrapper>(this IContainer container) 
+            where TBootstrapper : IBootstrapper, new()
+                => new TBootstrapper().RegisterType(container);
     }
 }

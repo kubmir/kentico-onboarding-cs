@@ -10,31 +10,31 @@ namespace Notes.Api.Services.Tests.Services
     [TestFixture]
     internal class UrlLocationHelperTest
     {
-        private const string Id = "2c00d1c2-fd2b-4c06-8f2d-130e88f719c2";
+        private const String Id = "2c00d1c2-fd2b-4c06-8f2d-130e88f719c2";
 
         private IUrlLocationHelper _urlLocationHelper;
         private UrlHelper _urlHelper;
-        private IRouteManager _routeManager;
+        private IRouteOptions _routeOptions;
 
         [SetUp]
         public void Init()
         {
             _urlHelper = Substitute.For<UrlHelper>();
-            _routeManager = Substitute.For<IRouteManager>();
+            _routeOptions = Substitute.For<IRouteOptions>();
 
             _urlHelper
-                .Route("test", Arg.Is<object>(value => (Guid) new HttpRouteValueDictionary(value)["id"] == new Guid(Id)))
+                .Route("test", Arg.Is<Object>(value => (Guid) new HttpRouteValueDictionary(value)["id"] == new Guid(Id)))
                 .Returns($"/{Id}/test");
 
-            _routeManager
+            _routeOptions
                 .GetNotesRouteName()
                 .Returns("test");
 
-            _urlLocationHelper = new UrlLocationHelper(_urlHelper, _routeManager);
+            _urlLocationHelper = new UrlLocationHelper(_urlHelper, _routeOptions);
         }
 
         [Test]
-        public void GetUrlWithId_ReturnsCorrectLocation()
+        public void GetUrlWithId_BuildUrl_ReturnsCorrectLocation()
         {
             var actualUrl = _urlLocationHelper.GetNotesUrlWithId(new Guid(Id));
 
